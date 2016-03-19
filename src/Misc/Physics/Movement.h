@@ -1,0 +1,44 @@
+#pragma once
+#include "../../Vars/vec3f.h"
+#include "../Collisions/SphereCollider.h"
+
+#define SPEED_MODIFIER                 0.01
+#define GRAVITY                        -9.8
+#define _WITHOUT_TERRAIN_COLLISIONS    1
+#define OFFSET                         0.3
+
+class Transform
+{
+public:
+	Transform();
+	~Transform();
+
+	void Move(float i, float deltaTime);
+	void Rotate(float angle) const;
+
+	vec::Vector3 * getPosition() const
+	{ return position; }
+	vec::Vector3 * getRotation() const
+	{ return rotation; }
+	void update(float deltaTime);
+	void isColliding(BoxCollider* collider) const;
+
+	int isGravity() const { return gravity; }
+
+private:
+	vec::Vector3 velocity = vec::Vector3();
+	vec::Vector3 acceleration = vec::Vector3();
+
+	vec::Vector3* position;
+	vec::Vector3* rotation;
+
+	vec::Vector3* _gravity_vec = new vec::Vector3(0, GRAVITY, 0);
+
+	SphereCollider* collider;
+
+	float mass;
+
+	float speed = 10;
+	int gravity = 0;
+};
+
