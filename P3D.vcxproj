@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Vars\Quaternion\Quaternion.cpp" />
     <ClCompile Include="src\Vars\Matrix\Matrix.cpp" />
     <ClCompile Include="src\Main\Player\Player.cpp" />
     <ClCompile Include="src\Misc\Collisions\SphereCollider.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
     <ClInclude Include="src\Vars\Matrix\Matrix.h" />
     <ClInclude Include="src\Main\Player\Player.h" />
     <ClInclude Include="src\Misc\Collisions\SphereCollider.h" />

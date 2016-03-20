@@ -1,6 +1,11 @@
 #pragma once
 #include <string>
 #include "MathHelper.h"
+#include "Matrix/Matrix.h"
+
+namespace Matrix{
+	class Matrix4;
+}
 
 namespace vec
 {
@@ -32,9 +37,12 @@ namespace vec
 		explicit Vector3(float value);
 		Vector3(float value, float z);
 
+		Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
+		Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
+
 		~Vector3();
 
-		std::string debugString();
+		std::string debugString() const;
 
 		static Vector3* Clamp(Vector3* value1, Vector3* min, Vector3* max);
 		static Vector3* Cross(Vector3* vector1, Vector3* vector2);
@@ -42,7 +50,7 @@ namespace vec
 		static float DistanceSquared(Vector3* vector1, Vector3* vector2);
 		static Vector3* Normalize(Vector3* value);
 
-		Vector3 operator+(const Vector3 v) const
+		Vector3 operator+(const Vector3 & v) const
 		{
 			auto vec = Vector3();
 			vec.x = this->x + v.x;
@@ -60,7 +68,7 @@ namespace vec
 			return vec;
 		}
 
-		Vector3 operator*(const Vector3 v) const {
+		Vector3 operator*(const Vector3 & v) const {
 			auto vec = Vector3();
 			vec.x = this->x * v.x;
 			vec.y = this->y * v.y;
@@ -123,12 +131,24 @@ namespace vec
 		this->z = z;
 	}
 
+	inline Vector3 Vector3::localToWord(const Vector3& local, Matrix::Matrix4& transform)
+	{
+		return transform.transform(local);
+	}
+
+	inline Vector3 Vector3::worldToLocal(const Vector3& local, Matrix::Matrix4& transform)
+	{
+		Matrix::Matrix4 inverse_matrix4;
+		inverse_matrix4 = transform.Inverse();
+		return inverse_matrix4.transform(local);
+	}
+
 	inline Vector3::~Vector3()
 	{
 
 	}
 
-	inline std::string Vector3::debugString()
+	inline std::string Vector3::debugString() const
 	{
 		auto value1 = this->x, value2 = this->y, value3 = this->z;
 		auto debug = "{ X: " + std::to_string(value1) + " Y: "+ std::to_string(value2) + " Z: " + std::to_string(value3) + " }";

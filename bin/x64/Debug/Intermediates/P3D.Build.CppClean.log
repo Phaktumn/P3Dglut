@@ -4,6 +4,7 @@ c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\pl
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\spherecollider.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\boxcollider.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\lightning.obj
+c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\movement.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\displaylist.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\object.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\glm.obj
@@ -14,7 +15,10 @@ c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\ax
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\game.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\main.obj
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\terrain.obj
-c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\movement.obj
+c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\matrix.obj
+c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\quaternion.obj
+c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\p3d.ilk
+c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\p3d.exe
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\p3d.pdb
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\p3d.tlog\cl.command.1.tlog
 c:\users\jorge-programar\documents\github\p3dglut\bin\x64\debug\intermediates\p3d.tlog\cl.read.1.tlog
