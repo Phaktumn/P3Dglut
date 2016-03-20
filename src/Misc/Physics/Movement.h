@@ -14,25 +14,24 @@ public:
 	~Transform();
 
 	void Move(float i, float deltaTime);
-	void Rotate(float angle) const;
+	void Rotate(float angle);
 
-	vec::Vector3 * getPosition() const
+	vec::Vector3 getPosition() const
 	{ return position; }
-	vec::Vector3 * getRotation() const
+	vec::Vector3 getRotation() const
 	{ return rotation; }
 	void update(float deltaTime);
-	void isColliding(BoxCollider* collider) const;
+	void isColliding(BoxCollider* collider);
 
 	int isGravity() const { return gravity; }
 
 private:
 	vec::Vector3 velocity = vec::Vector3();
-	vec::Vector3 acceleration = vec::Vector3();
+	vec::Vector3 acceleration = vec::Vector3(0, GRAVITY, 0);
 
-	vec::Vector3* position;
-	vec::Vector3* rotation;
-
-	vec::Vector3* _gravity_vec = new vec::Vector3(0, GRAVITY, 0);
+	vec::Vector3 position;
+	vec::Vector3 rotation;
+	vec::Vector3 Force;
 
 	SphereCollider* collider;
 

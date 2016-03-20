@@ -65,6 +65,7 @@ Game::Game(int argc, char** argv)
 
 Game::~Game()
 {
+	delete Gamer;
 	std::cout << "Closed";
 }
 
@@ -88,7 +89,7 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 
 	Gamer = new Player();
 
-	Tree = new Object("C:/Users/Jorge-Programar/OneDrive/P3D-master/Modelos3D/rose+vase.obj");
+	Tree = new Object("C:/Users/Jorge-Programar/Documents/GitHub/P3Dglut/Modelos3D/rose+vase.obj");
 	Tree->loadModel();
 
 	text->setWindowHeight(windowHeigth);

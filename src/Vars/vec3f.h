@@ -10,19 +10,17 @@ namespace vec
 
 	class Vector3
 	{
-	private:
-		//Private Static Fields
-		static Vector3 * zero() { return new Vector3(1.0f, 1.0f, 1.0f); }
-		static Vector3 * one() { return new Vector3(1.0f, 1.0f, 1.0f); }
-		static Vector3 * unitX() { return new Vector3(1.0f, 0.0f, 0.0f); }
-		static Vector3 * unitY() { return new Vector3(0.0f, 1.0f, 0.0f); }
-		static Vector3 * unitZ() { return new Vector3(0.0f, 0.0f, 1.0f); }
-		static Vector3 * up() { return new Vector3(0.0f, 1.0f, 0.0f); }
-		static Vector3 * down() { return new Vector3(0.0f, -1.0f, 0.0f); }
-		static Vector3 * right() { return new Vector3(1.0f, 0.0f, 0.0f); }
-		static Vector3 * left() { return new Vector3(-1.0f, 0.0f, 0.0f); }
-
 	public:
+		//Static Fields
+		static Vector3 zero() { return  Vector3(.0f, .0f, .0f); }
+		static Vector3 one() { return Vector3(1.0f, 1.0f, 1.0f); }
+		static Vector3 unitX() { return Vector3(1.0f, 0.0f, 0.0f); }
+		static Vector3 unitY() { return Vector3(0.0f, 1.0f, 0.0f); }
+		static Vector3 unitZ() { return Vector3(0.0f, 0.0f, 1.0f); }
+		static Vector3 up() { return Vector3(0.0f, 1.0f, 0.0f); }
+		static Vector3 down() { return Vector3(0.0f, -1.0f, 0.0f); }
+		static Vector3 right() { return Vector3(1.0f, 0.0f, 0.0f); }
+		static Vector3 left() { return Vector3(-1.0f, 0.0f, 0.0f); }
 		
 		//Public Fields
   		float x;
@@ -44,21 +42,12 @@ namespace vec
 		static float DistanceSquared(Vector3* vector1, Vector3* vector2);
 		static Vector3* Normalize(Vector3* value);
 
-		Vector3* operator+(const Vector3 & v) const
-		{
-			auto vec = new Vector3();
-			vec->x = this->x + v.x;
-			vec->y = this->y + v.y;
-			vec->z = this->z + v.z;
-			return vec;
-		}
-
-		Vector3 operator+(const Vector3* v) const
+		Vector3 operator+(const Vector3 v) const
 		{
 			auto vec = Vector3();
-			vec.x = this->x + v->x;
-			vec.y = this->y + v->y;
-			vec.z = this->z + v->z;
+			vec.x = this->x + v.x;
+			vec.y = this->y + v.y;
+			vec.z = this->z + v.z;
 			return vec;
 		}
 
@@ -71,11 +60,27 @@ namespace vec
 			return vec;
 		}
 
-		Vector3* operator*(const float f) const {
-			auto vec = new Vector3();
-			vec->x = this->x * f;
-			vec->y = this->x * f;
-			vec->z = this->z * f;
+		Vector3 operator*(const Vector3 v) const {
+			auto vec = Vector3();
+			vec.x = this->x * v.x;
+			vec.y = this->y * v.y;
+			vec.z = this->z * v.z;
+			return vec;
+		}
+
+		Vector3 operator*(const float f) const {
+			auto vec = Vector3();
+			vec.x = this->x * f;
+			vec.y = this->y * f;
+			vec.z = this->z * f;
+			return vec;
+		}
+
+		Vector3 operator/(const float scalar) const {
+			auto vec = Vector3();
+			vec.x = this->x / scalar;
+			vec.y = this->y / scalar;
+			vec.z = this->z / scalar;
 			return vec;
 		}
 
@@ -164,7 +169,7 @@ namespace vec
 		
 		Vector3::Normalize(Vector3* value)
 	{
-		auto Factor = Distance(value, zero());
+		auto Factor = Distance(value, &zero());
 		Factor = 1.0f / Factor;
 		return new Vector3(value->x * Factor, value->y * Factor, value->z * Factor);
 	}
