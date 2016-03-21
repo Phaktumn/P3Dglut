@@ -46,9 +46,6 @@ private:
 	static float Colors[10][3];
 
 	static float windowHeigth, windowWidth;
-
-	static void move(float i);
-	static void rotate(float angle);
 	 
 	static int font;
 	static float lx, lz;

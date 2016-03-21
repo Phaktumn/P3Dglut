@@ -27,14 +27,21 @@ public:
 	BoxShape shape;
 	vec::Vector3 force;
 
+	float atrt;
+
 	explicit RigidBody();
 	~RigidBody();
 
+	void computeAuxiliary();
+	void calculateTorque();
+	void calculateForces(float deltaTime);
 	void initializeRigidBodies(vec::Vector3 &pos, float mass);
+	void resetForces();
+	void Update(float deltaTime);
 	/**
 	* Adds the given force to the center of mass of the rigid body.
 	* The force is expressed in world coordinates.
 	*/
-	void addForce(const vec::Vector3 &force);
+	void addForce(const vec::Vector3 &force, float deltaTime);
 };
 

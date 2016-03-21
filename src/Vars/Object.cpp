@@ -4,7 +4,7 @@
 
 Object::Object(char path[]): model(nullptr)
 {
-	this->path = (char *) malloc(strlen(path) + 1);
+	this->path = static_cast<char *>(malloc(strlen(path) + 1));
 	strcpy(this->path, path);
 }
 
@@ -15,7 +15,7 @@ Object::~Object()
 
 GLvoid Object::loadModel()
 {
-	if(model == NULL)
+	if(model == nullptr)
 	{
 		model = glmReadOBJ(path);
 		if (model == nullptr){

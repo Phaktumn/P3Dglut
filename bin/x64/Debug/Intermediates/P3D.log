@@ -1,28 +1,41 @@
-﻿  Game.cpp
-c:\users\decapod\documents\github\p3dglut\src\vars\mathhelper.h(89): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\vars\mathhelper.h(94): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\misc\rendertext.h(17): warning C4200: nonstandard extension used: zero-sized array in struct/union
-  c:\users\decapod\documents\github\p3dglut\src\misc\rendertext.h(17): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
-c:\users\decapod\documents\github\p3dglut\src\misc\physics\movement.h(33): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(5): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
-  c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(5): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(11): warning C4311: 'reinterpret_cast': pointer truncation from 'void *' to 'int'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(11): warning C4302: 'reinterpret_cast': truncation from 'void *' to 'int'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(37): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(37): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(48): warning C4838: conversion from 'double' to 'GLfloat' requires a narrowing conversion
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(48): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(74): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(95): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(141): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(149): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(152): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(156): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(162): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\decapod\documents\github\p3dglut\src\main\game.cpp(163): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  P3D.vcxproj -> C:\Users\DecaPod\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.exe
+﻿Build started 3/21/2016 8:05:04 PM.
+     1>Project "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\P3D.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\\include\\" /ZI /nologo /W3 /WX- /sdl /Od /D _CRT_SECURE_NO_WARNINGS /D _CRT_OBSOLETE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\\" /Fd"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\vc140.pdb" /Gd /TP /errorReport:prompt src\Misc\Physics\RigidBody.cpp
+         RigidBody.cpp
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\vars\mathhelper.h(89): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\vars\mathhelper.h(94): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(22): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(23): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(24): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(61): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>c:\users\jorge-programar\documents\github\p3dglut\src\misc\physics\rigidbody.cpp(83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\\lib\x64\\" freeglut.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.lib" /MACHINE:X64 "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\RigidBody.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Quaternion.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Matrix.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Player.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\SphereCollider.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\BoxCollider.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Lightning.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Movement.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\DisplayList.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Object.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\glm.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\RenderText.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\ImageLoader.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\SnowMan.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Axis.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Game.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\main.obj"
+         "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\Intermediates\Terrain.obj"
+         P3D.vcxproj -> C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.exe
+     1>Done Building Project "C:\Users\Jorge-Programar\Documents\GitHub\P3Dglut\P3D.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.01

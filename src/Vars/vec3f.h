@@ -48,7 +48,7 @@ namespace vec
 		std::string debugString() const;
 
 		static Vector3* Clamp(Vector3* value1, Vector3* min, Vector3* max);
-		static Vector3* Cross(Vector3* vector1, Vector3* vector2);
+		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
 		static float Distance(Vector3* vector1, Vector3* vector2);
 		static float DistanceSquared(Vector3* vector1, Vector3* vector2);
 		static Vector3* Normalize(Vector3* value);
@@ -71,12 +71,31 @@ namespace vec
 			return vec;
 		}
 
-		Vector3* operator-(const Vector3 & v) const
+		Vector3 operator-=(const Vector3 & v)
 		{
-			auto vec = new Vector3();
-			vec->x = this->x - v.x;
-			vec->y = this->y - v.y;
-			vec->z = this->z - v.z;
+			auto vec = Vector3();
+			this->x -= v.x;
+			this->y -= v.y;
+			this->z -= v.z;
+			return vec;
+		}
+
+
+		Vector3 operator-=(const float f)
+		{
+			auto vec = Vector3();
+			this->x -= f;
+			this->y -= f;
+			this->z -= f;
+			return vec;
+		}
+
+		Vector3 operator-(const Vector3 & v) const
+		{
+			auto vec = Vector3();
+			vec.x = this->x - v.x;
+			vec.y = this->y - v.y;
+			vec.z = this->z - v.z;
 			return vec;
 		}
 
@@ -185,12 +204,12 @@ namespace vec
 			MathHelper::Clampf(value1->z, min->z, max->z));
 	}
 
-	inline Vector3 * Vector3::Cross(Vector3* vector1, Vector3* vector2)
+	inline Vector3 Vector3::Cross(Vector3& vector1, Vector3& vector2)
 	{
-		auto x = vector1->y * vector2->z - vector2->y * vector1->z;
-		auto y = -(vector1->x * vector2->z - vector2->x * vector1->z);
-		auto z = vector1->x * vector2->x - vector2->x * vector1->y;
-		return new Vector3(x, y, z);
+		auto x = vector1.y * vector2.z - vector2.y * vector1.z;
+		auto y = -(vector1.x * vector2.z - vector2.x * vector1.z);
+		auto z = vector1.x * vector2.x - vector2.x * vector1.y;
+		return Vector3(x, y, z);
 	}
 
 	inline float Vector3::Distance(Vector3* vector1, Vector3* vector2)

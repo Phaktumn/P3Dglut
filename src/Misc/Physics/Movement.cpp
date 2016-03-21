@@ -10,8 +10,8 @@ Transform::Transform(): mass(1250)
 	gravity = 1; //1 = activado 0 = desativado
 	collider = new SphereCollider(&position, 2);
 	body = new RigidBody();
-	body->initializeRigidBodies(this->position, 10);
-	body->addForce(vec::Vector3(0, 0, 0));
+	body->initializeRigidBodies(this->position, 0.7);
+	body->addForce(vec::Vector3(0, 0, 0), 0.01);
 }
 
 
@@ -22,7 +22,7 @@ Transform::~Transform()
 
 void Transform::Move(float x, float y, float z, float deltaTime)
 {
-	body->addForce(vec::Vector3(x * rotation.x, y, z*rotation.z));
+	body->addForce(vec::Vector3(x * rotation.x, y, z*rotation.z), deltaTime);
 }
 
 void Transform::Rotate(float angle)
@@ -34,18 +34,11 @@ void Transform::Rotate(float angle)
 void Transform::update(float deltaTime)
 {
 	if (gravity == 1) {
-		auto linearAccel = vec::Vector3(
-			body->force.x / sqrt(body->shape.mass), 
-			body->force.y / sqrt(body->shape.mass),
-			body->force.z / sqrt(body->shape.mass));
-		body->velocity += linearAccel * deltaTime;
-		body->position += body->velocity * deltaTime;
+		body->Update(deltaTime);
 		auto angularAccelX = body->torque.x / body->shape.momentOfInertia.x;
 		auto angularAccely = body->torque.y / body->shape.momentOfInertia.y;
 		auto angularAccelz = body->torque.z / body->shape.momentOfInertia.z;
-		body->rotation.x += angularAccelX * deltaTime;
-		body->rotation.y += angularAccely * deltaTime;
-		body->rotation.z += angularAccelz * deltaTime;
+		body->rotation += vec::Vector3(angularAccelX, angularAccely, angularAccelz) * deltaTime;	
 		this->position = body->position;
 		this->linearRot = body->rotation;
 #if _WITHOUT_TERRAIN_COLLISIONS 1
