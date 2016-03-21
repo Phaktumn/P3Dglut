@@ -167,6 +167,7 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Vars\Mesh\BoxShape.h" />
     <ClInclude Include="src\Misc\Physics\RigidBody.h" />
     <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
     <ClInclude Include="src\Vars\Matrix\Matrix.h" />

@@ -128,5 +128,8 @@
     <ClInclude Include="src\Misc\Physics\RigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Vars\Mesh\BoxShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -89,7 +89,7 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 
 	Gamer = new Player();
 
-	Tree = new Object("C:/Users/Jorge-Programar/Documents/GitHub/P3Dglut/Modelos3D/rose+vase.obj");
+	Tree = new Object("../P3Dglut/Modelos3D/rose+vase.obj");
 	Tree->loadModel();
 
 	text->setWindowHeight(windowHeigth);

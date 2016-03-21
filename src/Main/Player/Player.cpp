@@ -4,7 +4,7 @@
 Player::Player()
 {
 	transform = new Transform();
-	player = new Object("C:/Users/Jorge-Programar/Documents/GitHub/P3Dglut/Modelos3D/porsche.obj");
+	player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	Game::list1->RenderModel(player);
 }
@@ -29,11 +29,11 @@ void Player::Update()
 	}
 	if (Game::getKeyPressed('s'))
 	{
-		transform->Move(-2, 0.01f);
+		transform->Move(-10, 0, -10, Game::deltaTime);
 	}
 	if (Game::getKeyPressed('w'))
 	{
-		transform->Move(2, 0.01f);
+		transform->Move(10, 0, 10, Game::deltaTime);
 	}
 	transform->update(Game::deltaTime);
 }
@@ -52,6 +52,9 @@ TODO: //CAMERA get a camera workin
 	{
 		glTranslatef(transform->getPosition().x, transform->getPosition().y, transform->getPosition().z);
 		glRotatef(180 - rotationAngle * 180 / 3.14, 0.0, 1.0, 0.0);
+		glRotatef(transform->linearRot.x, 1.0, 0.0, 0.0);
+		glRotatef(transform->linearRot.y, 0.0, 1.0, 0.0);
+		glRotatef(transform->linearRot.z, 0.0, 0.0, 1.0);
 		glCallList(Game::list1->getList(1));
 	}
 	glPopMatrix();

@@ -37,11 +37,11 @@ namespace vec
 		explicit Vector3(float value);
 		Vector3(float value, float z);
 
-		Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
-		Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
+		static Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
+		static Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
 
-		Vector3 localToWorldDirection(const Vector3& local, Matrix::Matrix4& transform);
-		Vector3 worldtoLocalDirection(const Vector3& local, Matrix::Matrix4& transform);
+		static Vector3 localToWorldDirection(const Vector3& local, Matrix::Matrix4& transform);
+		static Vector3 worldtoLocalDirection(const Vector3& local, Matrix::Matrix4& transform);
 
 		~Vector3();
 
@@ -62,12 +62,12 @@ namespace vec
 			return vec;
 		}
 
-		Vector3 operator+=(const Vector3 & v) const
+		Vector3 operator+=(const Vector3 & v)
 		{
 			auto vec = Vector3();
-			vec.x += v.x;
-			vec.y += v.y;
-			vec.z += v.z;
+			this->x += v.x;
+			this->y += v.y;
+			this->z += v.z;
 			return vec;
 		}
 
