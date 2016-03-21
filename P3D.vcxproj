@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Misc\GameTime.cpp" />
     <ClCompile Include="src\Misc\Physics\RigidBody.cpp" />
     <ClCompile Include="src\Vars\Quaternion\Quaternion.cpp" />
     <ClCompile Include="src\Vars\Matrix\Matrix.cpp" />
@@ -160,13 +161,13 @@
     <ClCompile Include="src\Misc\GLM\glm.cpp" />
     <ClCompile Include="src\Misc\RenderText.cpp" />
     <ClCompile Include="src\Misc\ImageLoader.cpp" />
-    <ClCompile Include="src\Misc\SnowMan.cpp" />
     <ClCompile Include="src\Misc\Axis.cpp" />
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Misc\GameTime.h" />
     <ClInclude Include="src\Vars\Mesh\BoxShape.h" />
     <ClInclude Include="src\Misc\Physics\RigidBody.h" />
     <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
@@ -181,7 +182,6 @@
     <ClInclude Include="src\Misc\GLM\glm.h" />
     <ClInclude Include="src\Misc\RenderText.h" />
     <ClInclude Include="src\Misc\ImageLoader.h" />
-    <ClInclude Include="src\Misc\SnowMan.h" />
     <ClInclude Include="src\Misc\Axis.h" />
     <ClInclude Include="src\Main\Game.h" />
     <ClInclude Include="src\Vars\MathHelper.h" />

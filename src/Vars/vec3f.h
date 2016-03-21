@@ -62,32 +62,26 @@ namespace vec
 			return vec;
 		}
 
-		Vector3 operator+=(const Vector3 & v)
+		void operator+=(const Vector3 & v)
 		{
-			auto vec = Vector3();
 			this->x += v.x;
 			this->y += v.y;
 			this->z += v.z;
-			return vec;
 		}
 
-		Vector3 operator-=(const Vector3 & v)
+		void operator-=(const Vector3 & v)
 		{
-			auto vec = Vector3();
 			this->x -= v.x;
 			this->y -= v.y;
 			this->z -= v.z;
-			return vec;
 		}
 
 
-		Vector3 operator-=(const float f)
+		void operator-=(const float f)
 		{
-			auto vec = Vector3();
 			this->x -= f;
 			this->y -= f;
 			this->z -= f;
-			return vec;
 		}
 
 		Vector3 operator-(const Vector3 & v) const
@@ -105,6 +99,18 @@ namespace vec
 			vec.y = this->y * v.y;
 			vec.z = this->z * v.z;
 			return vec;
+		}
+
+		void operator*=(const Vector3 & v) {
+			this->x *= v.x;
+			this->y *= v.y;
+			this->z *= v.z;
+		}
+
+		void operator*=(const float v) {
+			this->x *= v;
+			this->y *= v;
+			this->z *= v;
 		}
 
 		Vector3 operator*(const float f) const {

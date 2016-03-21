@@ -10,8 +10,8 @@ Transform::Transform(): mass(1250)
 	gravity = 1; //1 = activado 0 = desativado
 	collider = new SphereCollider(&position, 2);
 	body = new RigidBody();
-	body->initializeRigidBodies(this->position, 0.7);
-	body->addForce(vec::Vector3(0, 0, 0), 0.01);
+	body->initializeRigidBodies(this->position, 1);
+	body->addForce(vec::Vector3(0, 0, 0));
 }
 
 
@@ -22,7 +22,7 @@ Transform::~Transform()
 
 void Transform::Move(float x, float y, float z, float deltaTime)
 {
-	body->addForce(vec::Vector3(x * rotation.x, y, z*rotation.z), deltaTime);
+	body->addForce(vec::Vector3(x, y, z));
 }
 
 void Transform::Rotate(float angle)
@@ -34,11 +34,10 @@ void Transform::Rotate(float angle)
 void Transform::update(float deltaTime)
 {
 	if (gravity == 1) {
-		body->Update(deltaTime);
-		auto angularAccelX = body->torque.x / body->shape.momentOfInertia.x;
-		auto angularAccely = body->torque.y / body->shape.momentOfInertia.y;
-		auto angularAccelz = body->torque.z / body->shape.momentOfInertia.z;
-		body->rotation += vec::Vector3(angularAccelX, angularAccely, angularAccelz) * deltaTime;	
+		body->Update(deltaTime);	
+		body->orientation.x = this->rotation.x;
+		body->orientation.y = 1;
+		body->orientation.z = this->rotation.z;
 		this->position = body->position;
 		this->linearRot = body->rotation;
 #if _WITHOUT_TERRAIN_COLLISIONS 1

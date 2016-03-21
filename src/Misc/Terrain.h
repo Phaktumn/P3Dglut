@@ -5,7 +5,7 @@ class Terrain
 {
 public:
 	Terrain(int w2, int h2);
-	Terrain* loadTerrain(const char* filename, float height);
+	Terrain* loadTerrain(const char* filename, float height) const;
 	~Terrain();
 
 	int getWidth() const

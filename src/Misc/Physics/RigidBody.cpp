@@ -24,11 +24,17 @@ void RigidBody::calculateForces(float deltaTime)
 	torque.z -= 0.2 * rotation.z;
 }
 
-void RigidBody::computeAuxiliary()
+void RigidBody::computeAuxiliary(float deltaTime)
 {
+	//rotation aux
+	auto angularAccelX = this->torque.x / this->shape.momentOfInertia.x;
+	auto angularAccely = this->torque.y / this->shape.momentOfInertia.y;
+	auto angularAccelz = this->torque.z / this->shape.momentOfInertia.z;
+	this->rotation += vec::Vector3(angularAccelX, angularAccely, angularAccelz) * deltaTime;
+
 	//Linear Velocity
 	auto m_inverse = shape.getInverseMass();
-	velocity = force * m_inverse;
+	velocity = force / shape.mass;
 }
 
 void RigidBody::calculateTorque()
@@ -65,19 +71,19 @@ void RigidBody::resetForces()
 
 void RigidBody::Update(float deltaTime)
 {
+	addForce(vec::Vector3(force.x, force.y, force.z));
 	calculateTorque();
-	calculateForces(deltaTime);
-	computeAuxiliary();
-	addForce(vec::Vector3(0, 0, 0), deltaTime);
-	atrt = 0.1f;
-	this->force -= atrt;
+	//calculateForces(deltaTime);
+	computeAuxiliary(deltaTime);
+	atrt = 0.97f;
+	this->force *= atrt;
 	if (force.x <= 0) force.x = 0;
 	if (force.y <= 0) force.y = 0;
 	if (force.z <= 0) force.z = 0;
-	position += velocity * deltaTime;
+	position += velocity * orientation * deltaTime;
 }
 
-void RigidBody::addForce(const vec::Vector3& force, float deltaTime)
+void RigidBody::addForce(const vec::Vector3& force)
 {
 	//applies force at a point in the body
 	auto _force = vec::Vector3(force.x, GRAVITY + force.y, force.z);

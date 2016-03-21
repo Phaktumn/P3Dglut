@@ -17,7 +17,7 @@ public:
 	/*Linear Position in World*/
 	vec::Vector3 position;
 	/*Angular Orientation*/
-	Quaternion orientation;
+	vec::Vector3 orientation;
 	/*Linear Velocity of the rigidBody*/
 	vec::Vector3 velocity;
 	/*Angular velocity or rotation of the rigidBody*/
@@ -32,7 +32,7 @@ public:
 	explicit RigidBody();
 	~RigidBody();
 
-	void computeAuxiliary();
+	void computeAuxiliary(float deltaTime);
 	void calculateTorque();
 	void calculateForces(float deltaTime);
 	void initializeRigidBodies(vec::Vector3 &pos, float mass);
@@ -42,6 +42,6 @@ public:
 	* Adds the given force to the center of mass of the rigid body.
 	* The force is expressed in world coordinates.
 	*/
-	void addForce(const vec::Vector3 &force, float deltaTime);
+	void addForce(const vec::Vector3 &force);
 };
 

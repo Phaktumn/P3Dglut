@@ -19,16 +19,16 @@ Terrain::Terrain(int w2, int h2)
 	computedNormals = false;
 }
 
-Terrain* Terrain::loadTerrain(const char* filename, float height)
+Terrain* Terrain::loadTerrain(const char* filename, float height) const
 {
-	Image* image = loadBMP(filename);
-	Terrain* t = new Terrain(image->width, image->height);
+	auto image = loadBMP(filename);
+	auto t = new Terrain(image->width, image->height);
 	for (int y = 0; y < image->height; y++)
 	{
 		for (int x = 0; x < image->width; x++)
 		{
-			unsigned char color = static_cast<unsigned char>(image->pixels[3 * (y * image->width + x)]);
-			float h = height * ((color / 255.0f) - 0.5f);
+			auto color = static_cast<unsigned char>(image->pixels[3 * (y * image->width + x)]);
+			auto h = height * ((color / 255.0f) - 0.5f);
 			t->setHeight(x, y, h);
 		}
 	}
