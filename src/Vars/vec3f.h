@@ -40,6 +40,9 @@ namespace vec
 		Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
 		Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
 
+		Vector3 localToWorldDirection(const Vector3& local, Matrix::Matrix4& transform);
+		Vector3 worldtoLocalDirection(const Vector3& local, Matrix::Matrix4& transform);
+
 		~Vector3();
 
 		std::string debugString() const;
@@ -56,6 +59,15 @@ namespace vec
 			vec.x = this->x + v.x;
 			vec.y = this->y + v.y;
 			vec.z = this->z + v.z;
+			return vec;
+		}
+
+		Vector3 operator+=(const Vector3 & v) const
+		{
+			auto vec = Vector3();
+			vec.x += v.x;
+			vec.y += v.y;
+			vec.z += v.z;
 			return vec;
 		}
 
@@ -140,7 +152,17 @@ namespace vec
 	{
 		Matrix::Matrix4 inverse_matrix4;
 		inverse_matrix4 = transform.Inverse();
-		return inverse_matrix4.transform(local);
+		return inverse_matrix4.transformInverse(local);
+	}
+
+	inline Vector3 Vector3::localToWorldDirection(const Vector3& local, Matrix::Matrix4& transform)
+	{
+		return transform.transformDirection(local);
+	}
+
+	inline Vector3 Vector3::worldtoLocalDirection(const Vector3& local, Matrix::Matrix4& transform)
+	{
+		return transform.tranformInverseDirection(local);
 	}
 
 	inline Vector3::~Vector3()

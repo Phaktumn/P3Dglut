@@ -25,6 +25,47 @@ Quaternion::~Quaternion()
 {
 }
 
+void Quaternion::normalize()
+{
+	float d = w * w + x * x + y * y + z * z;
+
+	if(d == 0)
+	{
+		w = 1;
+		return;
+	}
+	d = float(1.0) / sqrt(d);
+	w *= d;
+	x *= d;
+	y *= d;
+	z *= d;
+}
+
+void Quaternion::operator*=(const Quaternion& multiplier)
+{
+	Quaternion q = *this;
+	w = q.w * multiplier.w - q.x * multiplier.x - q.y * multiplier.y - q.z * multiplier.z;
+	x = q.w * multiplier.x + q.x * multiplier.w + q.y * multiplier.z - q.z * multiplier.y;
+	y = q.w * multiplier.y + q.y * multiplier.w + q.z * multiplier.x - q.x * multiplier.z;
+	z = q.w * multiplier.z + q.z * multiplier.w + q.x * multiplier.y - q.y * multiplier.x;
+}
+
+void Quaternion::rotateByVector(const vec::Vector3& vec)
+{
+	Quaternion q(vec.x * scale, vec.y * scale, vec.z * scale, 0);
+	(*this) *= q;
+}
+
+void Quaternion::addScaledVector(const vec::Vector3& vec, float scale)
+{
+	Quaternion q(vec.x * scale, vec.y * scale, vec.z * scale, 0);
+	q *= *this;
+	w += q.w * float(0.5);
+	x += q.x * float(0.5);
+	y += q.y * float(0.5);
+	z += q.z * float(0.5);
+}
+
 Quaternion Quaternion::CreateFromAxisAngle(vec::Vector3 axis, float angle)
 {
 	auto half = angle * 0.5f;

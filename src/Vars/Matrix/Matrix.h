@@ -28,18 +28,16 @@ namespace Matrix {
 		Matrix3 Transpose() const;
 		void setOrientation(const Quaternion& quaternion);
 			 
-		static Matrix3 Identity() { return Matrix3(1, 0, 0,
-												   0, 1, 0, 
-												   0, 0, 1); }
+		static Matrix3 Identity() { return Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1); }
 
 		//Tensor Matrix Data
 		float data[9];
 
 		Matrix3 operator*(const Matrix3 & matrix)const;
 		vec::Vector3 operator*(const vec::Vector3 & vec)const;
+		void setInverse(const Matrix3& matrix);
 	private:
 		float matrix_data_count = 9;
-		void setInverse(const Matrix3& matrix);
 		void setTranspose(const Matrix3 &matrix);
 	};
 
@@ -58,13 +56,12 @@ namespace Matrix {
 		Matrix4 Inverse() const;
 		void Invert();
 		void setOrientationAndPos(Quaternion &q, vec::Vector3 &vec);
+		vec::Vector3 transformInverse(const vec::Vector3 &vec);
+		vec::Vector3 transformDirection(const vec::Vector3 &vec);
+		vec::Vector3 tranformInverseDirection(const vec::Vector3 &vec);
 		vec::Vector3 transform(const vec::Vector3 &vec);
 
-		static Matrix4 Identity() {
-			return Matrix4(1, 0, 0, 0,
-				0, 1, 0, 0,
-				0, 0, 1, 0);
-		}
+		static Matrix4 Identity() { return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0); }
 
 		//Transform Matrix Data
 		float data[12];

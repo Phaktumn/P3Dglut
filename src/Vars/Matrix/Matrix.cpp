@@ -219,7 +219,7 @@ void Matrix::Matrix4::setOrientationAndPos(Quaternion& q, vec::Vector3& pos)
 	data[11]= pos.z;
 }
 
-vec::Vector3 Matrix::Matrix4::transform(const vec::Vector3& vec)
+vec::Vector3 Matrix::Matrix4::transformInverse(const vec::Vector3& vec)
 {
 	auto tmp = vec;
 	tmp.x -= data[3];
@@ -229,6 +229,25 @@ vec::Vector3 Matrix::Matrix4::transform(const vec::Vector3& vec)
 		tmp.x * data[0] + tmp.y * data[4] + tmp.z * data[8],
 		tmp.x * data[1] + tmp.y * data[5] + tmp.z * data[9],
 		tmp.x * data[2] + tmp.y * data[6] + tmp.z * data[10]);
+}
+
+vec::Vector3 Matrix::Matrix4::transformDirection(const vec::Vector3& vec)
+{
+	return vec::Vector3(vec.x * data[0] + vec.y * data[1] + vec.z * data[2],
+	                    vec.x * data[4] + vec.y * data[5] + vec.z * data[6],
+	                    vec.x * data[8] + vec.y * data[9] + vec.z * data[10]);
+}
+
+vec::Vector3 Matrix::Matrix4::tranformInverseDirection(const vec::Vector3& vec)
+{
+	return vec::Vector3(vec.x * data[0] + vec.y * data[4] + vec.z * data[8],
+	                    vec.x * data[1] + vec.y * data[5] + vec.z * data[9],
+	                    vec.x * data[2] + vec.y * data[6] + vec.z * data[10]);
+}
+
+vec::Vector3 Matrix::Matrix4::transform(const vec::Vector3& vec)
+{
+	return {};
 }
 
 void Matrix::Matrix4::setInverse(const Matrix4& m)
