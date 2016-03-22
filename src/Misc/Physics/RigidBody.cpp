@@ -1,16 +1,22 @@
 #include "RigidBody.h"
+#include "../../Vars/Quaternion/Quaternion.h"
 
 
-
-RigidBody::RigidBody(): inverseMass(0), angle(0)
+RigidBody::RigidBody(float mass_x): inverseMass(0), angle(0)
 {
-	shape = BoxShape();
+	shape = BoxShape(mass_x);
+	atrt = 0.99f;
 }
 
 
 RigidBody::~RigidBody()
 {
 
+}
+
+BoxShape RigidBody::getShape() const
+{
+	return this->shape;
 }
 
 void RigidBody::calculateForces(float deltaTime)
@@ -27,14 +33,14 @@ void RigidBody::calculateForces(float deltaTime)
 void RigidBody::computeAuxiliary(float deltaTime)
 {
 	//rotation aux
-	auto angularAccelX = this->torque.x / this->shape.momentOfInertia.x;
-	auto angularAccely = this->torque.y / this->shape.momentOfInertia.y;
-	auto angularAccelz = this->torque.z / this->shape.momentOfInertia.z;
+	auto angularAccelX = this->torque.x / shape.momentOfInertia.x;
+	auto angularAccely = this->torque.y / shape.momentOfInertia.y;
+	auto angularAccelz = this->torque.z / shape.momentOfInertia.z;
 	this->rotation += vec::Vector3(angularAccelX, angularAccely, angularAccelz) * deltaTime;
 
 	//Linear Velocity
-	auto m_inverse = shape.getInverseMass();
-	velocity = force / shape.mass;
+	inverseMass = shape.getInverseMass();
+	velocity = force * inverseMass;
 }
 
 void RigidBody::calculateTorque()
@@ -47,14 +53,13 @@ void RigidBody::calculateTorque()
 	torque = cross;
 }
 
-void RigidBody::initializeRigidBodies(vec::Vector3 &pos, float mass)
+void RigidBody::initializeRigidBodies(vec::Vector3 &pos)
 {
 	this->position = pos;
 	this->velocity = vec::Vector3(0, 0, 0);
 	this->rotation = vec::Vector3(1.0, 0, 1.0);
 
 	//MASS TEST FOR PORSCHE
-	shape.mass = mass;
 	shape.width = 2;
 	shape.height = 1;
 	shape.depth = 2;
@@ -64,29 +69,33 @@ void RigidBody::initializeRigidBodies(vec::Vector3 &pos, float mass)
 
 void RigidBody::resetForces()
 {
-	this->force = vec::Vector3(0.0, GRAVITY, 0.0);
-	this->torque = vec::Vector3(0.0, 0.0, 0.0);
+	this->force = vec::Vector3::zero();
+	this->torque = vec::Vector3::zero();
 	this->rotation = vec::Vector3(1.0, 0.0, 1.0);
 }
 
 void RigidBody::Update(float deltaTime)
 {
-	addForce(vec::Vector3(force.x, force.y, force.z));
+	if (position.y >= 0.5) isFalling = true;
+	else { isFalling = false; fallTime = 0; down_force_ = gravity; }
+	if(isFalling) {
+		fallTime += deltaTime;
+		down_force_ += gravity;
+	}
+	addForce(vec::Vector3(force.x, force.y, force.z) + down_force_);
 	calculateTorque();
-	//calculateForces(deltaTime);
+	calculateForces(deltaTime);
 	computeAuxiliary(deltaTime);
-	atrt = 0.97f;
 	this->force *= atrt;
-	if (force.x <= 0) force.x = 0;
-	if (force.y <= 0) force.y = 0;
-	if (force.z <= 0) force.z = 0;
+	if (force.x <= 0.2) force.x = 0;
+	if (force.z <= 0.2) force.z = 0;
 	position += velocity * orientation * deltaTime;
 }
 
 void RigidBody::addForce(const vec::Vector3& force)
 {
 	//applies force at a point in the body
-	auto _force = vec::Vector3(force.x, GRAVITY + force.y, force.z);
+	auto _force = vec::Vector3(force.x, force.y, force.z);
 	this->force = _force;
 }
 

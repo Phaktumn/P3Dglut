@@ -1,17 +1,27 @@
 #pragma once
 #include "../../Vars/Object.h"
 #include "../../Misc/Physics/Movement.h"
+#include "../Camera/Camera.h"
+
+class BoxCollider;
+
+class Camera;
 
 class Player
 {
 public:
 	Player();
 	~Player();
-	void Update();
+	void Update(float deltaTime);
 	void Draw() const;
-	void isColliding(BoxCollider* collider) const;
-private:
 
+	Transform* getTranform() const
+	{ return transform; }
+
+	float get_rotation_angle() const { return rotationAngle; }
+
+private:
+	Camera* camera;
 	Object* player;
 	Transform* transform;
 	float rotationAngle = 0;

@@ -17,8 +17,7 @@ public:
 
 	void RenderModel(Object * model);
 
-	GLuint getList(int index) const
-	{
+	GLuint getList(int index) const{
 		return list + index;
 	}
 

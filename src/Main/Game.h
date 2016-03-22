@@ -5,6 +5,7 @@
 #include "../Misc/Physics/Movement.h"
 #include "../Misc/Lights/Lightning.h"
 #include "Player/Player.h"
+#include "../Vars/GameTime.h"
 #pragma once
 
 class Game
@@ -31,14 +32,8 @@ private:
 	static void Update();
 	static void render();
 
-	static void keyboardCallback(unsigned char KEY, int x, int y);
-	static void upCallback(unsigned char KEY, int x, int y);
-
 	static Game* instance;
 
-	static bool KEYS[512];
-
-	static int _INDEX;
 	static float red[3];
 	static float green[3];
 	static float blue[3];
@@ -65,5 +60,6 @@ private:
 	static BoxCollider* colliderBox;
 	static Lightning * lights;
 	static Player* Gamer;
+	static GameTime* Time;
 };
 

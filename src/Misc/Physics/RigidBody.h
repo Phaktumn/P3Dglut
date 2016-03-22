@@ -1,9 +1,10 @@
 #pragma once
 #include "../../Vars/vec3f.h"
-#include "../../Vars/Quaternion/Quaternion.h"
-#include "../../Vars/Mesh/BoxShape.h"
+#include "Mesh/BoxShape.h"
 
 #define GRAVITY     -9.8
+
+class BoxShape;
 
 namespace vec{
 	class Vector3;
@@ -27,15 +28,23 @@ public:
 	BoxShape shape;
 	vec::Vector3 force;
 
+	//Falling Properties
+	vec::Vector3 down_force_ = vec::Vector3(0.0, 0.0, 0.0);
+	vec::Vector3 gravity = vec::Vector3(0.0, GRAVITY, 0.0);
+	bool isFalling = false;
+	float fallTime = 0;
+	//end falling properties
+
 	float atrt;
 
-	explicit RigidBody();
+	explicit RigidBody(float mass_x);
 	~RigidBody();
 
+	BoxShape getShape() const;
 	void computeAuxiliary(float deltaTime);
 	void calculateTorque();
 	void calculateForces(float deltaTime);
-	void initializeRigidBodies(vec::Vector3 &pos, float mass);
+	void initializeRigidBodies(vec::Vector3 &pos);
 	void resetForces();
 	void Update(float deltaTime);
 	/**

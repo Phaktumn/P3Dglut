@@ -147,7 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Misc\GameTime.cpp" />
+    <ClCompile Include="src\Main\Camera\Camera.cpp" />
+    <ClCompile Include="src\Main\Keyboard\Keyboard.cpp" />
+    <ClCompile Include="src\Vars\GameTime.cpp" />
     <ClCompile Include="src\Misc\Physics\RigidBody.cpp" />
     <ClCompile Include="src\Vars\Quaternion\Quaternion.cpp" />
     <ClCompile Include="src\Vars\Matrix\Matrix.cpp" />
@@ -165,10 +167,13 @@
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Misc\Terrain.cpp" />
+    <ClCompile Include="Traslate.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Misc\GameTime.h" />
-    <ClInclude Include="src\Vars\Mesh\BoxShape.h" />
+    <ClInclude Include="src\Main\Camera\Camera.h" />
+    <ClInclude Include="src\Main\Keyboard\Keyboard.h" />
+    <ClInclude Include="src\Vars\GameTime.h" />
+    <ClInclude Include="src\Misc\Physics\Mesh\BoxShape.h" />
     <ClInclude Include="src\Misc\Physics\RigidBody.h" />
     <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
     <ClInclude Include="src\Vars\Matrix\Matrix.h" />
@@ -187,6 +192,7 @@
     <ClInclude Include="src\Vars\MathHelper.h" />
     <ClInclude Include="src\Vars\vec3f.h" />
     <ClInclude Include="src\Misc\Terrain.h" />
+    <ClInclude Include="Traslate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

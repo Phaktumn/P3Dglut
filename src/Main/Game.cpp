@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include "../Misc/RenderText.h"
+#include "Keyboard/Keyboard.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _RENDER_LANDSCAPE        1
@@ -9,7 +10,6 @@
 
 Game* Game::instance = nullptr;
 int Game::font = reinterpret_cast<int>(GLUT_BITMAP_8_BY_13);
-bool Game::KEYS[];
 float Game::deltaTime;
 int Game::startTime;
 int Game::frames = 0;
@@ -30,7 +30,6 @@ float Game::rotateZ = 0;
 float Game::rotationAngle = 0;
 float Game::windowHeigth = 0;
 float Game::windowWidth = 0;
-int Game::_INDEX = 0;
 float Game::blue[] = { .0, .0, 1 };
 float Game::red[] = { 1, .0, .0 };
 float Game::green[] = { .0, 1, .0 };
@@ -54,6 +53,7 @@ Lightning * Game::lights = new Lightning(1);
 BoxCollider * Game::colliderBox = new BoxCollider(
 	vec::Vector3(10, 10, 10), vec::Vector3(12, 12, 12));
 Player * Game::Gamer;
+GameTime * Game::Time = new GameTime();
 
 Game::Game(int argc, char** argv)
 {
@@ -81,8 +81,8 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glutIdleFunc(Update);
 	glutReshapeFunc(resize);
 
-	glutKeyboardFunc(keyboardCallback);
-	glutKeyboardUpFunc(upCallback);
+	glutKeyboardFunc(Keyboard::keydoardCallback);
+	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -127,8 +127,8 @@ void Game::resize(int width, int height)
 
 void Game::Update()
 {
-	Gamer->Update();
-	Gamer->isColliding(colliderBox);
+	Time->start(glutGet(GLUT_ELAPSED_TIME));
+	Gamer->Update(deltaTime);
 	glutPostRedisplay();
 }
 
@@ -154,38 +154,12 @@ GLvoid Game::render()
 	glCallList(list1->getList(3));
 #endif
 #if _DEBUG_ 1
-	deltaTime = (glutGet(GLUT_ELAPSED_TIME) * 0.001f) - time;
-	frames++;
-	time = glutGet(GLUT_ELAPSED_TIME) * 0.001f;
-	if (time - startTime > 1.0f)
-	{
-		framesPS = frames / (time - startTime);
-		startTime = time;
-		frames = 0;
-		system("cls");
-		std::cout << "Elapsed Time: " << static_cast<int>(time) << std::endl;
-		std::cout << "FPS: " << framesPS << std::endl;
-	}
+	system("cls");
+	std::cout << "Delta Time: " << Time->getDeltaTime() << std::endl;
 #endif
+	deltaTime = Time->getDeltaTime() * 0.001;
+	Time->end(glutGet(GLUT_ELAPSED_TIME));
 	glutSwapBuffers();
-}
-
-void Game::keyboardCallback(unsigned char KEY, int x, int y)
-{
-	std::cout << "Pressed: " << KEY << std::endl;
-	KEYS[KEY] = true;
-}
-
-void Game::upCallback(unsigned char KEY, int x, int y)
-{
-
-	std::cout << "Released: " << KEY << std::endl;
-	KEYS[KEY] = false;
-}
-
-char Game::getKeyPressed(unsigned char KEY)
-{
-	return KEYS[KEY];
 }
 
 

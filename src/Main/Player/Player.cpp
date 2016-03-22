@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../Keyboard/Keyboard.h"
 #include "../Game.h"
 
 Player::Player()
@@ -7,6 +8,7 @@ Player::Player()
 	player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	Game::list1->RenderModel(player);
+	camera = new Camera(this);
 }
 
 
@@ -14,40 +16,34 @@ Player::~Player()
 {
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
 	//Translate Player Positions
-	if (Game::getKeyPressed('d'))
+	if (Keyboard::getKeyPressed(KEY_D))
 	{
-		rotationAngle += 1 * Game::deltaTime;
+		rotationAngle += 1 * deltaTime;
 		transform->Rotate(rotationAngle);
 	}
-	if (Game::getKeyPressed('a'))
+	if (Keyboard::getKeyPressed(KEY_A))
 	{
-		rotationAngle -= 1 * Game::deltaTime;
+		rotationAngle -= 1 * deltaTime;
 		transform->Rotate(rotationAngle);
 	}
-	if (Game::getKeyPressed('s'))
-	{
-		transform->Move(-10, 0, -10, Game::deltaTime);
+	if (Keyboard::getKeyPressed(KEY_S)) {
+		transform->body->atrt = 0.96f;
 	}
-	if (Game::getKeyPressed('w'))
+	if (Keyboard::getKeyPressed(KEY_W))
 	{
-		transform->Move(10, 0, 10, Game::deltaTime);
+		transform->body->atrt = 0.995f;
+		transform->Move(12000);
 	}
 	transform->update(Game::deltaTime);
+	camera->Update(deltaTime);
 }
 
 void Player::Draw() const
 {
-TODO: //CAMERA get a camera workin
-
-	gluLookAt(transform->getPosition().x + -sin(rotationAngle) * 5, transform->getPosition().y + 2,
-		transform->getPosition().z + cos(rotationAngle) * 5,
-		transform->getPosition().x + transform->getRotation().x, transform->getPosition().y + transform->getRotation().y,
-		transform->getPosition().z + transform->getRotation().z,
-		transform->getRotation().x, 1.0, transform->getRotation().z);
-
+	camera->Draw();
 	glPushMatrix();
 	{
 		glTranslatef(transform->getPosition().x, transform->getPosition().y, transform->getPosition().z);
@@ -58,9 +54,4 @@ TODO: //CAMERA get a camera workin
 		glCallList(Game::list1->getList(1));
 	}
 	glPopMatrix();
-}
-
-void Player::isColliding(BoxCollider* collider) const
-{
-	transform->isColliding(collider);
 }

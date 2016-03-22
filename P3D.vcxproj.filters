@@ -66,7 +66,16 @@
     <ClCompile Include="src\Misc\Physics\RigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Misc\GameTime.cpp">
+    <ClCompile Include="src\Vars\GameTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main\Keyboard\Keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main\Camera\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Traslate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,10 +134,19 @@
     <ClInclude Include="src\Misc\Physics\RigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vars\Mesh\BoxShape.h">
+    <ClInclude Include="src\Vars\GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Misc\GameTime.h">
+    <ClInclude Include="src\Main\Keyboard\Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Main\Camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Physics\Mesh\BoxShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Traslate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
