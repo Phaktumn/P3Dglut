@@ -39,9 +39,6 @@
     <ClCompile Include="src\Vars\dL\DisplayList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Misc\Physics\Movement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Misc\Lights\Lightning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -120,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Vars\dL\DisplayList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Misc\Physics\Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Misc\Lights\Lightning.h">

@@ -163,7 +163,6 @@
     <ClCompile Include="src\Misc\Physics\Collisions\SphereCollider.cpp" />
     <ClCompile Include="src\Misc\Physics\Collisions\BoxCollider.cpp" />
     <ClCompile Include="src\Misc\Lights\Lightning.cpp" />
-    <ClCompile Include="src\Misc\Physics\Movement.cpp" />
     <ClCompile Include="src\Vars\dL\DisplayList.cpp" />
     <ClCompile Include="src\Vars\Object.cpp" />
     <ClCompile Include="src\Misc\GLM\glm.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="src\Misc\Physics\Collisions\SphereCollider.h" />
     <ClInclude Include="src\Misc\Physics\Collisions\BoxCollider.h" />
     <ClInclude Include="src\Misc\Lights\Lightning.h" />
-    <ClInclude Include="src\Misc\Physics\Movement.h" />
     <ClInclude Include="src\Vars\dL\DisplayList.h" />
     <ClInclude Include="src\Vars\Object.h" />
     <ClInclude Include="src\Misc\GLM\glm.h" />
