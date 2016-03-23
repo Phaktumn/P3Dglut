@@ -1,21 +1,20 @@
 #pragma once
 #include "../../Vars/vec3f.h"
 #include "../Player/Player.h"
-
+ 
 class Player;
-
+ 
 class Camera
 {
 public:
 	//gluLookAt()
-	Camera();
-	explicit Camera(Player* player);
+	explicit Camera(Player& player);
 	~Camera();
 
 	//Sets the player to follow!
 	Player* player;
 
-	void Update(float deltaTime, float angle);
+	void Update(float deltaTime);
 	void Draw() const;
 
 	vec::Vector3 get_loook_at_vector3() const

@@ -1,9 +1,7 @@
 #pragma once
-#include "../../Vars/Object.h"
-#include "../../Misc/Physics/Movement.h"
 #include "../Camera/Camera.h"
-
-class BoxCollider;
+#include "../../Vars/Object.h"
+#include "../../Misc/Physics/PhysicsObject.h"
 
 class Camera;
 
@@ -15,15 +13,13 @@ public:
 	void Update(float deltaTime);
 	void Draw() const;
 
-	Transform* getTranform() const
-	{ return transform; }
-
-	float get_rotation_angle() const { return rotationAngle; }
+	RigidBody& getRigidBody() const;
+	PhysicsObject& getPhysicsObject() const { return *Box; }
 
 private:
 	Camera* camera;
 	Object* player;
-	Transform* transform;
+	PhysicsObject* Box;
 	float rotationAngle = 0;
 };
 

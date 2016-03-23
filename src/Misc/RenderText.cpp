@@ -1,20 +1,13 @@
 #include "RenderText.h"
+#include "../Vars/vec3f.h"
 
-
-RenderText::RenderText() : windowWidth(0), windowHeight(0)
+RenderText::RenderText()
 {
-	rgb = new vec::Vector3(0, 0, 0);
+	rgb = vec::Vector3(1, 1, 1);
 }
 
-GLvoid RenderText::drawText(const char text[], vec::Vector3* position, float scale)
+GLvoid RenderText::drawText(std::string& text, vec::Vector3& position, float scale) const
 {
-	for (size_t i = 0; i < strlen(text); i++){
-		str[i] = text[i];
-	}
-
-	//espessura da linha
-	glLineWidth(2.0);
-
 	////Suavizar a font!
 #if RICH_TEXT 1
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -22,34 +15,29 @@ GLvoid RenderText::drawText(const char text[], vec::Vector3* position, float sca
 	glEnable(GL_LINE_SMOOTH);
 #endif
 
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0.0, glutGet(GLUT_WINDOW_WIDTH), 
+		0.0, glutGet(GLUT_WINDOW_HEIGHT));
+	
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
 
-	glViewport(0, 0, this->windowWidth, this->windowHeight);
+	//espessura da linha
+	glLineWidth(2.0);
+
+	glTranslatef(position.x, position.y, 0);
+	glColor3f(rgb.x, rgb.y, rgb.z);
+	glScalef(scale, scale, 1);
+	glutStrokeString(GLUT_STROKE_ROMAN, (unsigned char*)text.c_str());
+	glPopMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	gluOrtho2D(0.0, static_cast<double>(this->windowWidth), 
-		0.0, static_cast<double>(this->windowHeight));
-	glTranslatef(0.0, this->windowHeight, 0.0);
+	glPopMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
-	glTranslatef(position->x, -position->y, position->z);
-	glColor3f(rgb->x, rgb->y, rgb->z);
-	glScalef(scale, scale, scale);
-	
-	for (size_t i = 0; i < strlen(str); i++) glutStrokeCharacter(GLUT_STROKE_ROMAN, str[i]);
-	delete position;
-	glFlush();
-}
-
-GLvoid RenderText::setWindowHeight(float height)
-{
-	this->windowHeight = height;
-}
-
-GLvoid RenderText::setWindowWidth(float width)
-{
-	this->windowWidth = width;
+	glLineWidth(1.0);
 }

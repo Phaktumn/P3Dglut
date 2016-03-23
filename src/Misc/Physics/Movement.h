@@ -16,14 +16,13 @@ public:
 	~Transform();
 
 	void Move(float x) const;
-	void Rotate(float angle);
+	void Rotate(float angle) const;
 
 	vec::Vector3 getPosition() const
 	{ return position; }
 	vec::Vector3 getRotation() const
 	{ return rotation; }
 	void update(float deltaTime);
-	void isColliding(BoxCollider& collider);
 
 	int isGravity() const { return gravity; }
 	vec::Vector3 linearRot;

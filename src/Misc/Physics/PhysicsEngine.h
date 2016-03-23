@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
-#include "RigidBody.h"
+
+class RigidBody;
+class PhysicsObject;
 
 class PhysicsEngine
 {
@@ -8,18 +10,20 @@ public:
 	PhysicsEngine() {}
 	~PhysicsEngine();
 
-	void AddObject();
+	void AddObject(const PhysicsObject& body);
 	void Simulate(float deltaTime);
+
+	//Move Required Object
+	RigidBody& moveObject();
 
 	void HandleCollisions();
 
-	unsigned int GetNumObjects() const
-	{
+	unsigned int GetNumObjects() const{
 		return unsigned int(m_objects.size());
 	}
 
 private:
-
-	std::vector<RigidBody> m_objects;
+	int listFront_index = 0;
+	std::vector<PhysicsObject> m_objects;
 };
 

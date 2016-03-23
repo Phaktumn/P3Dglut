@@ -58,6 +58,7 @@ void RigidBody::initializeRigidBodies(vec::Vector3 &pos)
 	this->position = pos;
 	this->velocity = vec::Vector3(0, 0, 0);
 	this->rotation = vec::Vector3(1.0, 0, 1.0);
+	rotate(0);
 
 	//MASS TEST FOR PORSCHE
 	shape.width = 2;
@@ -82,6 +83,11 @@ void RigidBody::Update(float deltaTime)
 		fallTime += deltaTime;
 		down_force_ += gravity;
 	}
+	if(position.y <=0.3)
+	{
+		velocity.y = 0;
+		position.y = 0.3;
+	}
 	addForce(vec::Vector3(force.x, force.y, force.z) + down_force_);
 	calculateTorque();
 	calculateForces(deltaTime);
@@ -101,8 +107,9 @@ void RigidBody::addForce(const vec::Vector3& force)
 
 void RigidBody::rotate(float angle)
 {
-	orientation.x = sin(angle);
+	this->angle = angle;
+	orientation.x = sin(this->angle);
 	orientation.y = 1;
-	orientation.z = -cos(angle);
+	orientation.z = -cos(this->angle);
 }
 

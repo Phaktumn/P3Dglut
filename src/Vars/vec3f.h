@@ -37,8 +37,11 @@ namespace vec
 		explicit Vector3(float value);
 		Vector3(float value, float z);
 		float length() const;
-		static Vector3 Max(Vector3& vec1, Vector3& vec2);
 		float Max() const;
+		Vector3 Normalized() const;
+		Vector3 Reflect(Vector3& vec);
+
+		static Vector3 Max(Vector3& vec1, Vector3& vec2);
 
 		static Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
 		static Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
@@ -50,11 +53,13 @@ namespace vec
 
 		std::string debugString() const;
 
-		static Vector3* Clamp(Vector3* value1, Vector3* min, Vector3* max);
+		static Vector3 Clamp(Vector3* value1, Vector3* min, Vector3* max);
 		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
 		static float Distance(Vector3* vector1, Vector3* vector2);
 		static float DistanceSquared(Vector3* vector1, Vector3* vector2);
-		static Vector3* Normalize(Vector3* value);
+		static Vector3 Normalize(Vector3* value);
+		static Vector3 Reflect(Vector3& v1, Vector3& v2);
+		static float Dot(Vector3& v1, Vector3& v2);
 
 		Vector3 operator+(const Vector3 & v) const
 		{
@@ -197,6 +202,22 @@ namespace vec
 		return NULL;
 	}
 
+	inline Vector3 Vector3::Normalized() const
+	{
+		Vector3 res = *this;
+		res = res / res.length();
+		return res;
+	}
+
+	inline Vector3 Vector3::Reflect(Vector3& vec)
+	{
+		Vector3 res;
+		res.x = this->x - 2.f * Dot(*this, vec) * vec.x;
+		res.y = this->y - 2.f * Dot(*this, vec) * vec.y;
+		res.z = this->z - 2.f * Dot(*this, vec) * vec.z;
+		return res;
+	}
+
 	inline Vector3 Vector3::localToWord(const Vector3& local, Matrix::Matrix4& transform)
 	{
 		return transform.transform(local);
@@ -231,9 +252,9 @@ namespace vec
 		return debug;
 	}
 
-	inline Vector3 * Vector3::Clamp(Vector3 * value1, Vector3* min, Vector3* max)
+	inline Vector3 Vector3::Clamp(Vector3 * value1, Vector3* min, Vector3* max)
 	{
-		return new Vector3(
+		return Vector3(
 			MathHelper::Clampf(value1->x, min->y, max->z),
 			MathHelper::Clampf(value1->y, min->y, max->y),
 			MathHelper::Clampf(value1->z, min->z, max->z));
@@ -261,12 +282,22 @@ namespace vec
 			   (vector1->z - vector2->z) * (vector1->z - vector2->z);
 	}
 
-	inline Vector3*
+	inline Vector3
 		
 		Vector3::Normalize(Vector3* value)
 	{
 		auto Factor = Distance(value, &zero());
 		Factor = 1.0f / Factor;
-		return new Vector3(value->x * Factor, value->y * Factor, value->z * Factor);
+		return Vector3(value->x * Factor, value->y * Factor, value->z * Factor);
+	}
+
+	inline Vector3 Vector3::Reflect(Vector3& v1, Vector3& v2)
+	{
+
+	}
+
+	inline float Vector3::Dot(Vector3& v1, Vector3& v2)
+	{
+		return v1.x * v2.x + v1.y + v2.y + v1.z + v2.z;
 	}
 }

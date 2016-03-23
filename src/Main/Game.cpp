@@ -9,57 +9,19 @@
 #define _DEBUG_                  1
 
 Game* Game::instance = nullptr;
-int Game::font = reinterpret_cast<int>(GLUT_BITMAP_8_BY_13);
-float Game::deltaTime;
-int Game::startTime;
-int Game::frames = 0;
-int Game::framesPS = 0;
-float Game::time = 0;
-float Game::speed;
-float Game::posX = 0;
-float Game::posY = 0.5;
-float Game::posZ = 0;
-GLfloat Game::lx = 0;
-GLfloat Game::lz = 0;
-float Game::x;
-float Game::y;
-float Game::z;
-float Game::rotateX = 0;
-float Game::rotateY = 1;
-float Game::rotateZ = 0;
-float Game::rotationAngle = 0;
-float Game::windowHeigth = 0;
-float Game::windowWidth = 0;
-float Game::blue[] = { .0, .0, 1 };
-float Game::red[] = { 1, .0, .0 };
-float Game::green[] = { .0, 1, .0 };
-float Game::violet[] = { 0.5, 0.1, 0.5 };
-float Game::Colors[][3] = { {blue[0], blue[1] ,blue[2]},
-	{red[0],red[1],red[2]},
-	{green[0], green[1],green[2]},
-	{violet[0],violet[1],violet[2]},
-	{blue[0], blue[1] ,blue[2]},
-	{red[0],red[1],red[2]},
-	{green[0], green[1],green[2]},
-	{violet[0],violet[1],violet[2]},
-	{green[0], green[1],green[2]},
-	{violet[0],violet[1],violet[2]} };
 GLfloat Game::lModel_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
-RenderText* Game::text = new RenderText();
-RenderText* Game::WTF = new RenderText();
+RenderText Game::text = RenderText();
+RenderText Game::WTF = RenderText();
 Object * Game::Tree;
 DisplayList * Game::list1 = new DisplayList(3);
 Lightning * Game::lights = new Lightning(1);
-BoxCollider * Game::colliderBox = new BoxCollider(
-	vec::Vector3(10, 10, 10), vec::Vector3(12, 12, 12));
 Player * Game::Gamer;
-GameTime * Game::Time = new GameTime();
+GameTime Game::gameTime = GameTime();
+PhysicsEngine* Game::Physics = new PhysicsEngine();
 
 Game::Game(int argc, char** argv)
 {
 	glutInit(&argc, argv);
-	deltaTime = 0;
-	speed = 100;
 	std::cout << "Game Initialized";
 }
 
@@ -71,8 +33,6 @@ Game::~Game()
 
 int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) const
 {
-	this->windowHeigth = windowHeigth;
-	this->windowWidth = windowWidth;
 	glutInitWindowSize(windowWidth, windowHeigth);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutCreateWindow(windowTitle.c_str());
@@ -84,19 +44,19 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glutKeyboardFunc(Keyboard::keydoardCallback);
 	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
 
+	glEnable(GL_BLEND);
+	glEnable(GL_LINE_SMOOTH);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_CW);
+	glFrontFace(GL_CCW);
 
 	Gamer = new Player();
+	Physics->AddObject(Gamer->getPhysicsObject());
 
 	Tree = new Object("../P3Dglut/Modelos3D/rose+vase.obj");
 	Tree->loadModel();
-
-	text->setWindowHeight(windowHeigth);
-	text->setWindowWidth(windowWidth);
-
-	WTF->setWindowHeight(windowHeigth);
-	WTF->setWindowWidth(windowWidth);
 
 	//224,255,255
 	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(255, 255), 1, 1), 1);
@@ -127,8 +87,9 @@ void Game::resize(int width, int height)
 
 void Game::Update()
 {
-	Time->start(glutGet(GLUT_ELAPSED_TIME));
-	Gamer->Update(deltaTime);
+	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
+	Gamer->Update(gameTime.getDeltaTime());
+	Physics->Simulate(gameTime.getDeltaTime());
 	glutPostRedisplay();
 }
 
@@ -136,13 +97,9 @@ GLvoid Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.5, 1.0, 1.0, 0.0);
-	glCullFace(GL_BACK);
-	glMatrixMode(GL_PROJECTION);	
-	glViewport(0, 0, windowWidth, windowHeigth);
-	glLoadIdentity();
-	gluPerspective(45, windowWidth / windowHeigth, 0.01, 1000);
+	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 1000);
 
-	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	Gamer->Draw();
 
@@ -154,12 +111,11 @@ GLvoid Game::render()
 	glCallList(list1->getList(3));
 #endif
 #if _DEBUG_ 1
-	system("cls");
-	std::cout << "Delta Time: " << Time->getDeltaTime() << std::endl;
+	auto fps = "FPS: " + std::to_string(gameTime.getFps());
+	text.drawText(fps, vec::Vector3(20, 20, 0), 0.1);
 #endif
-	deltaTime = Time->getDeltaTime() * 0.001;
-	Time->end(glutGet(GLUT_ELAPSED_TIME));
-	glutSwapBuffers();
+	glutSwapBuffers();	
+	gameTime.end(glutGet(GLUT_ELAPSED_TIME) * 0.001);
 }
 
 

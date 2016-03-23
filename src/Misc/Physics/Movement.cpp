@@ -25,19 +25,17 @@ void Transform::Move(float x) const
 	body->addForce(vec::Vector3(x, 0.0, x));
 }
 
-void Transform::Rotate(float angle)
+void Transform::Rotate(float angle) const
 {
-	rotation.x = sin(angle);
-	rotation.z = -cos(angle);
+	body->rotate(angle);
 }
 
 void Transform::update(float deltaTime)
 {
 	if (gravity == 1) {
 		body->Update(deltaTime);	
-		body->orientation.x = this->rotation.x;
+		this->rotation = body->orientation;
 		body->orientation.y = 1;
-		body->orientation.z = this->rotation.z;
 		this->linearRot = body->rotation;
 		this->position = body->position;
 #if _WITHOUT_TERRAIN_COLLISIONS 1
@@ -48,15 +46,4 @@ void Transform::update(float deltaTime)
 		}
 #endif
 	}
-}
-
-void Transform::isColliding(BoxCollider& collider)
-{
-#if COLLISIONS_ENABLED 1	
-	if (this->collider.Intersects(collider)) {
-		this->position.x = this.position.x - (0.1f * rotation.x);
-		this->position.z = this.position.z - (0.1f * rotation.z);
-	}
-
-#endif
 }

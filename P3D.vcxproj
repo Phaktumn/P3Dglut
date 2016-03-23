@@ -147,6 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp" />
+    <ClCompile Include="src\Misc\Physics\BoundingSphere.cpp" />
+    <ClCompile Include="src\Misc\Physics\Collider.cpp" />
+    <ClCompile Include="src\Misc\Physics\PhysicsObject.cpp" />
     <ClCompile Include="src\Misc\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Misc\Physics\Mesh\AABB.cpp" />
     <ClCompile Include="src\Main\Camera\Camera.cpp" />
@@ -171,6 +175,11 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />
+    <ClInclude Include="src\Misc\Physics\BoundingSphere.h" />
+    <ClInclude Include="src\Misc\Physics\Collider.h" />
+    <ClInclude Include="src\Misc\Physics\PhysicsObject.h" />
+    <ClInclude Include="src\Main\ReferenceCounter.h" />
     <ClInclude Include="src\Misc\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\AABB.h" />
     <ClInclude Include="src\Main\Camera\Camera.h" />

@@ -1,7 +1,5 @@
 #include "GameTime.h"
 
-
-
 GameTime::GameTime() : m_fps(0), m_startTime(0), m_deltaTime(0),
 	m_frames(0), m_elapsedTime(0) {
 

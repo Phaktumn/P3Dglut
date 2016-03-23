@@ -4,13 +4,12 @@
 
 Player::Player()
 {
-	transform = new Transform();
+	Box = new PhysicsObject(vec::Vector3(0, 10, 0));
 	player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	Game::list1->RenderModel(player);
-	camera = new Camera(this);
+	camera = new Camera(*this);
 }
-
 
 Player::~Player()
 {
@@ -22,23 +21,21 @@ void Player::Update(float deltaTime)
 	if (Keyboard::getKeyPressed(KEY_D))
 	{
 		rotationAngle += 0.01f;
-		transform->Rotate(rotationAngle);
+		Box->getRigidBody().rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_A))
 	{
 		rotationAngle -= 0.01f;
-		transform->Rotate(rotationAngle);
+		Box->getRigidBody().rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_S)) {
-		transform->body->atrt = 0.96f;
+
 	}
 	if (Keyboard::getKeyPressed(KEY_W))
 	{
-		transform->body->atrt = 0.995f;
-		transform->Move(12000);
+		Box->getRigidBody().addForce(vec::Vector3(10000, 0, 10000));
 	}
-	transform->update(Game::deltaTime);
-	camera->Update(deltaTime, rotationAngle);
+	camera->Update(deltaTime);
 }
 
 void Player::Draw() const
@@ -46,12 +43,17 @@ void Player::Draw() const
 	camera->Draw();
 	glPushMatrix();
 	{
-		glTranslatef(transform->getPosition().x, transform->getPosition().y, transform->getPosition().z);
+		glTranslatef(Box->getPosition().x, Box->getPosition().y, Box->getPosition().z);
 		glRotatef(180 - rotationAngle * 180 / 3.14, 0.0, 1.0, 0.0);
-		glRotatef(transform->linearRot.x, 1.0, 0.0, 0.0);
-		glRotatef(transform->linearRot.y, 0.0, 1.0, 0.0);
-		glRotatef(transform->linearRot.z, 0.0, 0.0, 1.0);
+		glRotatef(Box->getRigidBody().torque.x, 1.0, 0.0, 0.0);
+		glRotatef(Box->getRigidBody().torque.y, 0.0, 1.0, 0.0);
+		glRotatef(Box->getRigidBody().torque.z, 0.0, 0.0, 1.0);
 		glCallList(Game::list1->getList(1));
 	}
 	glPopMatrix();
+}
+
+RigidBody& Player::getRigidBody() const
+{
+	return Box->getRigidBody();
 }
