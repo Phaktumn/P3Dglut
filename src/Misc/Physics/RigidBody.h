@@ -52,5 +52,6 @@ public:
 	* The force is expressed in world coordinates.
 	*/
 	void addForce(const vec::Vector3 &force);
+	void rotate(float angle);
 };
 

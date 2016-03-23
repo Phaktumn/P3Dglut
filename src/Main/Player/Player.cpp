@@ -21,12 +21,12 @@ void Player::Update(float deltaTime)
 	//Translate Player Positions
 	if (Keyboard::getKeyPressed(KEY_D))
 	{
-		rotationAngle += 1 * deltaTime;
+		rotationAngle += 0.01f;
 		transform->Rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_A))
 	{
-		rotationAngle -= 1 * deltaTime;
+		rotationAngle -= 0.01f;
 		transform->Rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_S)) {
@@ -38,7 +38,7 @@ void Player::Update(float deltaTime)
 		transform->Move(12000);
 	}
 	transform->update(Game::deltaTime);
-	camera->Update(deltaTime);
+	camera->Update(deltaTime, rotationAngle);
 }
 
 void Player::Draw() const

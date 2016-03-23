@@ -15,7 +15,7 @@ public:
 	//Sets the player to follow!
 	Player* player;
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, float angle);
 	void Draw() const;
 
 	vec::Vector3 get_loook_at_vector3() const

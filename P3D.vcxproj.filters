@@ -48,12 +48,6 @@
     <ClCompile Include="src\Misc\Lights\Lightning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Misc\Collisions\BoxCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Collisions\SphereCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main\Player\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,7 +69,16 @@
     <ClCompile Include="src\Main\Camera\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Traslate.cpp">
+    <ClCompile Include="src\Misc\Physics\Mesh\AABB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Physics\Collisions\BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Physics\Collisions\SphereCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Physics\PhysicsEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,12 +119,6 @@
     <ClInclude Include="src\Misc\Lights\Lightning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Misc\Collisions\BoxCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Misc\Collisions\SphereCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Main\Player\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -146,7 +143,19 @@
     <ClInclude Include="src\Misc\Physics\Mesh\BoxShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Traslate.h">
+    <ClInclude Include="src\Misc\Physics\IntersectData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Physics\Mesh\AABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Physics\Collisions\BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Physics\Collisions\SphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Misc\Physics\PhysicsEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

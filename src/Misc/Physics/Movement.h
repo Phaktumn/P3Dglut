@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Vars/vec3f.h"
-#include "../Collisions/SphereCollider.h"
 #include "RigidBody.h"
+#include "Collisions/SphereCollider.h"
 
 #define SPEED_MODIFIER                 0.01
 #define GRAVITY                        -9.8

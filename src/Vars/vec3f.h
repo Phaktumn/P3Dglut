@@ -36,6 +36,9 @@ namespace vec
 		Vector3(float x, float y, float z);
 		explicit Vector3(float value);
 		Vector3(float value, float z);
+		float length() const;
+		static Vector3 Max(Vector3& vec1, Vector3& vec2);
+		float Max() const;
 
 		static Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
 		static Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
@@ -166,6 +169,32 @@ namespace vec
 		this->x = value;
 		this->y = value;
 		this->z = z;
+	}
+
+	inline float Vector3::length() const
+	{
+		return sqrt(x * x + y * y + z * z);
+	}
+
+	inline Vector3 Vector3::Max(Vector3& vec1, Vector3& vec2)
+	{
+		auto res= Vector3();
+		if (vec1.x > vec2.x)res.x = vec1.x;
+		else res.x = vec2.x;
+		if (vec1.y > vec2.y)res.y = vec1.y;
+		else res.y = vec2.y;
+		if (vec1.z > vec2.z)res.z = vec1.z;
+		else res.z = vec2.z;
+		return res;
+	}
+
+	inline float Vector3::Max() const
+	{
+		auto res = Vector3();
+		if (x >= y && x >= z) {  return x; }
+		if (y >= x && y >= z) {  return y; }
+		if (z >= x && z >= y) {  return z; }
+		return NULL;
 	}
 
 	inline Vector3 Vector3::localToWord(const Vector3& local, Matrix::Matrix4& transform)

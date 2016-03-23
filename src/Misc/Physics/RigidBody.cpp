@@ -99,4 +99,10 @@ void RigidBody::addForce(const vec::Vector3& force)
 	this->force = _force;
 }
 
+void RigidBody::rotate(float angle)
+{
+	orientation.x = sin(angle);
+	orientation.y = 1;
+	orientation.z = -cos(angle);
+}
 
