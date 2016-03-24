@@ -36,6 +36,8 @@ private:
 	static Object* Tree;
 	static Lightning * lights;
 	static Player* Gamer;
+	static Plane* plane;
+	static PhysicsObject* ground;
 	static GameTime gameTime;
 	static PhysicsEngine* Physics;
 };

@@ -9,6 +9,7 @@
 #include "Collider.h"
 #include "../../Vars/vec3f.h"
 #include "RigidBody.h"
+#include "Mesh/AABB.h"
 
 class RigidBody;
 class Collider;
@@ -19,25 +20,27 @@ public:
 	PhysicsObject(): m_collider(nullptr)
 	{}
 	explicit PhysicsObject(vec::Vector3& pos);
+	explicit PhysicsObject(vec::Vector3& pos, Collider& collider);
 	~PhysicsObject();
 
 	void Simulate(float deltaTime);
 
-	const Collider& getCollider() { return *m_collider; }
-	vec::Vector3 getPosition() const{ return m_position; }
-	vec::Vector3 getRotation() const{ return m_rotation; }
-	vec::Vector3 getVelocity() const { return m_velocity; }
-	bool isKinematic() const{ return Kinematic; }
-	void setKinematic(bool state) { Kinematic = state; }
+	const Collider& getCollider() const { return *m_collider; }
+
+	vec::Vector3 getPosition();
+	vec::Vector3 getRotation();
+	vec::Vector3 getVelocity();
+	bool isKinematic() const;
+	void setKinematic(bool state);
 	RigidBody& getRigidBody() const;
-	void setForce(vec::Vector3& force) { m_Force = force; }
+	void setForce(vec::Vector3& force);
 
 private:
 	vec::Vector3 m_position;
 	vec::Vector3 m_rotation;
 	vec::Vector3 m_velocity;
-	Collider* m_collider;
 	vec::Vector3 m_Force;
+	Collider* m_collider;
 	RigidBody* rigidBody = new RigidBody(1000);
 	bool Kinematic = false;
 };

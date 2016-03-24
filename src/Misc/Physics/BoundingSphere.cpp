@@ -1,5 +1,6 @@
 #include "BoundingSphere.h"
 #include "IntersectData.h"
+#include "Mesh/Plane.h"
 
 BoundingSphere::~BoundingSphere()
 {
@@ -15,6 +16,11 @@ IntersectData BoundingSphere::IntersectBoundingSphere(const BoundingSphere& othe
 	float distance = centerDistance - radiusDistance;
 
 	return IntersectData(distance < 0, direction * distance);
+}
+
+IntersectData BoundingSphere::IntersectPlane(Plane& other) const
+{
+	return other.IntersectSphere(*this);
 }
 
 void BoundingSphere::Transform(const vec::Vector3& translation)

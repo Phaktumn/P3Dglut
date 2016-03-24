@@ -6,10 +6,10 @@
 #include "../../Physics/IntersectData.h"
 #include "../../Physics/BoundingSphere.h"
 
-class Plane
+class Plane : public Collider
 {
 public:
-	Plane(const vec::Vector3& normal, float distance) :
+	Plane(const vec::Vector3& normal, float distance) : Collider(TYPE_SIZE),
 		m_distance(distance),
 		m_normal(normal) {}
 

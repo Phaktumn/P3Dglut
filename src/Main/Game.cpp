@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
+#include "../Misc/Physics/Mesh/Plane.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _RENDER_LANDSCAPE        1
@@ -18,6 +19,8 @@ Lightning * Game::lights = new Lightning(1);
 Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
 PhysicsEngine* Game::Physics = new PhysicsEngine();
+PhysicsObject* Game::ground;
+Plane* Game::plane = new Plane(vec::Vector3::up(), 100);
 
 Game::Game(int argc, char** argv)
 {
@@ -58,6 +61,10 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	Tree = new Object("../P3Dglut/Modelos3D/rose+vase.obj");
 	Tree->loadModel();
 
+	ground = new PhysicsObject(vec::Vector3(0, 0, 0), (Collider)*plane);
+	ground->setKinematic(true);
+	Physics->AddObject(*ground);
+
 	//224,255,255
 	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(255, 255), 1, 1), 1);
 	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(255, 255)), 1);
@@ -90,6 +97,7 @@ void Game::Update()
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
 	Gamer->Update(gameTime.getDeltaTime());
 	Physics->Simulate(gameTime.getDeltaTime());
+	Physics->HandleCollisions();
 	glutPostRedisplay();
 }
 

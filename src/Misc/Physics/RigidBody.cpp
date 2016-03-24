@@ -84,7 +84,7 @@ void RigidBody::Update(float deltaTime)
 		down_force_ += gravity;
 	}
 	if(position.y <=0.3)
-	{
+	{ 
 		velocity.y = 0;
 		position.y = 0.3;
 	}

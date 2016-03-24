@@ -4,6 +4,8 @@
 #pragma once
 #include "Collider.h"
 
+class Plane;
+
 class BoundingSphere : public Collider
 {
 public:
@@ -14,6 +16,7 @@ public:
 	~BoundingSphere();
 
 	IntersectData IntersectBoundingSphere(const BoundingSphere& other) const;
+	IntersectData IntersectPlane(Plane& other) const;
 	virtual void Transform(const vec::Vector3& tranlation);
 	vec::Vector3 GetCenter() const override;
 

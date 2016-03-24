@@ -47,6 +47,7 @@ public:
 	void initializeRigidBodies(vec::Vector3 &pos);
 	void resetForces();
 	void Update(float deltaTime);
+	void setFriction(float value) { atrt = value; }
 	/**
 	* Adds the given force to the center of mass of the rigid body.
 	* The force is expressed in world coordinates.

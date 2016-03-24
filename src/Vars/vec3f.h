@@ -40,6 +40,7 @@ namespace vec
 		float Max() const;
 		Vector3 Normalized() const;
 		Vector3 Reflect(Vector3& vec);
+		float Dot(Vector3& other) const;
 
 		static Vector3 Max(Vector3& vec1, Vector3& vec2);
 
@@ -216,6 +217,11 @@ namespace vec
 		res.y = this->y - 2.f * Dot(*this, vec) * vec.y;
 		res.z = this->z - 2.f * Dot(*this, vec) * vec.z;
 		return res;
+	}
+
+	inline float Vector3::Dot(Vector3& other) const
+	{
+		return x * other.x + y + other.y + z + other.z;
 	}
 
 	inline Vector3 Vector3::localToWord(const Vector3& local, Matrix::Matrix4& transform)

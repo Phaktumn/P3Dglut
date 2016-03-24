@@ -20,19 +20,20 @@ void Player::Update(float deltaTime)
 	//Translate Player Positions
 	if (Keyboard::getKeyPressed(KEY_D))
 	{
-		rotationAngle += 0.01f;
+		rotationAngle += deltaTime;
 		Box->getRigidBody().rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_A))
 	{
-		rotationAngle -= 0.01f;
+		rotationAngle -= deltaTime;
 		Box->getRigidBody().rotate(rotationAngle);
 	}
 	if (Keyboard::getKeyPressed(KEY_S)) {
-
+		Box->getRigidBody().setFriction(0.96);
 	}
 	if (Keyboard::getKeyPressed(KEY_W))
 	{
+		Box->getRigidBody().setFriction(0.99);
 		Box->getRigidBody().addForce(vec::Vector3(10000, 0, 10000));
 	}
 	camera->Update(deltaTime);
