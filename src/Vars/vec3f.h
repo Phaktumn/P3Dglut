@@ -288,9 +288,7 @@ namespace vec
 			   (vector1->z - vector2->z) * (vector1->z - vector2->z);
 	}
 
-	inline Vector3
-		
-		Vector3::Normalize(Vector3* value)
+	inline Vector3 Vector3::Normalize(Vector3* value)
 	{
 		auto Factor = Distance(value, &zero());
 		Factor = 1.0f / Factor;
@@ -299,7 +297,11 @@ namespace vec
 
 	inline Vector3 Vector3::Reflect(Vector3& v1, Vector3& v2)
 	{
-
+		Vector3 res;
+		res.x = v1.x - 2.f * Dot(v1, v2) * v2.x;
+		res.y = v1.y - 2.f * Dot(v1, v2) * v2.y;
+		res.z = v1.z - 2.f * Dot(v1, v2) * v2.z;
+		return res;
 	}
 
 	inline float Vector3::Dot(Vector3& v1, Vector3& v2)

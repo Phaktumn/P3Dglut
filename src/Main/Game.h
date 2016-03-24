@@ -6,6 +6,7 @@
 #include "Player/Player.h"
 #include "../Vars/GameTime.h"
 #include "../Misc/Physics/PhysicsEngine.h"
+#include "../Misc/Physics/Mesh/Plane.h"
 #pragma once
 
 class Game

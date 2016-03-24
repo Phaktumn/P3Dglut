@@ -28,14 +28,12 @@ void PhysicsEngine::HandleCollisions()
 	{
 		for (auto x = i + 1; x < m_objects.size(); x++)
 		{
-			IntersectData intersect_data =
-				m_objects[i].getCollider().Intersect(m_objects[x].getCollider());
+			auto intersect_data = m_objects[i].getCollider().Intersect(m_objects[x].getCollider());
 
 			if(intersect_data.GetDoesIntersect())
 			{
-				vec::Vector3 direction = intersect_data.GetDirection().Normalized();
-				vec::Vector3 otherDirection = direction.Reflect(
-					m_objects[i].getVelocity().Normalized());
+				auto direction = intersect_data.GetDirection().Normalized();
+				auto otherDirection = vec::Vector3::Reflect(direction, m_objects[i].getVelocity());
 				m_objects[i].setForce(m_objects[i].getVelocity().Reflect(otherDirection));
 				m_objects[x].setForce(m_objects[x].getVelocity().Reflect(direction));
 			}

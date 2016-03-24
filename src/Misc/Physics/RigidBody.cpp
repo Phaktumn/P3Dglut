@@ -21,9 +21,9 @@ BoxShape RigidBody::getShape() const
 
 void RigidBody::calculateForces(float deltaTime)
 {
-	torque.x = 1.0 * sin(deltaTime * 0.9 + 0.5);
-	torque.y = 1.1 * sin(deltaTime * 0.5 + 0.4);
-	torque.z = 1.2 * sin(deltaTime * 0.7 + 0.9);
+	torque.x = 1.0 * sin(deltaTime * 0.9);
+	torque.y = 1.1 * sin(deltaTime * 0.5);
+	torque.z = 1.2 * sin(deltaTime * 0.7);
 
 	torque.x -= 0.2 * rotation.x;
 	torque.y -= 0.2 * rotation.y;

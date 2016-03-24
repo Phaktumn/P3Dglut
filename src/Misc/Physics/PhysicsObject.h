@@ -9,7 +9,6 @@
 #include "Collider.h"
 #include "../../Vars/vec3f.h"
 #include "RigidBody.h"
-#include "Mesh/AABB.h"
 
 class RigidBody;
 class Collider;

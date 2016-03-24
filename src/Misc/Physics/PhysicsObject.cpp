@@ -1,4 +1,5 @@
 #include "PhysicsObject.h"
+#include "Mesh/AABB.h"
 #define OFFSET 0.3
 
 PhysicsObject::PhysicsObject(vec::Vector3& pos)
