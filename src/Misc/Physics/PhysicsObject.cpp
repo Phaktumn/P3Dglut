@@ -1,10 +1,11 @@
 #include "PhysicsObject.h"
 #include "Mesh/AABB.h"
+
 #define OFFSET 0.3
 
 PhysicsObject::PhysicsObject(vec::Vector3& pos)
 {
-	m_collider = new AABB(vec::Vector3(0, 0, 0), vec::Vector3(2, 1, 1));
+	m_collider = new AABB(vec::Vector3(pos.x - 0.5, pos.y - 0.5, pos.z - 0.5), vec::Vector3(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5));
 	m_collider->AddReference();
 	m_position = pos;
 	m_rotation = vec::Vector3::zero();
@@ -21,7 +22,7 @@ PhysicsObject::PhysicsObject(vec::Vector3& pos, Collider& collider)
 	rigidBody->initializeRigidBodies(m_position);
 	rigidBody->addForce(vec::Vector3(0, 0, 0));
 }
-
+ 
 PhysicsObject::~PhysicsObject()
 {
 	if(m_collider->RemoveReference()){
@@ -34,7 +35,10 @@ void PhysicsObject::Simulate(float deltaTime)
 	if (Kinematic == false)
 	{
 		rigidBody->Update(deltaTime);
-		m_collider->Tranform(m_position);
+		m_collider->Transform(rigidBody->position);
+		m_position = rigidBody->position;
+		m_rotation = rigidBody->orientation;
+		m_velocity = rigidBody->velocity;
 		m_Force = rigidBody->force;
 	}
 }
@@ -52,6 +56,12 @@ vec::Vector3 PhysicsObject::getRotation() {
 vec::Vector3 PhysicsObject::getVelocity() {
 	m_velocity = rigidBody->velocity;
 	return m_velocity;
+}
+
+vec::Vector3 PhysicsObject::getForce()
+{
+	m_Force = rigidBody->force;
+	return m_Force;
 }
 
 bool PhysicsObject::isKinematic() const
@@ -72,4 +82,5 @@ RigidBody& PhysicsObject::getRigidBody() const
 void PhysicsObject::setForce(vec::Vector3& force)
 {
 	m_Force = force;
+	rigidBody->force = m_Force;
 }

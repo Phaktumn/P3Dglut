@@ -4,7 +4,7 @@
 
 Player::Player()
 {
-	Box = new PhysicsObject(vec::Vector3(0, 10, 0));
+	Box = new PhysicsObject(vec::Vector3(0, 1, 0));
 	player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	Game::list1->RenderModel(player);

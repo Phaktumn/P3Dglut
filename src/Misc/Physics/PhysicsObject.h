@@ -29,6 +29,7 @@ public:
 	vec::Vector3 getPosition();
 	vec::Vector3 getRotation();
 	vec::Vector3 getVelocity();
+	vec::Vector3 getForce();
 	bool isKinematic() const;
 	void setKinematic(bool state);
 	RigidBody& getRigidBody() const;

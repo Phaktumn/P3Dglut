@@ -18,8 +18,7 @@ public:
 
 	explicit Collider(int Type) : ReferenceCounter(), m_type(Type){}
 	IntersectData Intersect(const Collider& other) const;
-	virtual void Tranform(const vec::Vector3& tranlation){}
-	virtual vec::Vector3 GetCenter() const { return vec::Vector3(0, 0, 0); }
+	virtual void Transform(const vec::Vector3& translation);
 
 	/** Basic Getter */
 	int GetType() const { return m_type; }

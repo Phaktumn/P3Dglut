@@ -1,6 +1,7 @@
 #include "PhysicsEngine.h"
 #include "IntersectData.h"
 #include "PhysicsObject.h"
+#include <iostream>
 
 RigidBody& PhysicsEngine::moveObject()
 {
@@ -32,10 +33,21 @@ void PhysicsEngine::HandleCollisions()
 
 			if(intersect_data.GetDoesIntersect())
 			{
+				m_objects[i].getRigidBody().setFallState(false);
+				m_objects[i].getRigidBody().setCollidingState(true);
 				auto direction = intersect_data.GetDirection().Normalized();
-				auto otherDirection = vec::Vector3::Reflect(direction, m_objects[i].getVelocity());
-				m_objects[i].setForce(m_objects[i].getVelocity().Reflect(otherDirection));
-				m_objects[x].setForce(m_objects[x].getVelocity().Reflect(direction));
+				auto otherDirection = vec::Vector3::Reflect(direction, m_objects[i].getForce()).Normalized();
+				
+				if (!m_objects[i].isKinematic())
+					m_objects[i].setForce(m_objects[i].getForce().Reflect(otherDirection));
+				if (!m_objects[x].isKinematic())
+					m_objects[x].setForce(m_objects[x].getVelocity().Reflect(direction));
+				std::cout << "Colliding: " + m_objects[i].getPosition().debugString() << std::endl;
+			}
+			else{
+				m_objects[i].getRigidBody().setFallState(true);
+				m_objects[i].getRigidBody().setCollidingState(false);
+				std::cout << "NOT COLLIDING Colliding: " + m_objects[i].getPosition().debugString() << "Warning" << std::endl;
 			}
 		}
 	}

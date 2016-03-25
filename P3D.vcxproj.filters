@@ -179,5 +179,8 @@
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Misc\Debug\IO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

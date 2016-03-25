@@ -77,16 +77,9 @@ void RigidBody::resetForces()
 
 void RigidBody::Update(float deltaTime)
 {
-	if (position.y >= 0.5) isFalling = true;
-	else { isFalling = false; fallTime = 0; down_force_ = gravity; }
 	if(isFalling) {
 		fallTime += deltaTime;
 		down_force_ += gravity;
-	}
-	if(position.y <=0.3)
-	{ 
-		velocity.y = 0;
-		position.y = 0.3;
 	}
 	addForce(vec::Vector3(force.x, force.y, force.z) + down_force_);
 	calculateTorque();

@@ -4,6 +4,7 @@
 
 BoundingSphere::~BoundingSphere()
 {
+	m_center = vec::Vector3::zero();
 }
 
 IntersectData BoundingSphere::IntersectBoundingSphere(const BoundingSphere& other) const
@@ -28,5 +29,6 @@ void BoundingSphere::Transform(const vec::Vector3& translation)
 	m_center += translation;
 }
 
-vec::Vector3 BoundingSphere::GetCenter() const
-{ return m_center; }
+vec::Vector3& BoundingSphere::GetCenter() const
+// ReSharper disable once CppMsExtBindingRValueToLvalueReference
+{ return vec::Vector3(m_center.x, m_center.y, m_center.z); }

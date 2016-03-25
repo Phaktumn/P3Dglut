@@ -36,6 +36,18 @@ public:
 	//end falling properties
 
 	float atrt;
+	/* Let the RigidBody know if it is Colliding with something*/
+	bool isColliding = false;
+	/* 
+	* SET RIGID BODY COLLIDE STATE
+	* If collide state = false -> DownForce = 0 
+	*/
+	void setCollidingState(float value){
+		isColliding = value;
+		if(value == true) 
+			down_force_ = vec::Vector3::zero();
+		else down_force_ = gravity;
+	}
 
 	explicit RigidBody(float mass_x);
 	~RigidBody();
@@ -48,6 +60,14 @@ public:
 	void resetForces();
 	void Update(float deltaTime);
 	void setFriction(float value) { atrt = value; }
+	void setFallState(float value)
+	{
+		isFalling = value;
+		if(value == false){
+			fallTime = 0;
+			down_force_ = gravity;
+		}
+	}
 	/**
 	* Adds the given force to the center of mass of the rigid body.
 	* The force is expressed in world coordinates.
