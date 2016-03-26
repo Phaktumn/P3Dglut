@@ -46,7 +46,6 @@ public:
 		isColliding = value;
 		if(value == true) 
 			down_force_ = vec::Vector3::zero();
-		else down_force_ = gravity;
 	}
 
 	explicit RigidBody(float mass_x);
@@ -60,8 +59,7 @@ public:
 	void resetForces();
 	void Update(float deltaTime);
 	void setFriction(float value) { atrt = value; }
-	void setFallState(float value)
-	{
+	void setFallState(float value){
 		isFalling = value;
 		if(value == false){
 			fallTime = 0;
