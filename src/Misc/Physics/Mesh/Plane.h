@@ -9,7 +9,7 @@
 class Plane : public Collider
 {
 public:
-	Plane(const vec::Vector3& normal, float distance) : Collider(TYPE_SIZE),
+	Plane(vec::Vector3 normal, float distance) : Collider(TYPE_SIZE),
 		m_distance(distance),
 		m_normal(normal) {}
 

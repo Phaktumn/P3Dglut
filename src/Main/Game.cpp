@@ -20,7 +20,7 @@ Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
 PhysicsEngine* Game::Physics = new PhysicsEngine();
 PhysicsObject* Game::ground;
-Plane* Game::plane;
+Plane Game::plane = Plane(vec::Vector3::zero(), 0);
 Game::Game(int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -60,8 +60,8 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	Tree = new Object("../P3Dglut/Modelos3D/rose+vase.obj");
 	Tree->loadModel();
 
-	plane = new Plane(vec::Vector3::up(), 100);
-	ground = new PhysicsObject(vec::Vector3(0, 0, 0), (Collider)*plane);
+	plane = Plane(vec::Vector3::up(), 1);
+	ground = new PhysicsObject(vec::Vector3(0, 0, 0), plane);
 	ground->setKinematic(true);
 	Physics->AddObject(*ground);
 

@@ -4,21 +4,21 @@
 
 IntersectData AABB::IntersectAABB(const AABB& other) const
 {
-	auto distances1 = other.GetMinExtents() - m_initial_maxExtents;
-	auto distances2 = m_initial_minExtents - other.GetMaxExtents();
-	auto distances = vec::Vector3::Max(distances1, distances2);
-	auto maxDistance = distances.Max();
+	vec::Vector3 distances1 = other.GetMinExtents() - m_initial_maxExtents;
+	vec::Vector3 distances2 = m_initial_minExtents - other.GetMaxExtents();
+	vec::Vector3 distances = vec::Vector3::Max(distances1, distances2);
+	float maxDistance = distances.Max();
 	return IntersectData(maxDistance < 0, vec::Vector3(maxDistance));
 }
 
 IntersectData AABB::IntersectPlane(const Plane& other) const
 {
-	auto Extence = (m_maxExtents - m_minExtents) / 2.0f;
-	auto planeNormal = vec::Vector3::up();
-	auto fRadius = abs(planeNormal.x * Extence.x) +
+    vec::Vector3 Extence = (m_maxExtents - m_minExtents) / 2.0f;
+	vec::Vector3 planeNormal = other.GetNormal();
+	float fRadius = abs(planeNormal.x * Extence.x) +
 		abs(planeNormal.y * Extence.y) +
 		abs(planeNormal.z * Extence.z);
-	float s = planeNormal.Dot(GetCenter()) - Extence.y - 0.4;
+	float s = planeNormal.Dot(GetCenter()) - other.GetDistance();
 	return IntersectData(abs(s) <= fRadius, planeNormal);
 }
 

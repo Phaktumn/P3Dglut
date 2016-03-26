@@ -2,6 +2,7 @@
 #include "../Camera/Camera.h"
 #include "../../Vars/Object.h"
 #include "../../Misc/Physics/PhysicsObject.h"
+#include "../../Misc/Physics/Mesh/AABB.h"
 
 class Camera;
 
@@ -17,7 +18,9 @@ public:
 	PhysicsObject& getPhysicsObject() const { return *Box; }
 
 private:
+	AABB collider;
 	Camera* camera;
+	//Physics object
 	Object* player;
 	PhysicsObject* Box;
 	float rotationAngle = 0;

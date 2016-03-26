@@ -1,10 +1,12 @@
 #include "Player.h"
 #include "../Keyboard/Keyboard.h"
 #include "../Game.h"
+#include "../../Misc/Physics/Mesh/AABB.h"
 
-Player::Player()
+Player::Player() 
+	: collider(vec::Vector3(0, 0.5, 0), vec::Vector3(1, 1.5, 1))
 {
-	Box = new PhysicsObject(vec::Vector3(0, 1, 0));
+	Box = new PhysicsObject(vec::Vector3(0, 1, 0), collider);
 	player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	Game::list1->RenderModel(player);

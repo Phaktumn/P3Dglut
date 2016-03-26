@@ -1,4 +1,4 @@
-﻿  PhysicsEngine.cpp
+﻿  Player.cpp
 c:\users\decapod\documents\github\p3dglut\src\vars\mathhelper.h(89): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 c:\users\decapod\documents\github\p3dglut\src\vars\mathhelper.h(94): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
 c:\users\decapod\documents\github\p3dglut\src\misc\physics\rigidbody.h(33): warning C4305: 'argument': truncation from 'double' to 'float'
@@ -6,5 +6,10 @@ c:\users\decapod\documents\github\p3dglut\src\misc\physics\rigidbody.h(46): warn
 c:\users\decapod\documents\github\p3dglut\src\misc\physics\rigidbody.h(47): warning C4805: '==': unsafe mix of type 'float' and type 'bool' in operation
 c:\users\decapod\documents\github\p3dglut\src\misc\physics\rigidbody.h(65): warning C4800: 'float': forcing value to bool 'true' or 'false' (performance warning)
 c:\users\decapod\documents\github\p3dglut\src\misc\physics\rigidbody.h(66): warning C4805: '==': unsafe mix of type 'float' and type 'bool' in operation
-c:\users\decapod\documents\github\p3dglut\src\misc\physics\physicsengine.cpp(10): warning C4172: returning address of local variable or temporary
+c:\users\decapod\documents\github\p3dglut\src\main\player\player.cpp(34): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\decapod\documents\github\p3dglut\src\main\player\player.cpp(38): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\decapod\documents\github\p3dglut\src\main\player\player.cpp(50): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
   P3D.vcxproj -> C:\Users\DecaPod\Documents\GitHub\P3Dglut\bin\x64\Debug\P3D.exe
