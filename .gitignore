@@ -239,3 +239,10 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Exclude
+!lib/*
+!include/*
+!deps/*
+!src/*
+!Modelos3D/*
