@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Engine.cpp" />
+    <ClCompile Include="src\ECS\EntityFactory.cpp" />
+    <ClCompile Include="src\ECS\TypeMapper.cpp" />
     <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp" />
     <ClCompile Include="src\Misc\Physics\BoundingSphere.cpp" />
     <ClCompile Include="src\Misc\Physics\Collider.cpp" />
@@ -174,6 +177,12 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Component.h" />
+    <ClInclude Include="src\ECS\Engine.h" />
+    <ClInclude Include="src\ECS\Entity.h" />
+    <ClInclude Include="src\ECS\EntityFactory.h" />
+    <ClInclude Include="src\ECS\System.h" />
+    <ClInclude Include="src\ECS\TypeMapper.h" />
     <ClInclude Include="src\Misc\Debug\IO.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />
     <ClInclude Include="src\Misc\Physics\BoundingSphere.h" />
