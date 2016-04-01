@@ -3,10 +3,11 @@
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
 #include "../Misc/Physics/Mesh/Plane.h"
+#include "Planets/SolarSystem.h"
 
 #define _CRT_SECURE_NO_WARNINGS
-#define _RENDER_LANDSCAPE        1
-#define _RENDER_PLANE            1
+#define _RENDER_LANDSCAPE        0
+#define _RENDER_PLANE            0
 #define _DEBUG_                  1
 
 Game* Game::instance = nullptr;
@@ -18,9 +19,9 @@ DisplayList * Game::list1 = new DisplayList(3);
 Lightning * Game::lights = new Lightning(1);
 Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
-PhysicsEngine* Game::Physics = new PhysicsEngine();
-PhysicsObject* Game::ground;
-Plane Game::plane = Plane(vec::Vector3::zero(), 0);
+
+SolarSystem* solarSystem = new SolarSystem(12);
+
 Game::Game(int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -54,26 +55,13 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glCullFace(GL_CW);
 	glFrontFace(GL_CCW);
 
-	Gamer = new Player();
-	Physics->AddObject(Gamer->getPhysicsObject());
-
-	Tree = new Object("../P3Dglut/Modelos3D/rose+vase.obj");
-	Tree->loadModel();
-
-	plane = Plane(vec::Vector3::up(), 1);
-	ground = new PhysicsObject(vec::Vector3(0, 0, 0), plane);
-	ground->setKinematic(true);
-	Physics->AddObject(*ground);
+	solarSystem->Load();
 
 	//224,255,255
-	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(255, 255), 1, 1), 1);
-	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(255, 255)), 1);
-	lights->setSpecular(vec::Vector3(255), 1);
+	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(56, 255), 0, 0), 0.5);
+	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(189, 255)), 1);
+	lights->setSpecular(vec::Vector3(125), 1);
 	lights->enableLight();
-
-	list1->GenLandScape(GL_MODELVIEW, Tree);
-	list1->GenPlane(GL_QUADS, new vec::Vector3(MathHelper::normalizef(156, 255),
-		MathHelper::normalizef(205, 255), MathHelper::normalizef(50, 255)));
 
 	glutMainLoop();
 
@@ -95,21 +83,23 @@ void Game::resize(int width, int height)
 void Game::Update()
 {
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
-	Gamer->Update(gameTime.getDeltaTime());
-	Physics->Simulate(gameTime.getDeltaTime());
-	Physics->HandleCollisions();
+	solarSystem->Simulate(gameTime.getDeltaTime());
 	glutPostRedisplay();
 }
 
 GLvoid Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.5, 1.0, 1.0, 0.0);
+	glClearColor(0, 0, 0, 0.0);
 	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 1000);
 
 	glLoadIdentity();
-	Gamer->Draw();
+	gluLookAt(0, 20, 100, 
+			  0, 0, 0, 
+			  0, 1, 0);
+
+	solarSystem->Draw();
 
 #if _RENDER_LANDSCAPE 1
 	glCallList(list1->getList(2));

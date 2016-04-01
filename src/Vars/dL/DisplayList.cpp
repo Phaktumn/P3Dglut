@@ -36,8 +36,8 @@ void DisplayList::GenLandScape(GLenum begin_Enum, Object * model)
 	glNewList(list + index, GL_COMPILE);
 	glBegin(begin_Enum);
 
-	for (auto i = 0; i < 100; i += 20){
-		for (auto u = 0; u < 100; u += 20){
+	for (auto i = 0; i < 10; i += 1){
+		for (auto u = 0; u < 10; u += 1){
 			glPushMatrix();
 			glTranslatef(i, 1.3f, u);
 				model->renderModel();

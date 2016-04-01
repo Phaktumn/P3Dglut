@@ -32,7 +32,7 @@ bool SphereCollider::Intersects(BoxCollider* box)
 bool SphereCollider::Intersects(SphereCollider* sphere)
 {
 	GLfloat sqDistance;
-	sqDistance = vec::Vector3::DistanceSquared(&sphere->center, &this->center);
+	sqDistance = vec::Vector3::DistanceSquared(sphere->center, this->center);
 	if (sqDistance > (sphere->radius + this->radius) * (sphere->radius + this->radius))
 		return true;
 	return false;

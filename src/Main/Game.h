@@ -41,5 +41,7 @@ private:
 	static PhysicsObject* ground;
 	static GameTime gameTime;
 	static PhysicsEngine* Physics;
+	static AABB boxTree;
+	static PhysicsObject* tree;
 };
 

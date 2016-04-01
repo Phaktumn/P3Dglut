@@ -9,6 +9,7 @@ PhysicsObject::PhysicsObject(vec::Vector3 pos,
 	m_collider.AddReference();
 	m_position = pos;
 	m_rotation = vec::Vector3::zero();
+	rigidBody = new RigidBody(1000);
 	rigidBody->initializeRigidBodies(m_position);
 	rigidBody->addForce(vec::Vector3(0, 0, 0));
 }
@@ -72,3 +73,10 @@ void PhysicsObject::setForce(vec::Vector3& force)
 	m_Force = force;
 	rigidBody->force = m_Force;
 }
+
+void PhysicsObject::setVelocity(vec::Vector3& velocity)
+{
+	m_velocity = velocity;
+	rigidBody->velocity = m_velocity;
+}
+

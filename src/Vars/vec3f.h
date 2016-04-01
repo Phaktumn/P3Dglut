@@ -9,23 +9,19 @@ namespace Matrix{
 
 namespace vec
 {
-	//operators + - /
-	//enum float1 float2 float3
-	//       x       y      z
-
 	class Vector3
 	{
 	public:
 		//Static Fields
-		static Vector3 zero() { return  Vector3(.0f, .0f, .0f); }
-		static Vector3 one() { return Vector3(1.0f, 1.0f, 1.0f); }
-		static Vector3 unitX() { return Vector3(1.0f, 0.0f, 0.0f); }
-		static Vector3 unitY() { return Vector3(0.0f, 1.0f, 0.0f); }
-		static Vector3 unitZ() { return Vector3(0.0f, 0.0f, 1.0f); }
-		static Vector3 up() { return Vector3(0.0f, 1.0f, 0.0f); }
-		static Vector3 down() { return Vector3(0.0f, -1.0f, 0.0f); }
-		static Vector3 right() { return Vector3(1.0f, 0.0f, 0.0f); }
-		static Vector3 left() { return Vector3(-1.0f, 0.0f, 0.0f); }
+		static Vector3 zero()  { return  Vector3(.0f, .0f, .0f);    }
+		static Vector3 one()   { return Vector3(1.0f, 1.0f, 1.0f);  }
+		static Vector3 unitX() { return Vector3(1.0f, 0.0f, 0.0f);  }
+		static Vector3 unitY() { return Vector3(0.0f, 1.0f, 0.0f);  }
+		static Vector3 unitZ() { return Vector3(0.0f, 0.0f, 1.0f);  }
+		static Vector3 up()    { return Vector3(0.0f, 1.0f, 0.0f);  }
+		static Vector3 down()  { return Vector3(0.0f, -1.0f, 0.0f); }
+		static Vector3 right() { return Vector3(1.0f, 0.0f, 0.0f);  }
+		static Vector3 left()  { return Vector3(-1.0f, 0.0f, 0.0f); }
 		
 		//Public Fields
   		float x;
@@ -54,11 +50,11 @@ namespace vec
 
 		std::string debugString() const;
 
-		static Vector3 Clamp(Vector3* value1, Vector3* min, Vector3* max);
+		static Vector3 Clamp(Vector3& value1, Vector3& min, Vector3& max);
 		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
-		static float Distance(Vector3* vector1, Vector3* vector2);
-		static float DistanceSquared(Vector3* vector1, Vector3* vector2);
-		static Vector3 Normalize(Vector3* value);
+		static float Distance(Vector3& vector1, Vector3& vector2);
+		static float DistanceSquared(Vector3& vector1, Vector3& vector2);
+		static Vector3 Normalize(Vector3& value);
 		static Vector3 Reflect(Vector3& v1, Vector3& v2);
 		static float Dot(Vector3& v1, Vector3& v2);
 
@@ -258,12 +254,12 @@ namespace vec
 		return debug;
 	}
 
-	inline Vector3 Vector3::Clamp(Vector3 * value1, Vector3* min, Vector3* max)
+	inline Vector3 Vector3::Clamp(Vector3& value1, Vector3& min, Vector3& max)
 	{
 		return Vector3(
-			MathHelper::Clampf(value1->x, min->y, max->z),
-			MathHelper::Clampf(value1->y, min->y, max->y),
-			MathHelper::Clampf(value1->z, min->z, max->z));
+			MathHelper::Clampf(value1.x, min.y, max.z),
+			MathHelper::Clampf(value1.y, min.y, max.y),
+			MathHelper::Clampf(value1.z, min.z, max.z));
 	}
 
 	inline Vector3 Vector3::Cross(Vector3& vector1, Vector3& vector2)
@@ -274,25 +270,25 @@ namespace vec
 		return Vector3(x, y, z);
 	}
 
-	inline float Vector3::Distance(Vector3* vector1, Vector3* vector2)
+	inline float Vector3::Distance(Vector3& vector1, Vector3& vector2)
 	{
 		float result;
 		result = DistanceSquared(vector1, vector2);
 		return static_cast<float>(sqrtf(result));
 	}
 
-	inline float Vector3::DistanceSquared(Vector3* vector1, Vector3* vector2)
+	inline float Vector3::DistanceSquared(Vector3& vector1, Vector3& vector2)
 	{
-		return (vector1->x - vector2->x) * (vector1->x - vector2->x) +
-			   (vector1->y - vector2->y) * (vector1->y - vector2->y) +
-			   (vector1->z - vector2->z) * (vector1->z - vector2->z);
+		return (vector1.x - vector2.x) * (vector1.x - vector2.x) +
+			   (vector1.y - vector2.y) * (vector1.y - vector2.y) +
+			   (vector1.z - vector2.z) * (vector1.z - vector2.z);
 	}
 
-	inline Vector3 Vector3::Normalize(Vector3* value)
+	inline Vector3 Vector3::Normalize(Vector3& value)
 	{
-		auto Factor = Distance(value, &zero());
+		auto Factor = Distance(value, zero());
 		Factor = 1.0f / Factor;
-		return Vector3(value->x * Factor, value->y * Factor, value->z * Factor);
+		return Vector3(value.x * Factor, value.y * Factor, value.z * Factor);
 	}
 
 	inline Vector3 Vector3::Reflect(Vector3& v1, Vector3& v2)

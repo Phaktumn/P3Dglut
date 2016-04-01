@@ -8,7 +8,6 @@ Object::Object(char path[]): model(nullptr)
 	strcpy(this->path, path);
 }
 
-
 Object::~Object()
 {
 }

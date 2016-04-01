@@ -9,6 +9,7 @@
 #include "Collider.h"
 #include "../../Vars/vec3f.h"
 #include "RigidBody.h"
+#include "Collisions/SphereCollider.h"
 
 class RigidBody;
 class Collider;
@@ -17,6 +18,16 @@ class PhysicsObject
 {
 public:
 	explicit PhysicsObject(vec::Vector3 pos, Collider& collider);
+	/* No Collisions Expected */
+	explicit PhysicsObject(vec::Vector3 pos, float Mass) : m_collider(Collider(1)){
+		m_collider.AddReference();
+		m_position = pos;
+		m_rotation = vec::Vector3::zero();
+		rigidBody = new RigidBody(Mass);
+		rigidBody->initializeRigidBodies(m_position);
+		rigidBody->addForce(vec::Vector3::zero());
+	}
+
 	~PhysicsObject();
 
 	void Simulate(float deltaTime);
@@ -31,6 +42,7 @@ public:
 	void setKinematic(bool state);
 	RigidBody& getRigidBody() const;
 	void setForce(vec::Vector3& force);
+	void setVelocity(vec::Vector3& velocity);
 
 private:
 	vec::Vector3 m_position;
@@ -38,7 +50,7 @@ private:
 	vec::Vector3 m_velocity;
 	vec::Vector3 m_Force;
 	Collider& m_collider;
-	RigidBody* rigidBody = new RigidBody(1000);
+	RigidBody* rigidBody;
 	bool Kinematic = false;
 };
 
