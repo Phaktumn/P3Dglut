@@ -90,10 +90,20 @@
     <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Main\Planets\Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Main\Planets\SolarSystem.cpp">
+=======
+    <ClCompile Include="src\ECS\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\EntityFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\TypeMapper.cpp">
+>>>>>>> origin/master
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,10 +198,29 @@
     <ClInclude Include="src\Misc\Debug\IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\Main\Planets\Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Main\Planets\SolarSystem.h">
+=======
+    <ClInclude Include="src\ECS\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\EntityFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\TypeMapper.h">
+>>>>>>> origin/master
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -147,8 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="src\Main\Planets\SolarSystem.cpp" />
     <ClCompile Include="src\Main\Planets\Planet.cpp" />
+=======
+    <ClCompile Include="src\ECS\Engine.cpp" />
+    <ClCompile Include="src\ECS\EntityFactory.cpp" />
+    <ClCompile Include="src\ECS\TypeMapper.cpp" />
+>>>>>>> origin/master
     <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp" />
     <ClCompile Include="src\Misc\Physics\BoundingSphere.cpp" />
     <ClCompile Include="src\Misc\Physics\Collider.cpp" />
@@ -176,8 +182,17 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="src\Main\Planets\SolarSystem.h" />
     <ClInclude Include="src\Main\Planets\Planet.h" />
+=======
+    <ClInclude Include="src\ECS\Component.h" />
+    <ClInclude Include="src\ECS\Engine.h" />
+    <ClInclude Include="src\ECS\Entity.h" />
+    <ClInclude Include="src\ECS\EntityFactory.h" />
+    <ClInclude Include="src\ECS\System.h" />
+    <ClInclude Include="src\ECS\TypeMapper.h" />
+>>>>>>> origin/master
     <ClInclude Include="src\Misc\Debug\IO.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />
     <ClInclude Include="src\Misc\Physics\BoundingSphere.h" />
