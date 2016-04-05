@@ -53,7 +53,6 @@ void DisplayList::RenderModel(Object* model)
 {
 	glNewList(list + index, GL_COMPILE);
 	model->renderModel();
-	glEnd();
 	glEndList();
 	index++;
 }

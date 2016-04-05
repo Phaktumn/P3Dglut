@@ -9,13 +9,14 @@ class Camera
 public:
 	//gluLookAt()
 	explicit Camera(Player& player);
-	~Camera();
+	explicit Camera(vec::Vector3& position, float rotationAngle);
+	virtual ~Camera();
 
 	//Sets the player to follow!
 	Player* player;
 
-	void Update(float deltaTime);
-	void Draw() const;
+	virtual void Update(float deltaTime);
+	virtual void Draw() const;
 
 	vec::Vector3 get_loook_at_vector3() const
 	{ return this->lookAt; }
@@ -29,7 +30,7 @@ public:
 	float get_rotationangle_() const 
 	{ return rotationAngle; }
 
-private:
+protected:
 	vec::Vector3 lookAt;
 	vec::Vector3 eye;
 	vec::Vector3 upVec;

@@ -13,6 +13,10 @@ public:
 	void Simulate(float deltaTime);
 	void Draw() const;
 
+	std::string getPosition() const{
+		return m_Position.debugString();
+	}
+
 private:
 	std::string m_Name;
 	vec::Vector3 m_Position;

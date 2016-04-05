@@ -5,12 +5,12 @@
 class SolarSystem
 {
 public:
-	explicit SolarSystem(const int PlanetCount);
+	SolarSystem();
 	~SolarSystem();
 
 	void Load();
 	void Simulate(float deltaTime);
-	void Draw();
+	void Draw() const;
 
 private: 
 	GLuint m_list;

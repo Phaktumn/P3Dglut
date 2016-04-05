@@ -4,10 +4,9 @@
 #include "Keyboard/Keyboard.h"
 #include "../Misc/Physics/Mesh/Plane.h"
 #include "Planets/SolarSystem.h"
+#include "Camera/StaticCamera.h"
 
 #define _CRT_SECURE_NO_WARNINGS
-#define _RENDER_LANDSCAPE        0
-#define _RENDER_PLANE            0
 #define _DEBUG_                  1
 
 Game* Game::instance = nullptr;
@@ -19,8 +18,8 @@ DisplayList * Game::list1 = new DisplayList(3);
 Lightning * Game::lights = new Lightning(1);
 Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
-
-SolarSystem* solarSystem = new SolarSystem(12);
+Camera* camera;
+SolarSystem* solarSystem = new SolarSystem();
 
 Game::Game(int argc, char** argv)
 {
@@ -55,6 +54,8 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glCullFace(GL_CW);
 	glFrontFace(GL_CCW);
 
+	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
+	camera = new StaticCamera(vec::Vector3(0, 20, 300), 0);
 	solarSystem->Load();
 
 	//224,255,255
@@ -83,6 +84,7 @@ void Game::resize(int width, int height)
 void Game::Update()
 {
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
+	camera->Update(gameTime.getDeltaTime());
 	solarSystem->Simulate(gameTime.getDeltaTime());
 	glutPostRedisplay();
 }
@@ -95,19 +97,9 @@ GLvoid Game::render()
 	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 1000);
 
 	glLoadIdentity();
-	gluLookAt(0, 20, 100, 
-			  0, 0, 0, 
-			  0, 1, 0);
-
+	camera->Draw();
 	solarSystem->Draw();
 
-#if _RENDER_LANDSCAPE 1
-	glCallList(list1->getList(2));
-#endif
-#if _RENDER_PLANE 1
-	//Desenhar plano
-	glCallList(list1->getList(3));
-#endif
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());
 	text.drawText(fps, vec::Vector3(20, 20, 0), 0.1);
