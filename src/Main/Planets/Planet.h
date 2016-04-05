@@ -16,7 +16,7 @@ public:
 	void Simulate(float deltaTime);
 	void Draw() const;
 
-	void addMoon(Moon* moon);
+	void addMoon(float distanceToPlanet, float radius);
 
 	std::string getPosition() const{
 		return m_Position.debugString();

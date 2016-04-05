@@ -23,21 +23,24 @@ void Moon::Load()
 
 void Moon::Update(float deltaTime)
 {
-	this->m_position = planet_.getPositionVec() 
-		+ m_distance_to_planet;
-
 	//Rotate 
-	m_rotation_angle += 0.01f;
-	if (m_rotation_angle >= 360) m_rotation_angle -= m_rotation_angle;
+	m_rotation_angle += 0.1f;
+	if (m_rotation_angle >= 360) 
+		m_rotation_angle -= m_rotation_angle;
+
+	m_position = planet_.getPositionVec();
+	m_position.x += cos(MathHelper::ToRadians(m_rotation_angle)) * m_distance_to_planet;
+	//ReWrite This ples!
+	m_position.y += (sin(MathHelper::ToRadians(m_rotation_angle)) +
+		cos(MathHelper::ToRadians(m_rotation_angle))) * m_distance_to_planet;
+	m_position.z += sin(MathHelper::ToRadians(m_rotation_angle)) * m_distance_to_planet;
 }
 
 void Moon::Draw() const
 {
 	glPushMatrix();
 	glTranslatef(m_position.x, m_position.y, m_position.z);
-	glRotatef(m_rotation_angle, m_northPoleNormal.x, m_northPoleNormal.y, m_northPoleNormal.z);
 	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
-	//m_Sphere->renderModel();
 	glCallList(SolarSystem::m_list + 1);
 	glPopMatrix();
 }

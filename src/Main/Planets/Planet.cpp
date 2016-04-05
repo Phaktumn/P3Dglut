@@ -20,6 +20,8 @@ Planet::~Planet()
 	for (size_t i = 0; i < moons.size(); i++){
 		delete(moons[i]);
 	}
+	delete m_planet_object_;
+	delete m_Sphere;
 }
 
 void Planet::Load() const
@@ -48,7 +50,6 @@ void Planet::Draw() const
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	glScalef(m_scale, m_scale, m_scale);
-	//m_Sphere->renderModel();
 	glCallList(SolarSystem::m_list + 1);
 	glPopMatrix();
 
@@ -57,9 +58,9 @@ void Planet::Draw() const
 	}
 }
 
-void Planet::addMoon(Moon* moon)
+void Planet::addMoon(float distanceToPlantet, float radius)
 {
-	moons.push_back(moon);
+	moons.push_back(new Moon(*this, distanceToPlantet, radius));
 	moons[m_moon_index]->Load();
 	m_moon_index++;
 }

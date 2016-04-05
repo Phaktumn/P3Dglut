@@ -15,6 +15,6 @@ public:
 	static GLuint m_list;
 
 private: 
-	std::vector<Planet> m_Planets;
+	std::vector<Planet*> m_Planets;
 };
 
