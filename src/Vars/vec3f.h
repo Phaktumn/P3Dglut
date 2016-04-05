@@ -67,6 +67,12 @@ namespace vec
 			return vec;
 		}
 
+		Vector3 operator+(const float v) const
+		{
+			return Vector3(this->x + v, 
+				this->y + v, this->z + v);
+		}
+
 		void operator+=(const Vector3 & v)
 		{
 			this->x += v.x;

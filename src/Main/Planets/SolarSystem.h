@@ -12,8 +12,9 @@ public:
 	void Simulate(float deltaTime);
 	void Draw() const;
 
+	static GLuint m_list;
+
 private: 
-	GLuint m_list;
 	std::vector<Planet> m_Planets;
 };
 

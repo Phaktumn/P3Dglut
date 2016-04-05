@@ -1,10 +1,10 @@
 #include "SolarSystem.h"
 #include "../../Misc/Debug/IO.h"
 
+GLuint SolarSystem::m_list = glGenLists(1);
+
 SolarSystem::SolarSystem()
 {
-	m_list = glGenLists(1);
-
 	//Add Sun
 	m_Planets.push_back(Planet(std::string("Modelos3D/Sun.obj"),
 		std::string("Sun"), 0.0f, 0.5f, vec::Vector3(0, 0, 0), 15.0f));
@@ -30,17 +30,16 @@ SolarSystem::~SolarSystem()
 
 }
 
-
 void SolarSystem::Load()
 {
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i].Load();
 	}
 
-	glNewList(1, GL_COMPILE);
-	for (size_t i = 0; i < m_Planets.size(); i++) {
-		m_Planets[i].Draw();
-	}
+	m_Planets[1].addMoon(new Moon(m_Planets[1], 5));
+
+	glNewList(m_list + 1, GL_COMPILE);
+		m_Planets[0].getObject().renderModel();
 	glEndList();
 }
 
@@ -56,5 +55,4 @@ void SolarSystem::Draw() const
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i].Draw();
 	}
-	//glCallList(m_list + 1);
 }

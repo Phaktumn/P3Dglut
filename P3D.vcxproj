@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Moon.cpp" />
     <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
     <ClCompile Include="src\Main\Planets\SolarSystem.cpp" />
     <ClCompile Include="src\Main\Planets\Planet.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="src\Main\Camera\StaticCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Moon.h" />
     <ClInclude Include="src\Main\Camera\MultyPurposeCamera.h" />
     <ClInclude Include="src\Main\Planets\SolarSystem.h" />
     <ClInclude Include="src\Main\Planets\Planet.h" />
