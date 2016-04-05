@@ -33,7 +33,7 @@
     <ClCompile Include="src\Misc\Terrain.cpp" />
     <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
     <ClCompile Include="src\Main\Camera\StaticCamera.cpp" />
-    <ClCompile Include="Moon.cpp" />
+    <ClCompile Include="src\Main\Planets\Moon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Main\Planets\SolarSystem.h" />
@@ -75,7 +75,7 @@
     <ClInclude Include="src\Vars\vec3f.h" />
     <ClInclude Include="src\Misc\Terrain.h" />
     <ClInclude Include="src\Main\Camera\StaticCamera.h" />
-    <ClInclude Include="src\Main\Camera\MultyPurposeCamera.h" />
-    <ClInclude Include="Moon.h" />
+    <ClInclude Include="src\Main\Planets\Moon.h" />
+    <ClInclude Include="src\Main\Camera\MultiPurposeCamera.h" />
   </ItemGroup>
 </Project>

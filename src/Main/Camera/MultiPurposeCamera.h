@@ -1,12 +1,12 @@
 #pragma once
 #include "Camera.h"
 
-class StaticCamera :
+class MultiPurposeCamera :
 	public Camera
 {
 public:
-	StaticCamera(vec::Vector3& position, float rotationAngle);
-	~StaticCamera();
+	explicit MultiPurposeCamera(Player& player);
+	~MultiPurposeCamera();
 
 	void Update(float deltaTime) override;
 	void Draw() const override;

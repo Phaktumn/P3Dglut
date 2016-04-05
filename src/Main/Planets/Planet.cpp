@@ -1,5 +1,6 @@
 #include "Planet.h"
 #include "SolarSystem.h"
+#include "Moon.h"
 
 Planet::Planet(std::string& modelPath, std::string& name, 
 	float orbitDuration, float rotatioDuration, vec::Vector3& position, float scale) :
@@ -59,10 +60,6 @@ void Planet::Draw() const
 void Planet::addMoon(Moon* moon)
 {
 	moons.push_back(moon);
-	moons[m_moon_index]->m_position.x = 
-		this->m_Position.x + moons[m_moon_index]->m_distance_to_planet;
-	moons[m_moon_index]->m_position.y =
-		this->m_Position.y + moons[m_moon_index]->m_distance_to_planet;
-	moons[m_moon_index]->m_position.z = this->m_Position.z;
+	moons[m_moon_index]->Load();
 	m_moon_index++;
 }

@@ -2,7 +2,6 @@
 #include "../../Vars/vec3f.h"
 #include "../../Misc/Physics/PhysicsObject.h"
 #include "../../Vars/Object.h"
-#include "../../../Moon.h"
 #include <vector>
 
 class Moon;

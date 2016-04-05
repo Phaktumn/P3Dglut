@@ -1,19 +1,19 @@
-#include "MultyPurposeCamera.h"
+#include "MultiPurposeCamera.h"
 
 
 
-MultyPurposeCamera::MultyPurposeCamera(Player& player)
+MultiPurposeCamera::MultiPurposeCamera(Player& player)
 	: Camera(player)
 {
 
 }
 
 
-MultyPurposeCamera::~MultyPurposeCamera()
+MultiPurposeCamera::~MultiPurposeCamera()
 {
 }
 
-void MultyPurposeCamera::Update(float deltaTime)
+void MultiPurposeCamera::Update(float deltaTime)
 {
 	//this is the center!
 	if (player != nullptr)
@@ -27,7 +27,7 @@ void MultyPurposeCamera::Update(float deltaTime)
 	Camera::Update(deltaTime);
 }
 
-void MultyPurposeCamera::Draw() const
+void MultiPurposeCamera::Draw() const
 {
 	Camera::Draw();
 
