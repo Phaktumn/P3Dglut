@@ -59,3 +59,12 @@ void SolarSystem::Draw() const
 		m_Planets[i]->Draw();
 	}
 }
+
+void SolarSystem::renderOrbits()
+{
+	glDisable(GL_LIGHTING);
+	for (size_t i = 0; i < m_Planets.size(); i++) {
+		m_Planets[i]->renderOrbit();
+	}
+	glEnable(GL_LIGHTING);
+}

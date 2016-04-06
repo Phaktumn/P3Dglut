@@ -92,13 +92,15 @@ void Game::Update()
 GLvoid Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0, 0, 0, 0.0);
+	glClearColor(0, 0, 0, 1.0);
 	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 1000);
 
 	glLoadIdentity();
+	glColor3f(1, 1, 1);
 	camera->Draw();
 	solarSystem->Draw();
+	solarSystem->renderOrbits();
 
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());

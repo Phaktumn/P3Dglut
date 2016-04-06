@@ -17,6 +17,7 @@ public:
 	void Draw() const;
 
 	void addMoon(float distanceToPlanet, float radius);
+	void renderOrbit();
 
 	std::string getPosition() const{
 		return m_Position.debugString();

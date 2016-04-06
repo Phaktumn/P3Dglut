@@ -60,7 +60,24 @@ void Planet::Draw() const
 
 void Planet::addMoon(float distanceToPlantet, float radius)
 {
-	moons.push_back(new Moon(*this, distanceToPlantet, radius));
+	moons.push_back(new Moon(*this, distanceToPlantet, radius, 30));
 	moons[m_moon_index]->Load();
 	m_moon_index++;
+}
+
+void Planet::renderOrbit()
+{
+	glBegin(GL_LINE_STRIP);
+	for (float i = 0.0f; i < 6.28318530375f; i+=0.05f){
+		glVertex3f(sin(i) * m_orbit_distance, m_Position.y, cos(i) * m_orbit_distance);
+	}
+	glVertex3f(m_orbit_distance, m_Position.y , m_orbit_distance);
+	glEnd();
+
+	glPushMatrix();
+	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
+	for (size_t i = 0; i < moons.size(); i++){
+		moons[i]->renderOrbit();
+	}
+	glPopMatrix();
 }

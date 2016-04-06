@@ -12,6 +12,8 @@ public:
 	void Simulate(float deltaTime);
 	void Draw() const;
 
+	void renderOrbits();
+
 	static GLuint m_list;
 
 private: 
