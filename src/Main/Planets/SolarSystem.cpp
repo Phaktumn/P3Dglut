@@ -1,29 +1,39 @@
 #include "SolarSystem.h"
 #include "../../Misc/Debug/IO.h"
-#include "Moon.h"
 
 GLuint SolarSystem::m_list = glGenLists(1);
 
 SolarSystem::SolarSystem()
 {
-	//Add Sun
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
-		std::string("Sun"), 0.0f, 0.5f, vec::Vector3(0, 0, 0), 15.0f));
+		std::string("Sun"), 0.1f, 0.5f, vec::Vector3(0, 0, 0), 50));
 
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"), 
-		std::string("DmnBig"), 0.01f, 0.5f, vec::Vector3(0, 0, 150), 3.0));
+		std::string("Mercurio"), 88.0f, 0.5f, vec::Vector3(0, 0, 70), 0.3f));
 
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"), 
-		std::string("Earth"), 0.09f, 0.6f, vec::Vector3(0, 0, 20), 1.0));
+		std::string("Venus"), 224.0f, 0.6f, vec::Vector3(0, 0, 108), 0.4f));
 	
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
-		std::string("Jupiter"), 0.05f, 0.6f, vec::Vector3(0, 0, 85), 4));
+		std::string("Terra"), 365.0f, 0.6f, vec::Vector3(0, 0, 150), 1.0f));
 	
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
-		std::string("Uranus"), 0.03f, 0.6f, vec::Vector3(0, 0, 100), 4.5));
+		std::string("Mars"), .0f, 0.6f, vec::Vector3(0, 0, 228), 0.8f));
+
+	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
+		std::string("Jupiter"), 4332.0f, 0.6f, vec::Vector3(0, 0, 772), 11.5f));
 	
 	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
-		std::string("Mars"), 0.08f, 0.6f, vec::Vector3(0, 0, 25), 0.85));
+		std::string("Saturn"), 10760.0f, 0.6f, vec::Vector3(0, 0, 1443), 9.5f));
+
+	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
+		std::string("Uranus"), 30700.0f, 0.6f, vec::Vector3(0, 0, 2871), 9.5f));
+
+	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
+		std::string("Neptune"), 60200.0f, 0.6f, vec::Vector3(0, 0, 4504), 9.5f));
+
+	m_Planets.push_back(new Planet(std::string("Modelos3D/Sun.obj"),
+		std::string("Pluto"), 90600.0f, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
 }
 
 SolarSystem::~SolarSystem()
@@ -39,7 +49,7 @@ void SolarSystem::Load()
 		m_Planets[i]->Load();
 	}
 
-	m_Planets[1]->addMoon(10, 0.5f);
+	m_Planets[3]->addMoon(10, 0.5f);
 
 	glNewList(m_list + 1, GL_COMPILE);
 		m_Planets[0]->getObject().renderModel();
@@ -63,8 +73,12 @@ void SolarSystem::Draw() const
 void SolarSystem::renderOrbits()
 {
 	glDisable(GL_LIGHTING);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->renderOrbit();
 	}
+	glDisable(GL_BLEND);
 	glEnable(GL_LIGHTING);
 }

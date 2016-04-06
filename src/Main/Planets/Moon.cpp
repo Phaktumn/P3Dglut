@@ -24,9 +24,6 @@ void Moon::Load()
 
 void Moon::Update(float deltaTime)
 {
-	m_northPoleNormal = vec::Vector3::Cross(m_position - planet_.getPositionVec(),
-		planet_.getPositionVec());
-
 	//Rotate 
 	m_rotation_angle += 0.1f;
 	if (m_rotation_angle >= 360) 
@@ -41,16 +38,11 @@ void Moon::Update(float deltaTime)
 
 void Moon::Draw() const
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-
 	glPushMatrix();
 	glTranslatef(m_position.x, m_position.y, m_position.z);
 	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
 	glCallList(SolarSystem::m_list + 1);
 	glPopMatrix();
-
-	glDisable(GL_BLEND);
 }
 
 void Moon::renderOrbit() const

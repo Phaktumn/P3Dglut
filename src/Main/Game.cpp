@@ -2,7 +2,6 @@
 #include <iostream>
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
-#include "../Misc/Physics/Mesh/Plane.h"
 #include "Planets/SolarSystem.h"
 #include "Camera/StaticCamera.h"
 
@@ -55,13 +54,13 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glFrontFace(GL_CCW);
 
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
-	camera = new StaticCamera(vec::Vector3(0, 20, 300), 0);
+	camera = new StaticCamera(vec::Vector3(0, 100, 0), 0);
 	solarSystem->Load();
 
 	//224,255,255
 	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(56, 255), 0, 0), 0.5);
-	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(189, 255)), 1);
-	lights->setSpecular(vec::Vector3(125), 1);
+	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(189, 255)), 0.5);
+	lights->setSpecular(vec::Vector3(125), 0.5);
 	lights->enableLight();
 
 	glutMainLoop();
@@ -77,7 +76,7 @@ void Game::resize(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, ratio, 0.01, 1000);
+	gluPerspective(45, ratio, 0.01, 10000);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -94,7 +93,7 @@ GLvoid Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1.0);
 	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 1000);
+	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 10000);
 
 	glLoadIdentity();
 	glColor3f(1, 1, 1);
@@ -104,6 +103,7 @@ GLvoid Game::render()
 
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());
+	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
 	text.drawText(fps, vec::Vector3(20, 20, 0), 0.1);
 #endif
 	glutSwapBuffers();	

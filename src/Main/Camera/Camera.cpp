@@ -6,6 +6,7 @@ Camera::Camera(Player& player): rotationAngle(0)
 	this->lookAt = vec::Vector3::zero();
 	this->eye = vec::Vector3::zero();
 	this->upVec = vec::Vector3::up();
+	this->m_Position = vec::Vector3(0, 0, 0);
 }
 
 Camera::Camera(vec::Vector3& position, float rotationAngle)

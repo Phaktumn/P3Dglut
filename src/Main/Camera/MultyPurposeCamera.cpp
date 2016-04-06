@@ -30,7 +30,5 @@ void MultiPurposeCamera::Update(float deltaTime)
 void MultiPurposeCamera::Draw() const
 {
 	Camera::Draw();
-
-	//Pila pequena
 }
 

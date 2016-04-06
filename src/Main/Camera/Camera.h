@@ -35,6 +35,8 @@ protected:
 	vec::Vector3 eye;
 	vec::Vector3 upVec;
 
+	vec::Vector3 m_Position;
+
 	//Player angle rotation in Degrees
 	float rotationAngle;
 };

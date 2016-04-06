@@ -31,7 +31,7 @@ void Planet::Load() const
 
 void Planet::Simulate(float deltaTime)
 {
-	m_orbit_Angle += m_Orbit_Duration;
+	m_orbit_Angle += 10 / m_Orbit_Duration;
 	if(m_orbit_Angle >= 360) {
 		m_orbit_Angle -= 360;
 	}
