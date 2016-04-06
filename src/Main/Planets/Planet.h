@@ -16,6 +16,7 @@ public:
 	void Simulate(float deltaTime);
 	void Draw() const;
 
+	void loadTexture(std::string& path);
 	void addMoon(float distanceToPlanet, float radius);
 	void renderOrbit();
 
@@ -42,6 +43,7 @@ private:
 	Object* m_Sphere;
 
 	GLuint list;
+	GLuint m_planet_texture;
 
 	float m_scale = 0;
 

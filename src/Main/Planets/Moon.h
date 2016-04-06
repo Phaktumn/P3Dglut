@@ -16,7 +16,7 @@ public:
 	vec::Vector3 m_position;
 	float m_distance_to_planet;
 
-	void renderOrbit();
+	void renderOrbit() const;
 
 private:
 	/*Orbit Angle*/

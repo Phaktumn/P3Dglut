@@ -74,8 +74,8 @@
     <ClInclude Include="src\Vars\MathHelper.h" />
     <ClInclude Include="src\Vars\vec3f.h" />
     <ClInclude Include="src\Misc\Terrain.h" />
-    <ClInclude Include="src\Main\Camera\StaticCamera.h" />
     <ClInclude Include="src\Main\Planets\Moon.h" />
     <ClInclude Include="src\Main\Camera\MultiPurposeCamera.h" />
+    <ClInclude Include="src\Main\Camera\StaticCamera.h" />
   </ItemGroup>
 </Project>

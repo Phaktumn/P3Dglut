@@ -41,20 +41,24 @@ void Moon::Update(float deltaTime)
 
 void Moon::Draw() const
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
 	glPushMatrix();
 	glTranslatef(m_position.x, m_position.y, m_position.z);
 	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
 	glCallList(SolarSystem::m_list + 1);
 	glPopMatrix();
+
+	glDisable(GL_BLEND);
 }
 
-void Moon::renderOrbit()
+void Moon::renderOrbit() const
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 6.28318530375f; i += 0.05f) {
+	for (float i = 0.0f; i < 6.28318530375f; i += 3.14 / 180) {
 		glVertex3f(sin(i) * m_distance_to_planet, 
 			m_position.y, cos(i) * m_distance_to_planet);
 	}
-	glVertex3f(m_distance_to_planet, m_position.y, m_distance_to_planet);
 	glEnd();
 }

@@ -58,6 +58,11 @@ void Planet::Draw() const
 	}
 }
 
+void Planet::loadTexture(std::string& path){
+	m_planet_texture = 0;
+	
+}
+
 void Planet::addMoon(float distanceToPlantet, float radius)
 {
 	moons.push_back(new Moon(*this, distanceToPlantet, radius, 30));
@@ -68,10 +73,11 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 6.28318530375f; i+=0.05f){
-		glVertex3f(sin(i) * m_orbit_distance, m_Position.y, cos(i) * m_orbit_distance);
+	for (float i = 0.0f; i < 6.28318530375f; i+= 3.14 / 180){
+		glVertex3f(sin(i) * m_orbit_distance,
+			m_Position.y, 
+			cos(i) * m_orbit_distance);
 	}
-	glVertex3f(m_orbit_distance, m_Position.y , m_orbit_distance);
 	glEnd();
 
 	glPushMatrix();
