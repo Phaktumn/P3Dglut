@@ -1,7 +1,6 @@
 #pragma once
 #include "../../Vars/vec3f.h"
 #include "../../Misc/Physics/PhysicsObject.h"
-#include "../../Vars/Object.h"
 #include <vector>
 #include "../../LoadTGAs/Texture.h"
 
@@ -12,7 +11,7 @@ bool LoadTGA(Texture *, char *);
 class Planet
 {
 public:
-	explicit Planet(std::string& modelPath, std::string& name, 
+	explicit Planet(const std::string& modelPath, const  std::string& name,
 		float orbitDuration, float rotatioDuration, vec::Vector3& pos, float scale);
 	~Planet();
 	void Load();
@@ -35,18 +34,13 @@ public:
 		list = _list;
 	}
 
-	Object& getObject() const{
-		return *m_Sphere;
-	}
-
 private:
 	std::string m_texture_path;
 	Texture m_texture;
 	std::string m_Name;
 	vec::Vector3 m_Position;
-	PhysicsObject* m_planet_object_;
-	Object* m_Sphere;
 
+	GLuint m_idtexture;
 	GLuint list;
 
 	float m_scale = 0;

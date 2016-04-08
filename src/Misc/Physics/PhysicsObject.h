@@ -9,7 +9,6 @@
 #include "Collider.h"
 #include "../../Vars/vec3f.h"
 #include "RigidBody.h"
-#include "Collisions/SphereCollider.h"
 
 class RigidBody;
 class Collider;

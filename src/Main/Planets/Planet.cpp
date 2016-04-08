@@ -2,13 +2,12 @@
 #include "SolarSystem.h"
 #include "Moon.h"
 #include "../src/Misc/Debug/IO.h"
-#include "../../LoadTGAs/tga.h"
+#include "../Game.h"
+#include "../../Misc/imageloader.h"
 
-Planet::Planet(std::string& texturePath, std::string& name, 
+Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, vec::Vector3& position, float scale) :
-	m_planet_object_(new PhysicsObject(vec::Vector3(0.0, 0.0, 0.0), 10000.0f)),
-	m_Sphere(new Object(const_cast<char*>("Modelos3D/Sun1.obj"))), list(0), 
-	m_orbit_distance(abs(position.z)), m_rotation(0)
+	list(0), m_orbit_distance(abs(position.z)), m_rotation(0)
 {
 	this->m_Position = position;
 	this->m_Orbit_Duration = orbitDuration;
@@ -23,22 +22,19 @@ Planet::~Planet()
 	for (size_t i = 0; i < moons.size(); i++){
 		delete(moons[i]);
 	}
-	delete m_planet_object_;
-	delete m_Sphere;
 }
 
 void Planet::Load()
 {
-	m_Sphere->loadModel();
 	loadTexture();
 }
 
 void Planet::Simulate(float deltaTime)
 {
+	m_rotation += m_Rotation_Duration;
+	if (m_rotation >= 360) { m_rotation -= 360; }
 	m_orbit_Angle += 10 / m_Orbit_Duration;
-	if(m_orbit_Angle >= 360) {
-		m_orbit_Angle -= 360;
-	}
+	if (m_orbit_Angle >= 360) { m_orbit_Angle -= 360; }
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	m_Position.x = cos(radians) * m_orbit_distance;
 	m_Position.z = sin(radians) * m_orbit_distance;
@@ -51,22 +47,44 @@ void Planet::Simulate(float deltaTime)
 
 void Planet::Draw() const
 {
+	Lightning::applyMaterial();
+	glBindTexture(GL_TEXTURE_2D, m_idtexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
+	//Rodar o planeta para a textura parecer legit XD
+	glRotatef(90, 1, 0, 0);
+	glRotatef(m_rotation, 0, 0, -1);
 	glScalef(m_scale, m_scale, m_scale);
-	glBindTexture(GL_TEXTURE_2D, m_texture.texID);
-    //m_Sphere->renderModel();
 	glCallList(SolarSystem::m_list + 1);
-	glPopMatrix();
+    glPopMatrix();
 
 	for (size_t i = 0; i < moons.size(); i++) {
 		moons[i]->Draw();
 	}
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Planet::loadTexture()
 {
-	if (LoadTGA(&m_texture, const_cast<char*>(m_texture_path.c_str()))) {
+	Image* image = loadBMP(m_texture_path.c_str());	
+	GLuint textureId;
+	glGenTextures(1, &textureId);			 //Make room for our texture
+	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
+											 //Map the image to the texture
+	glTexImage2D(GL_TEXTURE_2D,       //Always GL_TEXTURE_2D
+		0,                            //0 for now
+		GL_RGB,                       //Format OpenGL uses for image
+		image->width, image->height,  //Width and height
+		0,                            //The border of the image
+		GL_RGB,					      //GL_RGB, because pixels are stored in RGB format
+		GL_UNSIGNED_BYTE,			  //GL_UNSIGNED_BYTE, because pixels are stored
+									  //as unsigned numbers
+		image->pixels);               //The actual pixel data
+	m_idtexture = textureId;		  //Returns the id of the texture
+	delete image;
+	 /*if (LoadTGA(&m_texture, const_cast<char*>(m_texture_path.c_str()))) {
 		glGenTextures(1, &m_texture.texID);
 		glTexImage2D(GL_TEXTURE_2D, 0, m_texture.texID / 8, m_texture.width,
 			m_texture.height, 0, m_texture.type, GL_UNSIGNED_BYTE, m_texture.imageData);
@@ -81,7 +99,7 @@ void Planet::loadTexture()
 	else
 	{
 		IO::printError(std::string("TEXTURE NOT FOUND"));
-	}
+	}*/
 }
 
 void Planet::addMoon(float distanceToPlantet, float radius)

@@ -157,6 +157,7 @@
     <ClCompile Include="src\ECS\Engine.cpp" />
     <ClCompile Include="src\ECS\EntityFactory.cpp" />
     <ClCompile Include="src\ECS\TypeMapper.cpp" />
+    <ClCompile Include="src\Misc\imageloader.cpp" />
     <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp" />
     <ClCompile Include="src\Misc\Physics\BoundingSphere.cpp" />
     <ClCompile Include="src\Misc\Physics\Collider.cpp" />
@@ -170,18 +171,14 @@
     <ClCompile Include="src\Vars\Quaternion\Quaternion.cpp" />
     <ClCompile Include="src\Vars\Matrix\Matrix.cpp" />
     <ClCompile Include="src\Main\Player\Player.cpp" />
-    <ClCompile Include="src\Misc\Physics\Collisions\SphereCollider.cpp" />
-    <ClCompile Include="src\Misc\Physics\Collisions\BoxCollider.cpp" />
     <ClCompile Include="src\Misc\Lights\Lightning.cpp" />
     <ClCompile Include="src\Vars\dL\DisplayList.cpp" />
     <ClCompile Include="src\Vars\Object.cpp" />
     <ClCompile Include="src\Misc\GLM\glm.cpp" />
     <ClCompile Include="src\Misc\RenderText.cpp" />
-    <ClCompile Include="src\Misc\ImageLoader.cpp" />
     <ClCompile Include="src\Misc\Axis.cpp" />
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Misc\Terrain.cpp" />
     <ClCompile Include="src\Main\Camera\StaticCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,7 +194,9 @@
     <ClInclude Include="src\ECS\EntityFactory.h" />
     <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\ECS\TypeMapper.h" />
+    <ClInclude Include="src\Main\Planets\Universe.h" />
     <ClInclude Include="src\Misc\Debug\IO.h" />
+    <ClInclude Include="src\Misc\imageloader.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />
     <ClInclude Include="src\Misc\Physics\BoundingSphere.h" />
     <ClInclude Include="src\Misc\Physics\Collider.h" />
@@ -214,19 +213,15 @@
     <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
     <ClInclude Include="src\Vars\Matrix\Matrix.h" />
     <ClInclude Include="src\Main\Player\Player.h" />
-    <ClInclude Include="src\Misc\Physics\Collisions\SphereCollider.h" />
-    <ClInclude Include="src\Misc\Physics\Collisions\BoxCollider.h" />
     <ClInclude Include="src\Misc\Lights\Lightning.h" />
     <ClInclude Include="src\Vars\dL\DisplayList.h" />
     <ClInclude Include="src\Vars\Object.h" />
     <ClInclude Include="src\Misc\GLM\glm.h" />
     <ClInclude Include="src\Misc\RenderText.h" />
-    <ClInclude Include="src\Misc\ImageLoader.h" />
     <ClInclude Include="src\Misc\Axis.h" />
     <ClInclude Include="src\Main\Game.h" />
     <ClInclude Include="src\Vars\MathHelper.h" />
     <ClInclude Include="src\Vars\vec3f.h" />
-    <ClInclude Include="src\Misc\Terrain.h" />
     <ClInclude Include="src\Main\Camera\StaticCamera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

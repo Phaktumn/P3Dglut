@@ -18,5 +18,6 @@ public:
 
 private: 
 	std::vector<Planet*> m_Planets;
+	GLUquadricObj* sphere = nullptr;
 };
 

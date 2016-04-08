@@ -6,7 +6,8 @@ class Planet;
 class Moon
 {
 public:
- 	explicit Moon(Planet& planet,float distanceToPLanet, float scale, float orbitAngle);
+ 	explicit Moon(Planet& planet,
+		float distanceToPLanet, float scale, float orbitAngle);
 	~Moon();
 
 	void Load();

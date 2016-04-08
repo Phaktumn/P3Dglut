@@ -14,7 +14,6 @@ RenderText Game::text = RenderText();
 RenderText Game::WTF = RenderText();
 Object * Game::Tree;
 DisplayList * Game::list1 = new DisplayList(3);
-Lightning * Game::lights = new Lightning(1);
 Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
 Camera* camera;
@@ -57,11 +56,7 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	camera = new StaticCamera(vec::Vector3(0, 100, 0), 0);
 	solarSystem->Load();
 
-	//224,255,255
-	lights->setAmbientColor(vec::Vector3(MathHelper::normalizef(56, 255), 0, 0), 0.5);
-	lights->setDiffuse(vec::Vector3(MathHelper::normalizef(189, 255)), 0.5);
-	lights->setSpecular(vec::Vector3(125), 0.5);
-	lights->enableLight();
+	Lightning::enableLight();
 
 	glutMainLoop();
 
@@ -91,13 +86,12 @@ void Game::Update()
 GLvoid Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0, 0, 0, 1.0);
-	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	gluPerspective(45, glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 0.01, 10000);
 
 	glLoadIdentity();
-	glColor3f(1, 1, 1);
 	camera->Draw();
+
+	Lightning::applyLights();
+
 	solarSystem->Draw();
 	solarSystem->renderOrbits();
 

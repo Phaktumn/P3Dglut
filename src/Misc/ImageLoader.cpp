@@ -17,15 +17,15 @@ namespace {
 	//Converts a four-character array to an integer, using little-endian form
 	int toInt(const char* bytes) {
 		return (int)(((unsigned char)bytes[3] << 24) |
-			((unsigned char)bytes[2] << 16) |
-			((unsigned char)bytes[1] << 8) |
-			(unsigned char)bytes[0]);
+					 ((unsigned char)bytes[2] << 16) |
+					 ((unsigned char)bytes[1] << 8) |
+					 (unsigned char)bytes[0]);
 	}
 
 	//Converts a two-character array to a short, using little-endian form
 	short toShort(const char* bytes) {
 		return (short)(((unsigned char)bytes[1] << 8) |
-			(unsigned char)bytes[0]);
+					   (unsigned char)bytes[0]);
 	}
 
 	//Reads the next four bytes as an integer, using little-endian form
@@ -45,66 +45,66 @@ namespace {
 	//Just like auto_ptr, but for arrays
 	template<class T>
 	class auto_array {
-	private:
-		T* array;
-		mutable bool isReleased;
-	public:
-		explicit auto_array(T* array_ = NULL) :
-			array(array_), isReleased(false) {
-		}
-
-		auto_array(const auto_array<T> &aarray) {
-			array = aarray.array;
-			isReleased = aarray.isReleased;
-			aarray.isReleased = true;
-		}
-
-		~auto_array() {
-			if (!isReleased && array != NULL) {
-				delete[] array;
+		private:
+			T* array;
+			mutable bool isReleased;
+		public:
+			explicit auto_array(T* array_ = NULL) :
+				array(array_), isReleased(false) {
 			}
-		}
 
-		T* get() const {
-			return array;
-		}
-
-		T &operator*() const {
-			return *array;
-		}
-
-		void operator=(const auto_array<T> &aarray) {
-			if (!isReleased && array != NULL) {
-				delete[] array;
+			auto_array(const auto_array<T> &aarray) {
+				array = aarray.array;
+				isReleased = aarray.isReleased;
+				aarray.isReleased = true;
 			}
-			array = aarray.array;
-			isReleased = aarray.isReleased;
-			aarray.isReleased = true;
-		}
 
-		T* operator->() const {
-			return array;
-		}
-
-		T* release() {
-			isReleased = true;
-			return array;
-		}
-
-		void reset(T* array_ = NULL) {
-			if (!isReleased && array != NULL) {
-				delete[] array;
+			~auto_array() {
+				if (!isReleased && array != NULL) {
+					delete[] array;
+				}
 			}
-			array = array_;
-		}
 
-		T* operator+(int i) {
-			return array + i;
-		}
+			T* get() const {
+				return array;
+			}
 
-		T &operator[](int i) {
-			return array[i];
-		}
+			T &operator*() const {
+				return *array;
+			}
+
+			void operator=(const auto_array<T> &aarray) {
+				if (!isReleased && array != NULL) {
+					delete[] array;
+				}
+				array = aarray.array;
+				isReleased = aarray.isReleased;
+				aarray.isReleased = true;
+			}
+
+			T* operator->() const {
+				return array;
+			}
+
+			T* release() {
+				isReleased = true;
+				return array;
+			}
+
+			void reset(T* array_ = NULL) {
+				if (!isReleased && array != NULL) {
+					delete[] array;
+				}
+				array = array_;
+			}
+
+			T* operator+(int i) {
+				return array + i;
+			}
+
+			T &operator[](int i) {
+				return array[i];
+			}
 	};
 }
 
@@ -122,36 +122,36 @@ Image* loadBMP(const char* filename) {
 	int headerSize = readInt(input);
 	int width;
 	int height;
-	switch (headerSize) {
-	case 40:
-		//V3
-		width = readInt(input);
-		height = readInt(input);
-		input.ignore(2);
-		assert(readShort(input) == 24 || !"Image is not 24 bits per pixel");
-		assert(readShort(input) == 0 || !"Image is compressed");
-		break;
-	case 12:
-		//OS/2 V1
-		width = readShort(input);
-		height = readShort(input);
-		input.ignore(2);
-		assert(readShort(input) == 24 || !"Image is not 24 bits per pixel");
-		break;
-	case 64:
-		//OS/2 V2
-		assert(!"Can't load OS/2 V2 bitmaps");
-		break;
-	case 108:
-		//Windows V4
-		assert(!"Can't load Windows V4 bitmaps");
-		break;
-	case 124:
-		//Windows V5
-		assert(!"Can't load Windows V5 bitmaps");
-		break;
-	default:
-		assert(!"Unknown bitmap format");
+	switch(headerSize) {
+		case 40:
+			//V3
+			width = readInt(input);
+			height = readInt(input);
+			input.ignore(2);
+			assert(readShort(input) == 24 || !"Image is not 24 bits per pixel");
+			assert(readShort(input) == 0 || !"Image is compressed");
+			break;
+		case 12:
+			//OS/2 V1
+			width = readShort(input);
+			height = readShort(input);
+			input.ignore(2);
+			assert(readShort(input) == 24 || !"Image is not 24 bits per pixel");
+			break;
+		case 64:
+			//OS/2 V2
+			assert(!"Can't load OS/2 V2 bitmaps");
+			break;
+		case 108:
+			//Windows V4
+			assert(!"Can't load Windows V4 bitmaps");
+			break;
+		case 124:
+			//Windows V5
+			assert(!"Can't load Windows V5 bitmaps");
+			break;
+		default:
+			assert(!"Unknown bitmap format");
 	}
 
 	//Read the data
@@ -163,9 +163,9 @@ Image* loadBMP(const char* filename) {
 
 	//Get the data into the right format
 	auto_array<char> pixels2(new char[width * height * 3]);
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			for (int c = 0; c < 3; c++) {
+	for(int y = 0; y < height; y++) {
+		for(int x = 0; x < width; x++) {
+			for(int c = 0; c < 3; c++) {
 				pixels2[3 * (width * y + x) + c] =
 					pixels[bytesPerRow * y + 3 * x + (2 - c)];
 			}
@@ -175,3 +175,12 @@ Image* loadBMP(const char* filename) {
 	input.close();
 	return new Image(pixels2.release(), width, height);
 }
+
+
+
+
+
+
+
+
+

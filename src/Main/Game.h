@@ -35,7 +35,6 @@ private:
 	static RenderText text;
 	static RenderText WTF;
 	static Object* Tree;
-	static Lightning * lights;
 	static Player* Gamer;
 	static Plane plane;
 	static PhysicsObject* ground;
