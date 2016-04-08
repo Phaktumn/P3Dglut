@@ -1,13 +1,13 @@
 #include "Planet.h"
 #include "SolarSystem.h"
 #include "Moon.h"
-#include "../src/Misc/Debug/IO.h"
+#include "Misc/Debug/IO.h"
 #include "../Game.h"
-#include "../../Misc/imageloader.h"
+#include "Misc/imageloader.h"
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, vec::Vector3& position, float scale) :
-	list(0), m_orbit_distance(abs(position.z)), m_rotation(0)
+	m_idtexture(0), list(0), m_orbit_distance(abs(position.z)), m_rotation(0)
 {
 	this->m_Position = position;
 	this->m_Orbit_Duration = orbitDuration;

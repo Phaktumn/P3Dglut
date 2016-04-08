@@ -2,9 +2,9 @@
 #define PLANE_INCLUDED_H
 
 #pragma once
-#include "../../P3Dglut/src/Vars/vec3f.h"
-#include "../../Physics/IntersectData.h"
-#include "../../Physics/BoundingSphere.h"
+#include <Vars/vec3f.h>
+#include <Misc/Physics/IntersectData.h>
+#include <Misc/Physics/BoundingSphere.h>
 
 class Plane : public Collider
 {
