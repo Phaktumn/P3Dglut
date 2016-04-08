@@ -3,8 +3,11 @@
 #include "../../Misc/Physics/PhysicsObject.h"
 #include "../../Vars/Object.h"
 #include <vector>
+#include "../../LoadTGAs/Texture.h"
 
 class Moon;
+
+bool LoadTGA(Texture *, char *);
 
 class Planet
 {
@@ -12,11 +15,11 @@ public:
 	explicit Planet(std::string& modelPath, std::string& name, 
 		float orbitDuration, float rotatioDuration, vec::Vector3& pos, float scale);
 	~Planet();
-	void Load() const;
+	void Load();
 	void Simulate(float deltaTime);
 	void Draw() const;
 
-	void loadTexture(std::string& path);
+	void loadTexture();
 	void addMoon(float distanceToPlanet, float radius);
 	void renderOrbit();
 
@@ -37,13 +40,14 @@ public:
 	}
 
 private:
+	std::string m_texture_path;
+	Texture m_texture;
 	std::string m_Name;
 	vec::Vector3 m_Position;
 	PhysicsObject* m_planet_object_;
 	Object* m_Sphere;
 
 	GLuint list;
-	GLuint m_planet_texture;
 
 	float m_scale = 0;
 

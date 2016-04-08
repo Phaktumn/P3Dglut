@@ -10,6 +10,7 @@ Object::Object(char path[]): model(nullptr)
 
 Object::~Object()
 {
+
 }
 
 GLvoid Object::loadModel()
@@ -21,7 +22,6 @@ GLvoid Object::loadModel()
 			std::cout << "Error Loading Model!"; 
 			exit(0);
 		}
-		
 		glmUnitize(model);
 		glmLinearTexture(model);
 		glmScale(model, 1.0);
@@ -42,7 +42,6 @@ GLuint Object::getObjecTriangleCount() const
 
 std::string Object::debug() const
 {
-TODO:
 	std::string debug;
 	debug = "{ Object: " + std::string(model->groups->name) + " Triangles: " + std::to_string(getObjecTriangleCount()) + " }";
 	return debug;

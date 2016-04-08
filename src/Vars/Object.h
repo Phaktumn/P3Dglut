@@ -11,6 +11,9 @@ public:
 	GLvoid loadModel();
 	GLvoid renderModel() const;
 
+	GLMmaterial* getMaterial() const
+	{ return model->materials; }
+
 	GLuint getObjecTriangleCount() const;
 
 	std::string debug() const;

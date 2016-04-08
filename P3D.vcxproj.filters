@@ -34,6 +34,7 @@
     <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
     <ClCompile Include="src\Main\Camera\StaticCamera.cpp" />
     <ClCompile Include="src\Main\Planets\Moon.cpp" />
+    <ClCompile Include="src\LoadTGAs\TGALoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Main\Planets\SolarSystem.h" />
@@ -77,5 +78,7 @@
     <ClInclude Include="src\Main\Planets\Moon.h" />
     <ClInclude Include="src\Main\Camera\MultiPurposeCamera.h" />
     <ClInclude Include="src\Main\Camera\StaticCamera.h" />
+    <ClInclude Include="src\LoadTGAs\Texture.h" />
+    <ClInclude Include="src\LoadTGAs\Tga.h" />
   </ItemGroup>
 </Project>

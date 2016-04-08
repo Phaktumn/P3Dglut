@@ -109,6 +109,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>freeglut.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,9 +145,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>freeglut.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\LoadTGAs\TGALoader.cpp" />
     <ClCompile Include="src\Main\Planets\Moon.cpp" />
     <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
     <ClCompile Include="src\Main\Planets\SolarSystem.cpp" />
@@ -182,6 +185,8 @@
     <ClCompile Include="src\Main\Camera\StaticCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LoadTGAs\Texture.h" />
+    <ClInclude Include="src\LoadTGAs\Tga.h" />
     <ClInclude Include="src\Main\Planets\Moon.h" />
     <ClInclude Include="src\Main\Camera\MultiPurposeCamera.h" />
     <ClInclude Include="src\Main\Planets\SolarSystem.h" />
