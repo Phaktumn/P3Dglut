@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Planet.h"
+#include <Misc/RenderText.h>
 
 class SolarSystem
 {
@@ -21,5 +22,6 @@ public:
 private: 
 	std::vector<Planet*> m_Planets;
 	GLUquadricObj* sphere = nullptr;
+	RenderText* EarthSettings = new RenderText();
 };
 

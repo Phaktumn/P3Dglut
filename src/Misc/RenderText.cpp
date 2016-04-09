@@ -6,7 +6,8 @@ RenderText::RenderText()
 	rgb = vec::Vector3(1, 1, 1);
 }
 
-GLvoid RenderText::drawText(std::string& text, vec::Vector3& position, float scale)
+GLvoid RenderText::drawText(const std::string& text, 
+	const vec::Vector3& position, float scale)
 {
 	string = reinterpret_cast<const unsigned char*>(text.c_str());
 	////Suavizar a font!
@@ -32,7 +33,7 @@ GLvoid RenderText::drawText(std::string& text, vec::Vector3& position, float sca
 
 	glScalef(scale, scale, 1);
 	glColor3f(rgb.x, rgb.y, rgb.z);
-	glRasterPos2f(position.x, position.y);
+	glRasterPos2f(position.x, position.z);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, string);
 	glPopMatrix();
 

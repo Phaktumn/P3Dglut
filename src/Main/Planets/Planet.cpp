@@ -6,9 +6,10 @@
 #include "Misc/imageloader.h"
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
-	float orbitDuration, float rotatioDuration, vec::Vector3& position, float scale) :
+	float orbitDuration, float rotatioDuration, const vec::Vector3& position, float scale) :
 	m_idtexture(0), list(0), m_orbit_distance(abs(position.z)), m_rotation(0)
 {
+	m_Name = name;
 	this->m_Position = position;
 	this->m_Orbit_Duration = orbitDuration;
 	this->m_Rotation_Duration = rotatioDuration;
@@ -20,7 +21,7 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 Planet::~Planet()
 {
 	for (size_t i = 0; i < moons.size(); i++){
-		delete(moons[i]);
+		delete moons[i];
 	}
 }
 
@@ -31,16 +32,21 @@ void Planet::Load()
 
 void Planet::Simulate(float deltaTime)
 {
-	m_rotation += m_Rotation_Duration;
-	if (m_rotation >= 360) { m_rotation -= 360; }
+	m_rotation += 10 / m_Rotation_Duration;
+	if (m_rotation >= 360) {
+		m_rotation -= 360;
+		m_days_elapsed++;
+	}
 	m_orbit_Angle += 10 / m_Orbit_Duration;
-	if (m_orbit_Angle >= 360) { m_orbit_Angle -= 360; }
+	if (m_orbit_Angle >= 360) {
+		m_years_elapsed++;
+		m_orbit_Angle -= 360;
+	}
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	m_Position.x = cos(radians) * m_orbit_distance;
 	m_Position.z = sin(radians) * m_orbit_distance;
 
-	for (size_t i = 0; i < moons.size(); i++)
-	{
+	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->Update(deltaTime);
 	}
 }
@@ -69,6 +75,7 @@ void Planet::Draw() const
 void Planet::loadTexture()
 {
 	Image* image = loadBMP(m_texture_path.c_str());	
+	IO::printMessage("Image: {" + m_texture_path + "} Loaded with Success ");
 	GLuint textureId;
 	glGenTextures(1, &textureId);			 //Make room for our texture
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
@@ -125,4 +132,20 @@ void Planet::renderOrbit()
 		moons[i]->renderOrbit();
 	}
 	glPopMatrix();
+}
+
+std::string& Planet::planetSettigs()
+{
+	m_planetSettings = "Name: " + m_Name;
+	m_planetSettings += "\n Position: " 
+		+ getPosition();
+	m_planetSettings += "\n Rotation: " 
+		+ std::to_string(m_rotation);
+	m_planetSettings += "\n OrbitDuration: " 
+		+ std::to_string(int(m_Orbit_Duration)) + " Days";
+	m_planetSettings += "\n Days Elapsed on Earth: "
+		+ std::to_string(m_days_elapsed) + " Days";
+	m_planetSettings += "\n Years Elapsed on Earth: "
+		+ std::to_string(m_years_elapsed) + " Years";
+	return {m_planetSettings};
 }

@@ -12,7 +12,7 @@ class Planet
 {
 public:
 	explicit Planet(const std::string& modelPath, const  std::string& name,
-		float orbitDuration, float rotatioDuration, vec::Vector3& pos, float scale);
+		float orbitDuration, float rotatioDuration, const vec::Vector3& pos, float scale);
 	~Planet();
 	void Load();
 	void Simulate(float deltaTime);
@@ -22,27 +22,35 @@ public:
 	void addMoon(float distanceToPlanet, float radius);
 	void renderOrbit();
 
-	std::string& getPlanetName(){
-		return m_Name;
-	}
+	/* Number Of Moons */
+	int getMoonCount() const
+	{ return m_moon_index; }
 
-	std::string getPosition() const{
-		return m_Position.debugString();
-	}
+	/* Planet Name */
+	std::string& getPlanetName()
+	{ return m_Name; }
 
-	vec::Vector3& getPositionVec(){
-		return m_Position;
-	}
+	/* Planet Position Debug String */
+	std::string getPosition() const
+	{ return m_Position.debugString(); }
 
-	void setList(GLuint _list){
-		list = _list;
-	}
+	/* Planet Position vector*/
+	vec::Vector3& getPositionVec()
+	{ return m_Position; }
+
+	/* display list */
+	void setList(GLuint _list)
+	{ list = _list; }
+
+	std::string& planetSettigs();
 
 private:
 	std::string m_texture_path;
 	Texture m_texture;
 	std::string m_Name;
 	vec::Vector3 m_Position;
+
+	std::string m_planetSettings;
 
 	GLuint m_idtexture;
 	GLuint list;
@@ -57,5 +65,9 @@ private:
 
 	int m_moon_index = 0;
 	std::vector<Moon*> moons;
+
+	/* Days Elapsed in Earth Since simulation has started */
+	int m_days_elapsed = 0;
+	int m_years_elapsed = 0;
 };
 

@@ -4,11 +4,11 @@
 
 namespace IO
 {
-	inline void printMessage(std::string& message){
+	inline void printMessage(const std::string& message){
 		std::cout << "DEBUG: " + message << std::endl;
 	}
 
-	inline void printError(std::string& error){
+	inline void printError(const std::string& error){
 		std::cerr << "ERROR: " + error << std::endl;
 	}
 }

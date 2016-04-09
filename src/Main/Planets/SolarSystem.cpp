@@ -1,5 +1,6 @@
 #include "SolarSystem.h"
 #include "../../Misc/Debug/IO.h"
+#include <Misc/RenderText.h>
 
 GLuint SolarSystem::m_list = glGenLists(1);
 
@@ -15,7 +16,7 @@ SolarSystem::SolarSystem()
 		"Venus", 224.0f, 0.1f, vec::Vector3(0, 0, 108), 0.4f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
-		"Earth", 365.0f, 0.1f, vec::Vector3(0, 0, 150), 1.0f));
+		"Earth", 365.0f, 1.0f, vec::Vector3(0, 0, 150), 1.0f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
 		"Mars", 687.0f, 0.1f, vec::Vector3(0, 0, 228), 1.0f));
@@ -42,6 +43,7 @@ SolarSystem::~SolarSystem()
 		delete m_Planets[i];
 	}
 	free(sphere);
+	delete(EarthSettings);
 }
 
 void SolarSystem::Load()
@@ -84,6 +86,10 @@ void SolarSystem::Draw() const
 		}
 		else {
 			m_Planets[i]->Draw();
+			if(i == 3) {
+				EarthSettings->drawText(m_Planets[i]->planetSettigs(), 
+					vec::Vector3(20, 100), 1.0f);
+			}
 		}
 	}
 }
@@ -97,6 +103,7 @@ void SolarSystem::renderOrbits()
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->renderOrbit();
 	}
+
 	glDisable(GL_BLEND);
 	glEnable(GL_LIGHTING);
 }
@@ -105,8 +112,9 @@ Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{
-		if(m_Planets[planet_t]->getPlanetName().compare(planetName) == TRUE){
+		if(m_Planets[planet_t]->getPlanetName() == planetName){
 			return *m_Planets[planet_t];
 		}
 	}
+	IO::printError("No Planet Found With Name: {" + planetName + "}");
 }

@@ -10,7 +10,8 @@ class RenderText
 {
 public:
 	RenderText();
-	GLvoid drawText(std::string& text, vec::Vector3& position, float scale);
+	GLvoid drawText(const std::string& text, 
+		const vec::Vector3& position, float scale);
 private:
 	vec::Vector3 rgb;
 	const unsigned char* string;
