@@ -40,6 +40,7 @@ void Moon::Draw() const
 {
 	glPushMatrix();
 	glTranslatef(m_position.x, m_position.y, m_position.z);
+	glRotatef(m_rotation_angle, 0, 0, -1);
 	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
 	glCallList(SolarSystem::m_list + 1);
 	glPopMatrix();

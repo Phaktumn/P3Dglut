@@ -1,12 +1,8 @@
 #include <string>
 #include "../Misc/RenderText.h"
-#include "../Vars/Object.h"
-#include "../Vars/dL/DisplayList.h"
-#include "../Misc/Lights/Lightning.h"
-#include "Player/Player.h"
 #include "../Vars/GameTime.h"
 #include "../Misc/Physics/PhysicsEngine.h"
-#include "../Misc/Physics/Mesh/Plane.h"
+#include "Camera/StaticCamera.h"
 #pragma once
 
 class Game
@@ -21,7 +17,7 @@ public:
 
 	int start(int windowHeigth, int windowWidth, std::string windowTitle) const;
 
-	static Camera* m_camera;
+	static StaticCamera* m_camera;
 private:
 	Game(int argc, char **argv);
 	~Game();

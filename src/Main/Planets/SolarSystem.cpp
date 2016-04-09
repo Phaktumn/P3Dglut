@@ -24,16 +24,16 @@ SolarSystem::SolarSystem()
 		"Mars", 687.0f, 1.01f, vec::Vector3(0, 0, 228), 0.9f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
-		"Jupiter", 4332.0f, 0.1f, vec::Vector3(0, 0, 772), 11.5f));
+		"Jupiter", 4332.0f, 9.8 / 24.0, vec::Vector3(0, 0, 772), 11.5f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/saturn.bmp"),
-		"Saturn", 10760.0f, 0.6f, vec::Vector3(0, 0, 1443), 9.5f));
+		"Saturn", 10760.0f, 10.5 / 24.0, vec::Vector3(0, 0, 1443), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/uranus.bmp"),
-		"Uranus", 30700.0f, 0.6f, vec::Vector3(0, 0, 2871), 9.5f));
+		"Uranus", 30700.0f, 17.0 / 24.0, vec::Vector3(0, 0, 2871), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
-		"Neptune", 60200.0f, 0.6f, vec::Vector3(0, 0, 4504), 9.5f));
+		"Neptune", 60200.0f, 16.0 / 24.0, vec::Vector3(0, 0, 4504), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
 		"Pluto", 90600.0f, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
@@ -78,33 +78,53 @@ void SolarSystem::Simulate(float deltaTime)
 	m_elapsedTime += deltaTime;
 	if (Keyboard::getKeyPressed(NUM_0)) {
 		m_print_Index = 0;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_1)){
 		m_print_Index = 1;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_2)) {
 		m_print_Index = 2;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_3)) {
 		m_print_Index = 3;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_4)) {
 		m_print_Index = 4;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_5)) {
 		m_print_Index = 5;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_6)) {
 		m_print_Index = 6;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_7)) {
 		m_print_Index = 7;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_8)) {
 		m_print_Index = 8;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_9)) {
 		m_print_Index = 9;
+		Game::m_camera->setLookAt(
+			m_Planets[m_print_Index]->getPositionVec());
 	}
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(deltaTime);

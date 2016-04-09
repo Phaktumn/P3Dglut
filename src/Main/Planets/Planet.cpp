@@ -2,8 +2,8 @@
 #include "SolarSystem.h"
 #include "Moon.h"
 #include "Misc/Debug/IO.h"
-#include "../Game.h"
 #include "Misc/imageloader.h"
+#include <Misc/Lights/Lightning.h>
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, const vec::Vector3& position, float scale) :
@@ -42,7 +42,6 @@ void Planet::Simulate(float deltaTime)
 		m_rotation -= 360;
 		m_days_elapsed++;
 	}
-
 	m_orbit_Angle += deltaTime * 3.1419f / m_Orbit_Duration;
 	if (m_orbit_Angle >= 2 * 3.1419f) {
 		m_years_elapsed++;
@@ -150,8 +149,16 @@ std::string& Planet::planetSettigs()
 		+ std::to_string(int(m_orbit_distance)) + "Mill km";
 	m_planetSettings += "\n Rotation: " 
 		+ std::to_string(m_rotation);
-	m_planetSettings += "\n OrbitDuration: " 
-		+ std::to_string(int(m_Orbit_Duration)) + " Days";
+	m_planetSettings += "\n Orbit Duration: " 
+		+ std::to_string(int(m_Orbit_Duration)) + " Earth Days";
+
+	if(m_Rotation_Duration < 1) {
+		m_planetSettings += "\n Day Duration: "
+			+ std::to_string(double(m_Rotation_Duration * 24)) + " Earth Hours";
+	}
+	else m_planetSettings += "\n Day Duration: "
+		+ std::to_string(int(m_Rotation_Duration)) + " Earth Days";
+	
 	m_planetSettings += "\n Days Elapsed on " + m_Name + ": "
 		+ std::to_string(m_days_elapsed) + " Days";
 	m_planetSettings += "\n Years Elapsed on " + m_Name + ": "

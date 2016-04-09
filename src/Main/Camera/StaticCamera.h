@@ -14,5 +14,9 @@ public:
 	void Draw() const override;
 
 	void rotate(float angle);
+
+	void setLookAt(vec::Vector3& lookAt){
+		m_lookAt = lookAt;
+	}
 };
 

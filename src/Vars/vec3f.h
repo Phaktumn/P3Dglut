@@ -13,15 +13,15 @@ namespace vec
 	{
 	public:
 		//Static Fields
-		static Vector3 zero()  { return  Vector3(.0f, .0f, .0f);    }
-		static Vector3 one()   { return Vector3(1.0f, 1.0f, 1.0f);  }
+		static Vector3  zero() { return Vector3(0.0f, 0.0f, 0.0f);  }
+		static Vector3   one() { return Vector3(1.0f, 1.0f, 1.0f);  }
 		static Vector3 unitX() { return Vector3(1.0f, 0.0f, 0.0f);  }
 		static Vector3 unitY() { return Vector3(0.0f, 1.0f, 0.0f);  }
 		static Vector3 unitZ() { return Vector3(0.0f, 0.0f, 1.0f);  }
-		static Vector3 up()    { return Vector3(0.0f, 1.0f, 0.0f);  }
-		static Vector3 down()  { return Vector3(0.0f, -1.0f, 0.0f); }
+		static Vector3    up() { return Vector3(0.0f, 1.0f, 0.0f);  }
+		static Vector3  down() { return Vector3(0.0f,-1.0f, 0.0f);  }
 		static Vector3 right() { return Vector3(1.0f, 0.0f, 0.0f);  }
-		static Vector3 left()  { return Vector3(-1.0f, 0.0f, 0.0f); }
+		static Vector3  left() { return Vector3(-1.0f,0.0f, 0.0f);  }
 		
 		//Public Fields
   		float x;
@@ -37,6 +37,7 @@ namespace vec
 		Vector3 Normalized() const;
 		Vector3 Reflect(Vector3& vec);
 		float Dot(Vector3& other) const;
+		void setZero();
 
 		static Vector3 Max(Vector3& vec1, Vector3& vec2);
 
@@ -224,6 +225,13 @@ namespace vec
 	inline float Vector3::Dot(Vector3& other) const
 	{
 		return x * other.x + y * other.y + z * other.z;
+	}
+
+	inline void Vector3::setZero()
+	{
+		x = NULL;
+		y = NULL;
+		z = NULL;
 	}
 
 	inline Vector3 Vector3::localToWord(const Vector3& local, Matrix::Matrix4& transform)

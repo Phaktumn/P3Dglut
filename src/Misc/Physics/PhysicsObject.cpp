@@ -1,5 +1,4 @@
 #include "PhysicsObject.h"
-#include "Mesh/AABB.h"
 
 #define OFFSET 0.3
 

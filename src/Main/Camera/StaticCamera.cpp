@@ -1,10 +1,10 @@
 #include "StaticCamera.h"
 #include "../Keyboard/Keyboard.h"
 
-StaticCamera::StaticCamera(vec::Vector3& position, float _rotationAngle):
-	Camera(position, _rotationAngle)
+StaticCamera::StaticCamera(vec::Vector3& position, float):
+	Camera(position)
 {
-	lookAt = vec::Vector3::zero();
+	m_lookAt = vec::Vector3::zero();
 	eye = position;
 	upVec = vec::Vector3::up();
 	m_Orientation = vec::Vector3::zero();
@@ -31,7 +31,7 @@ void StaticCamera::Update(float deltaTime)
 	}
 	eye = m_Position;
 	eye += vec::Vector3(-sin(this->rotationAngle), 0, cos(rotationAngle));
-	lookAt = m_Position + m_Orientation;
+	m_lookAt = m_Position + m_Orientation;
 	upVec = vec::Vector3::up();
 	Camera::Update(deltaTime);
 }

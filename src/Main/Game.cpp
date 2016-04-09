@@ -3,7 +3,7 @@
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
 #include "Planets/SolarSystem.h"
-#include "Camera/StaticCamera.h"
+#include <Misc/Lights/Lightning.h>
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _DEBUG_                  1
@@ -11,7 +11,7 @@
 Game* Game::instance = nullptr;
 RenderText Game::text = RenderText();
 GameTime Game::gameTime = GameTime();
-Camera* Game::m_camera;
+StaticCamera* Game::m_camera;
 SolarSystem* solarSystem = new SolarSystem();
 
 Game::Game(int argc, char** argv)
@@ -43,7 +43,7 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glCullFace(GL_CW);
 	glFrontFace(GL_CCW);
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
-	m_camera = new StaticCamera(vec::Vector3(0, 100, 0), 0);
+	m_camera = new StaticCamera(vec::Vector3(0,0,0), 0.0f);
 	solarSystem->Load();
 	Lightning::enableLight();
 	glutMainLoop();
@@ -58,7 +58,7 @@ void Game::resize(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, ratio, 0.01, 10000);
+	gluPerspective(80, ratio, 0.01, 10000);
 	glMatrixMode(GL_MODELVIEW);
 }
 
