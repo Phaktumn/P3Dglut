@@ -15,7 +15,7 @@ SolarSystem::SolarSystem()
 		"Venus", 224.0f, 0.1f, vec::Vector3(0, 0, 108), 0.4f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
-		"Terra", 365.0f, 0.1f, vec::Vector3(0, 0, 150), 1.0f));
+		"Earth", 365.0f, 0.1f, vec::Vector3(0, 0, 150), 1.0f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
 		"Mars", 687.0f, 0.1f, vec::Vector3(0, 0, 228), 1.0f));
@@ -54,7 +54,7 @@ void SolarSystem::Load()
 		m_Planets[i]->Load();
 	}
 
-	m_Planets[3]->addMoon(10, 0.5f);
+	findPlanetByName("Earth").addMoon(25.0f, 0.6f);
 
 	sphere = gluNewQuadric();
 	gluQuadricDrawStyle(sphere, GLU_FILL);
@@ -99,4 +99,14 @@ void SolarSystem::renderOrbits()
 	}
 	glDisable(GL_BLEND);
 	glEnable(GL_LIGHTING);
+}
+
+Planet& SolarSystem::findPlanetByName(const std::string& planetName)
+{
+	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
+	{
+		if(m_Planets[planet_t]->getPlanetName().compare(planetName) == TRUE){
+			return *m_Planets[planet_t];
+		}
+	}
 }

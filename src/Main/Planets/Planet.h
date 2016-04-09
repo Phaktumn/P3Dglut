@@ -22,6 +22,10 @@ public:
 	void addMoon(float distanceToPlanet, float radius);
 	void renderOrbit();
 
+	std::string& getPlanetName(){
+		return m_Name;
+	}
+
 	std::string getPosition() const{
 		return m_Position.debugString();
 	}

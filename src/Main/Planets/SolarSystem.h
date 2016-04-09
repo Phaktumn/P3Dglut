@@ -14,6 +14,8 @@ public:
 
 	void renderOrbits();
 
+	Planet& findPlanetByName(const std::string& planetName);
+
 	static GLuint m_list;
 
 private: 
