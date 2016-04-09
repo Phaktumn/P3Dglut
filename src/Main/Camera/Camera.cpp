@@ -10,7 +10,7 @@ Camera::Camera(Player& player): rotationAngle(0)
 }
 
 Camera::Camera(vec::Vector3& position, float rotationAngle)
-	: player(nullptr)
+	: player(nullptr), rotationAngle(0)
 {
 
 }

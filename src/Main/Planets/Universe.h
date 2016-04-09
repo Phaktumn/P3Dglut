@@ -4,10 +4,10 @@
 class Universe
 {
 public:
-	static void loadQuads();
+	static void drawQuads();
 };
 
-inline void Universe::loadQuads()
+inline void Universe::drawQuads()
 {
 	glBegin(GL_QUADS);
 

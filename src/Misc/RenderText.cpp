@@ -1,7 +1,7 @@
 #include "RenderText.h"
 #include "../Vars/vec3f.h"
 
-RenderText::RenderText()
+RenderText::RenderText(): string(nullptr)
 {
 	rgb = vec::Vector3(1, 1, 1);
 }

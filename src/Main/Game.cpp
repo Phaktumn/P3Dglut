@@ -9,14 +9,9 @@
 #define _DEBUG_                  1
 
 Game* Game::instance = nullptr;
-GLfloat Game::lModel_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
 RenderText Game::text = RenderText();
-RenderText Game::WTF = RenderText();
-Object * Game::Tree;
-DisplayList * Game::list1 = new DisplayList(3);
-Player * Game::Gamer;
 GameTime Game::gameTime = GameTime();
-Camera* camera;
+Camera* Game::m_camera;
 SolarSystem* solarSystem = new SolarSystem();
 
 Game::Game(int argc, char** argv)
@@ -27,7 +22,6 @@ Game::Game(int argc, char** argv)
 
 Game::~Game()
 {
-	delete Gamer;
 	std::cout << "Closed";
 }
 
@@ -36,14 +30,11 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glutInitWindowSize(windowWidth, windowHeigth);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutCreateWindow(windowTitle.c_str());
-
 	glutDisplayFunc(render);
 	glutIdleFunc(Update);
 	glutReshapeFunc(resize);
-
 	glutKeyboardFunc(Keyboard::keydoardCallback);
 	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
-
 	glEnable(GL_BLEND);
 	glEnable(GL_LINE_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -51,15 +42,11 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_CW);
 	glFrontFace(GL_CCW);
-
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
-	camera = new StaticCamera(vec::Vector3(0, 100, 0), 0);
+	m_camera = new StaticCamera(vec::Vector3(0, 100, 0), 0);
 	solarSystem->Load();
-
 	Lightning::enableLight();
-
 	glutMainLoop();
-
 	return 0;
 }
 
@@ -78,7 +65,7 @@ void Game::resize(int width, int height)
 void Game::Update()
 {
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
-	camera->Update(gameTime.getDeltaTime());
+	m_camera->Update(gameTime.getDeltaTime());
 	solarSystem->Simulate(gameTime.getDeltaTime());
 	glutPostRedisplay();
 }
@@ -86,15 +73,11 @@ void Game::Update()
 GLvoid Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glLoadIdentity();
-	camera->Draw();
-
+	m_camera->Draw();
 	Lightning::applyLights();
-
 	solarSystem->Draw();
 	solarSystem->renderOrbits();
-
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference

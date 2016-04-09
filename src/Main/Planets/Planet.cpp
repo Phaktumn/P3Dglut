@@ -16,6 +16,8 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 	m_orbit_Angle = 0;
 	m_scale = scale;
 	m_texture_path = texturePath;
+	m_years_elapsed = 0;
+	m_days_elapsed = 0;
 }
 
 Planet::~Planet()
@@ -32,19 +34,24 @@ void Planet::Load()
 
 void Planet::Simulate(float deltaTime)
 {
-	m_rotation += 10 / m_Rotation_Duration;
-	if (m_rotation >= 360) {
+	//If is Sun -> just dont Simulate 
+	//rotation Duration and orbit Duration == 0
+	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
+	m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
+	if (m_rotation >= 360.0f ) {
 		m_rotation -= 360;
 		m_days_elapsed++;
 	}
-	m_orbit_Angle += 10 / m_Orbit_Duration;
-	if (m_orbit_Angle >= 360) {
+
+	m_orbit_Angle += deltaTime * 3.1419f / m_Orbit_Duration;
+	if (m_orbit_Angle >= 2 * 3.1419f) {
 		m_years_elapsed++;
-		m_orbit_Angle -= 360;
+		m_orbit_Angle -= 2 * 3.1419f;
 	}
-	float radians = MathHelper::ToRadians(m_orbit_Angle);
-	m_Position.x = cos(radians) * m_orbit_distance;
-	m_Position.z = sin(radians) * m_orbit_distance;
+	//float radians = MathHelper::ToRadians(m_orbit_Angle);
+	m_Position.x = cos(m_orbit_Angle) * m_orbit_distance;
+	m_Position.y = 0;
+	m_Position.z = sin(m_orbit_Angle) * m_orbit_distance;
 
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->Update(deltaTime);
@@ -139,13 +146,15 @@ std::string& Planet::planetSettigs()
 	m_planetSettings = "Name: " + m_Name;
 	m_planetSettings += "\n Position: " 
 		+ getPosition();
+	m_planetSettings += "\n Distance to Sun: " 
+		+ std::to_string(int(m_orbit_distance)) + "Mill km";
 	m_planetSettings += "\n Rotation: " 
 		+ std::to_string(m_rotation);
 	m_planetSettings += "\n OrbitDuration: " 
 		+ std::to_string(int(m_Orbit_Duration)) + " Days";
-	m_planetSettings += "\n Days Elapsed on Earth: "
+	m_planetSettings += "\n Days Elapsed on " + m_Name + ": "
 		+ std::to_string(m_days_elapsed) + " Days";
-	m_planetSettings += "\n Years Elapsed on Earth: "
+	m_planetSettings += "\n Years Elapsed on " + m_Name + ": "
 		+ std::to_string(m_years_elapsed) + " Years";
 	return {m_planetSettings};
 }

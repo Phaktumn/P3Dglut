@@ -21,7 +21,7 @@ public:
 
 	int start(int windowHeigth, int windowWidth, std::string windowTitle) const;
 
-	static DisplayList * list1;
+	static Camera* m_camera;
 private:
 	Game(int argc, char **argv);
 	~Game();
@@ -31,16 +31,7 @@ private:
 	static void render();
 
 	static Game* instance;
-	static GLfloat lModel_ambient[];
 	static RenderText text;
-	static RenderText WTF;
-	static Object* Tree;
-	static Player* Gamer;
-	static Plane plane;
-	static PhysicsObject* ground;
 	static GameTime gameTime;
-	static PhysicsEngine* Physics;
-	static AABB boxTree;
-	static PhysicsObject* tree;
 };
 

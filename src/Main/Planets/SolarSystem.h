@@ -22,6 +22,9 @@ public:
 private: 
 	std::vector<Planet*> m_Planets;
 	GLUquadricObj* sphere = nullptr;
-	RenderText* EarthSettings = new RenderText();
+	RenderText* Settings = new RenderText();
+
+	int m_print_Index;
+	float m_elapsedTime;
 };
 

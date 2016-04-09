@@ -1,25 +1,27 @@
 #include "SolarSystem.h"
 #include "../../Misc/Debug/IO.h"
 #include <Misc/RenderText.h>
+#include <Main/Keyboard/Keyboard.h>
+#include <Main/Game.h>
 
 GLuint SolarSystem::m_list = glGenLists(1);
 
 SolarSystem::SolarSystem()
 {
 	m_Planets.push_back(new Planet(std::string("Textures/sun.bmp"),
-		std::string("Sun"), 0.01f, 0.0f, vec::Vector3(0, 0, 0), 50));
+		std::string("Sun"), NULL, NULL, vec::Vector3(0, 0, 0), 50));
 
 	m_Planets.push_back(new Planet("Textures/mercury.bmp", 
-		"Mercurio", 88.0f, 0.1f, vec::Vector3(0, 0, 70), 0.3f));
+		"Mercurio", 88.0f, 58.0f, vec::Vector3(0, 0, 70), 0.3f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
-		"Venus", 224.0f, 0.1f, vec::Vector3(0, 0, 108), 0.4f));
+		"Venus", 225.0f, 241.0f, vec::Vector3(0, 0, 108), 0.4f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
 		"Earth", 365.0f, 1.0f, vec::Vector3(0, 0, 150), 1.0f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
-		"Mars", 687.0f, 0.1f, vec::Vector3(0, 0, 228), 1.0f));
+		"Mars", 687.0f, 1.01f, vec::Vector3(0, 0, 228), 0.9f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
 		"Jupiter", 4332.0f, 0.1f, vec::Vector3(0, 0, 772), 11.5f));
@@ -35,6 +37,9 @@ SolarSystem::SolarSystem()
 
 	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
 		"Pluto", 90600.0f, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
+
+	m_print_Index = 0;
+	m_elapsedTime = 0;
 }
 
 SolarSystem::~SolarSystem()
@@ -43,7 +48,7 @@ SolarSystem::~SolarSystem()
 		delete m_Planets[i];
 	}
 	free(sphere);
-	delete(EarthSettings);
+	delete Settings;
 }
 
 void SolarSystem::Load()
@@ -70,7 +75,37 @@ void SolarSystem::Load()
 
 void SolarSystem::Simulate(float deltaTime)
 {
-
+	m_elapsedTime += deltaTime;
+	if (Keyboard::getKeyPressed(NUM_0)) {
+		m_print_Index = 0;
+	}
+	if (Keyboard::getKeyPressed(NUM_1)){
+		m_print_Index = 1;
+	}
+	if (Keyboard::getKeyPressed(NUM_2)) {
+		m_print_Index = 2;
+	}
+	if (Keyboard::getKeyPressed(NUM_3)) {
+		m_print_Index = 3;
+	}
+	if (Keyboard::getKeyPressed(NUM_4)) {
+		m_print_Index = 4;
+	}
+	if (Keyboard::getKeyPressed(NUM_5)) {
+		m_print_Index = 5;
+	}
+	if (Keyboard::getKeyPressed(NUM_6)) {
+		m_print_Index = 6;
+	}
+	if (Keyboard::getKeyPressed(NUM_7)) {
+		m_print_Index = 7;
+	}
+	if (Keyboard::getKeyPressed(NUM_8)) {
+		m_print_Index = 8;
+	}
+	if (Keyboard::getKeyPressed(NUM_9)) {
+		m_print_Index = 9;
+	}
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(deltaTime);
 	}
@@ -86,10 +121,10 @@ void SolarSystem::Draw() const
 		}
 		else {
 			m_Planets[i]->Draw();
-			if(i == 3) {
-				EarthSettings->drawText(m_Planets[i]->planetSettigs(), 
-					vec::Vector3(20, 100), 1.0f);
-			}
+		}
+		if (i == m_print_Index) {
+			Settings->drawText(m_Planets[i]->planetSettigs(),
+				vec::Vector3(20, 150), 1.0f);
 		}
 	}
 }
