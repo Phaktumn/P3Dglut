@@ -38,10 +38,6 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 	glEnable(GL_BLEND);
 	glEnable(GL_LINE_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_CW);
-	glFrontFace(GL_CCW);
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
 	m_camera = new StaticCamera(vec::Vector3(0,0,0), 0.0f);
 	solarSystem->Load();
@@ -58,13 +54,14 @@ void Game::resize(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(80, ratio, 0.01, 10000);
+	gluPerspective(80, ratio, 0.01, 15000);
 	glMatrixMode(GL_MODELVIEW);
 }
 
 void Game::Update()
 {
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
+	solarSystem->preCameraTranslateDraw();
 	m_camera->Update(gameTime.getDeltaTime());
 	solarSystem->Simulate(gameTime.getDeltaTime());
 	glutPostRedisplay();

@@ -3,6 +3,8 @@
 #include <Misc/RenderText.h>
 #include <Main/Keyboard/Keyboard.h>
 #include <Main/Game.h>
+#include "Universe.h"
+#include <Misc/imageloader.h>
 
 GLuint SolarSystem::m_list = glGenLists(1);
 
@@ -54,8 +56,10 @@ SolarSystem::~SolarSystem()
 void SolarSystem::Load()
 {
 	glEnable(GL_NORMALIZE);
-	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR_MATERIAL);
+
+	loadUniverTexture();
 
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->Load();
@@ -69,7 +73,16 @@ void SolarSystem::Load()
 	gluQuadricNormals(sphere, GLU_SMOOTH);
 
 	glNewList(m_list + 1, GL_COMPILE);
-		gluSphere(sphere, 1, 50, 50);
+	gluSphere(sphere, 1, 50, 50);
+	glEndList();
+
+	glNewList(m_list + 2, GL_COMPILE);
+	glDisable(GL_DEPTH_TEST);
+	glDepthMask(0);
+	glScalef(10000, 10000, 10000);
+	Universe::drawQuads();
+	glDepthMask(1);
+	glEnable(GL_DEPTH_TEST);
 	glEndList();
 }
 
@@ -131,8 +144,22 @@ void SolarSystem::Simulate(float deltaTime)
 	}
 }
 
+void SolarSystem::preCameraTranslateDraw() const
+{
+}
+
+
 void SolarSystem::Draw() const
 {
+	glDisable(GL_LIGHTING);
+	glBindTexture(GL_TEXTURE_2D, m_Universetexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glPushMatrix();
+	glCallList(m_list + 2);
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
+
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		if (i == 0) {
 			glDisable(GL_LIGHTING);
@@ -147,6 +174,8 @@ void SolarSystem::Draw() const
 				vec::Vector3(20, 150), 1.0f);
 		}
 	}
+
+	glDisable(GL_LIGHTING);
 }
 
 void SolarSystem::renderOrbits()
@@ -172,4 +201,25 @@ Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 		}
 	}
 	IO::printError("No Planet Found With Name: {" + planetName + "}");
+}
+
+void SolarSystem::loadUniverTexture()
+{
+	Image* image = loadBMP("Textures/stars.bmp");
+	IO::printMessage("Image: { Textures / galaxy.bmp } Loaded with Success ");
+	GLuint textureId;
+	glGenTextures(1, &textureId);			 //Make room for our texture
+	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
+											 //Map the image to the texture
+	glTexImage2D(GL_TEXTURE_2D,       //Always GL_TEXTURE_2D
+		0,                            //0 for now
+		GL_RGB,                       //Format OpenGL uses for image
+		image->width, image->height,  //Width and height
+		0,                            //The border of the image
+		GL_RGB,					      //GL_RGB, because pixels are stored in RGB format
+		GL_UNSIGNED_BYTE,			  //GL_UNSIGNED_BYTE, because pixels are stored
+									  //as unsigned numbers
+		image->pixels);               //The actual pixel data
+	m_Universetexture = textureId;	  //Returns the id of the texture
+	delete image;
 }

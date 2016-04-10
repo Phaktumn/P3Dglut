@@ -18,6 +18,7 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 	m_texture_path = texturePath;
 	m_years_elapsed = 0;
 	m_days_elapsed = 0;
+	m_PlanetOrbitList = glGenLists(2);
 }
 
 Planet::~Planet()
@@ -30,6 +31,13 @@ Planet::~Planet()
 void Planet::Load()
 {
 	loadTexture();
+	glNewList(m_PlanetOrbitList + 1, GL_COMPILE);
+	for (float i = 0.0f; i < 6.28318530375f; i += 3.14 / 180) {
+		glVertex3f(sin(i) * m_orbit_distance,
+			m_Position.y,
+			cos(i) * m_orbit_distance);
+	}
+	glEndList();
 }
 
 void Planet::Simulate(float deltaTime)
@@ -37,23 +45,23 @@ void Planet::Simulate(float deltaTime)
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
-	m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
+	m_rotation += 0.02f * 360 / m_Rotation_Duration;
 	if (m_rotation >= 360.0f ) {
 		m_rotation -= 360;
 		m_days_elapsed++;
 	}
-	m_orbit_Angle += deltaTime * 3.1419f / m_Orbit_Duration;
-	if (m_orbit_Angle >= 2 * 3.1419f) {
+	m_orbit_Angle +=  0.02f * 360 / m_Orbit_Duration;
+	if (m_orbit_Angle >= 360) {
 		m_years_elapsed++;
-		m_orbit_Angle -= 2 * 3.1419f;
+		m_orbit_Angle -= 360;
 	}
-	//float radians = MathHelper::ToRadians(m_orbit_Angle);
-	m_Position.x = cos(m_orbit_Angle) * m_orbit_distance;
+	float radians = MathHelper::ToRadians(m_orbit_Angle);
+	m_Position.x = cos(radians) * m_orbit_distance;
 	m_Position.y = 0;
-	m_Position.z = sin(m_orbit_Angle) * m_orbit_distance;
+	m_Position.z = sin(radians) * m_orbit_distance;
 
 	for (size_t i = 0; i < moons.size(); i++){
-		moons[i]->Update(deltaTime);
+		moons[i]->Update(0.1f);
 	}
 }
 
@@ -125,11 +133,7 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 6.28318530375f; i+= 3.14 / 180){
-		glVertex3f(sin(i) * m_orbit_distance,
-			m_Position.y, 
-			cos(i) * m_orbit_distance);
-	}
+	glCallList(m_PlanetOrbitList + 1);
 	glEnd();
 
 	glPushMatrix();
@@ -149,6 +153,8 @@ std::string& Planet::planetSettigs()
 		+ std::to_string(int(m_orbit_distance)) + "Mill km";
 	m_planetSettings += "\n Rotation: " 
 		+ std::to_string(m_rotation);
+	m_planetSettings += "\n Orbit Angle: "
+		+ std::to_string(m_orbit_Angle);
 	m_planetSettings += "\n Orbit Duration: " 
 		+ std::to_string(int(m_Orbit_Duration)) + " Earth Days";
 

@@ -11,6 +11,7 @@ public:
 
 	void Load();
 	void Simulate(float deltaTime);
+	void preCameraTranslateDraw() const;
 	void Draw() const;
 
 	void renderOrbits();
@@ -23,6 +24,9 @@ private:
 	std::vector<Planet*> m_Planets;
 	GLUquadricObj* sphere = nullptr;
 	RenderText* Settings = new RenderText();
+
+	GLuint m_Universetexture;
+	void loadUniverTexture();
 
 	int m_print_Index;
 	float m_elapsedTime;

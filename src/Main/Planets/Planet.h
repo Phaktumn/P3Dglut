@@ -54,6 +54,7 @@ private:
 
 	GLuint m_idtexture;
 	GLuint list;
+	GLuint m_PlanetOrbitList = 0;
 
 	float m_scale = 0;
 
