@@ -11,7 +11,7 @@
 #define EC_SATURN     0.0560
 #define EC_URANUS     0.0461
 #define EC_NEPTUNE    0.0097
-#define EC_PLUTO      0.0
+#define EC_PLUTO      0.0103
 
 class SolarSystem
 {
@@ -27,6 +27,7 @@ public:
 	void renderOrbits();
 
 	Planet& findPlanetByName(const std::string& planetName);
+	void addMoon();
 
 	static GLuint m_list;
 

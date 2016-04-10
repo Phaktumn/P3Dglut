@@ -126,6 +126,9 @@ void Planet::loadTexture()
 
 void Planet::addMoon(float distanceToPlantet, float radius)
 {
+	if (distanceToPlantet < m_scale) {
+		distanceToPlantet = m_scale + 5;
+	}
 	moons.push_back(new Moon(*this, distanceToPlantet, radius, 30));
 	moons[m_moon_index]->Load();
 	m_moon_index++;
@@ -134,7 +137,7 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 360.0f; i += 90.0f / 360.0f) {
+	for (float i = 0.0f; i < 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		glVertex3f(cos(m) * calculateKeplerOrbit(m),
 			m_Position.y,

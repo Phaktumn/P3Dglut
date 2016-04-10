@@ -278,5 +278,8 @@ public:
 	static void keyboardUpCallback(unsigned char KEY, int x, int y);
 	static bool getKeyPressed(unsigned char KEY);
 	static char keyPressed();
+
+private :
+	static float KEYS[256];
 };
 

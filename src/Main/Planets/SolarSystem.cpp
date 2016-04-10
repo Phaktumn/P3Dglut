@@ -90,63 +90,104 @@ void SolarSystem::Load()
 
 void SolarSystem::Simulate(float deltaTime)
 {
-	if (Keyboard::getKeyPressed(NUM_0)) {
+	if (Keyboard::getKeyPressed(NUM_0))
+	{
 		m_print_Index = 0;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
 	}
-	if (Keyboard::getKeyPressed(NUM_1)){
+	if (Keyboard::getKeyPressed(NUM_1)) {
 		m_print_Index = 1;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_2)) {
 		m_print_Index = 2;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_3)) {
 		m_print_Index = 3;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_4)) {
 		m_print_Index = 4;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_5)) {
 		m_print_Index = 5;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_6)) {
 		m_print_Index = 6;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_7)) {
 		m_print_Index = 7;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
-	if (Keyboard::getKeyPressed(NUM_8)) {
+	if (Keyboard::getKeyPressed(NUM_8))
+	{
 		m_print_Index = 8;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_9)) {
 		m_print_Index = 9;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
+		for (size_t i = 0; i < m_Planets.size(); i++) {
+			m_Planets[i]->setSelected(false);
+		}
+		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(KEY_Z)) {
 		simulationDeltaTime -= 0.01f;
 		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
 	}
-	if(Keyboard::getKeyPressed(KEY_X)) {
+	if (Keyboard::getKeyPressed(KEY_X)) {
 		simulationDeltaTime += 0.01f;
 		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
+	}
+	if (Keyboard::getKeyPressed(KEY_J)) {
+		addMoon();
 	}
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(simulationDeltaTime);
@@ -209,6 +250,15 @@ Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 		}
 	}
 	IO::printError("No Planet Found With Name: {" + planetName + "}");
+}
+
+void SolarSystem::addMoon()
+{
+	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
+	{
+		if(m_Planets[planet_t]->IsSelected() == true)
+			m_Planets[planet_t]->addMoon(rand() % 100 + 50, rand() % 1 + 5);
+	}
 }
 
 void SolarSystem::loadUniverTexture()
