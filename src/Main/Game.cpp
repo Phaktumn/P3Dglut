@@ -49,16 +49,25 @@ int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) cons
 
 void Game::init()
 {
-	glutDisplayFunc(render);
-	glutIdleFunc(Update);
-	glutReshapeFunc(resize);
-	
-	glutKeyboardFunc(Keyboard::keydoardCallback);
-	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
-
+	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glDepthFunc(GL_LEQUAL);							   // The Type Of Depth Testing To Do
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);             // Pixel Storage Mode To Byte Alignment
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			   // Black Background (CHANGED)
+	glClearDepth(1.0f);								   // Depth Buffer Setup					
+	glEnable(GL_DEPTH_TEST);						   // Enables Depth Testing						  
+	glEnable(GL_COLOR_MATERIAL);					   // Enable Material Coloring
 	glEnable(GL_BLEND);
 	glEnable(GL_LINE_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glutDisplayFunc(render);
+	glutIdleFunc(Update);
+	glutReshapeFunc(resize);
+	//glutIdleFunc(render);
+
+	glutKeyboardFunc(Keyboard::keydoardCallback);
+	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
 
 	Lightning::enableLight();		//enables all lights properties positional light
 }

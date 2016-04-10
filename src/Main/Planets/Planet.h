@@ -11,7 +11,7 @@ class Planet
 {
 public:
 	explicit Planet(const std::string& modelPath, const  std::string& name,
-		float orbitDuration, float rotatioDuration, const vec::Vector3& pos, float scale);
+		float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& pos, float scale);
 	~Planet();
 	void Load();
 	void Simulate(float deltaTime);
@@ -48,20 +48,26 @@ private:
 	Texture m_texture;
 	std::string m_Name;
 	vec::Vector3 m_Position;
-
+	float m_orbitInclination; //Orbit inclination In degrees
 	std::string m_planetSettings;
 
 	GLuint m_idtexture;
 	GLuint list;
-	GLuint m_PlanetOrbitList = 0;
 
 	float m_scale = 0;
 
+	//Distance from planet 0,0,0
 	float m_orbit_distance;
+	//Actual distance ftom planet to 0,0,0
+	float m_KeplerOrbitDistance = 0;
+
 	float m_rotation;
 	float m_orbit_Angle;
 	float m_Orbit_Duration;
 	float m_Rotation_Duration;
+
+	float calculateKeplerOrbit(float radians);
+	float m_eccentricity;
 
 	int m_moon_index = 0;
 	std::vector<Moon*> moons;

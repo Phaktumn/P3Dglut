@@ -30,10 +30,10 @@ void StaticCamera::Update(float deltaTime)
 		rotate(-0.005f);
 	}
 	if(Keyboard::getKeyPressed(KEY_Q)) {
-		m_Position -= upVec * 0.1f;
+		m_Position -= upVec * 0.5f;
 	}
 	if (Keyboard::getKeyPressed(KEY_E)) {
-		m_Position += upVec * 0.1f;
+		m_Position += upVec * 0.5f;
 	}
 	eye = m_Position;
 	eye += vec::Vector3(-sin(this->rotationAngle), 0, cos(rotationAngle));

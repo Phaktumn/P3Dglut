@@ -6,19 +6,16 @@
 #include <Misc/Lights/Lightning.h>
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
-	float orbitDuration, float rotatioDuration, const vec::Vector3& position, float scale) :
-	m_idtexture(0), list(0), m_orbit_distance(abs(position.z)), m_rotation(0)
+	float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& position, float scale) : 
+	m_orbitInclination(0), m_idtexture(0), list(0), m_orbit_distance(abs(position.z)),
+	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
 {
 	m_Name = name;
 	this->m_Position = position;
 	this->m_Orbit_Duration = orbitDuration;
 	this->m_Rotation_Duration = rotatioDuration;
-	m_orbit_Angle = 0;
 	m_scale = scale;
 	m_texture_path = texturePath;
-	m_years_elapsed = 0;
-	m_days_elapsed = 0;
-	m_PlanetOrbitList = glGenLists(1);
 }
 
 Planet::~Planet()
@@ -31,6 +28,16 @@ Planet::~Planet()
 void Planet::Load()
 {
 	loadTexture();
+	m_orbitInclination = 10;
+}
+
+float Planet::calculateKeplerOrbit(float radians)
+{
+	float semiLatus = m_orbit_distance * (1 - m_eccentricity);
+	float keplerOrbit = semiLatus / (1 + m_eccentricity * cos(radians));
+	//just filter and set class variable m_... to keplerOrbit
+	m_KeplerOrbitDistance = keplerOrbit;
+	return keplerOrbit;
 }
 
 void Planet::Simulate(float deltaTime)
@@ -38,20 +45,22 @@ void Planet::Simulate(float deltaTime)
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
-	m_rotation += 0.02f * 360 / m_Rotation_Duration;
+	m_rotation += deltaTime * 360 / m_Rotation_Duration;
 	if (m_rotation >= 360.0f ) {
 		m_rotation -= 360;
 		m_days_elapsed++;
 	}
-	m_orbit_Angle +=  0.02f * 360 / m_Orbit_Duration;
+	m_orbit_Angle +=  deltaTime * 360 / m_Orbit_Duration;
 	if (m_orbit_Angle >= 360) {
 		m_years_elapsed++;
 		m_orbit_Angle -= 360;
 	}
+
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
-	m_Position.x = cos(radians) * m_orbit_distance;
+
+	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
 	m_Position.y = 0;
-	m_Position.z = sin(radians) * m_orbit_distance;
+	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
 
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->Update(0.1f);
@@ -125,10 +134,11 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 6.28318530375f; i += 3.14 / 180) {
-		glVertex3f(sin(i) * m_orbit_distance,
+	for (float i = 0.0f; i < 360.0f; i += 90.0f / 360.0f) {
+		float m = MathHelper::ToRadians(i);
+		glVertex3f(cos(m) * calculateKeplerOrbit(m),
 			m_Position.y,
-			cos(i) * m_orbit_distance);
+			sin(m) * calculateKeplerOrbit(m));
 	}
 	glEnd();
 
@@ -146,7 +156,7 @@ std::string& Planet::planetSettigs()
 	m_planetSettings += "\n Position: " 
 		+ getPosition();
 	m_planetSettings += "\n Distance to Sun: " 
-		+ std::to_string(int(m_orbit_distance)) + "Mill km";
+		+ std::to_string(m_KeplerOrbitDistance) + "Mill km";
 	m_planetSettings += "\n Rotation: " 
 		+ std::to_string(m_rotation);
 	m_planetSettings += "\n Orbit Angle: "

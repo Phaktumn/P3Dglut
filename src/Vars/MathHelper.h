@@ -36,8 +36,8 @@ public:
 
 inline float MathHelper::Clampf(float value, float min, float max)
 {
-	if (value < min) value = min;
-	if (value > max) value = max;
+	if (value < min)  value = min;
+	if (value > max)  value = max; 
 	return value;
 }
 

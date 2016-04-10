@@ -8,40 +8,42 @@
 
 GLuint SolarSystem::m_list;
 
-SolarSystem::SolarSystem(): m_Universetexture(0)
+SolarSystem::SolarSystem() 
+	: m_Universetexture(0)
 {
-	m_Planets.push_back(new Planet(std::string("Textures/sun.bmp"),
-		std::string("Sun"), NULL, NULL, vec::Vector3(0, 0, 0), 50));
+	m_Planets.push_back(new Planet("Textures/sun.bmp",
+		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
 
 	m_Planets.push_back(new Planet("Textures/mercury.bmp", 
-		"Mercurio", 88.0f, 58.0f, vec::Vector3(0, 0, 70), 0.3f));
+		"Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
-		"Venus", 225.0f, 241.0f, vec::Vector3(0, 0, 108), 0.4f));
+		"Venus", 225.0f, 241.0f,EC_VENUS, vec::Vector3(0, 0, 108), 0.4f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
-		"Earth", 365.0f, 1.0f, vec::Vector3(0, 0, 150), 1.0f));
+		"Earth", 365.0f, 1.0f,EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
-		"Mars", 687.0f, 1.01f, vec::Vector3(0, 0, 228), 0.9f));
+		"Mars", 687.0f, 1.01f,EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
-		"Jupiter", 4332.0f, 9.8 / 24.0, vec::Vector3(0, 0, 772), 11.5f));
+		"Jupiter", 4332.0f, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
 	
 	m_Planets.push_back(new Planet(std::string("Textures/saturn.bmp"),
-		"Saturn", 10760.0f, 10.5 / 24.0, vec::Vector3(0, 0, 1443), 9.5f));
+		"Saturn", 10760.0f, 10.5 / 24.0, EC_SATURN,vec::Vector3(0, 0, 1443), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/uranus.bmp"),
-		"Uranus", 30700.0f, 17.0 / 24.0, vec::Vector3(0, 0, 2871), 9.5f));
+		"Uranus", 30700.0f, 17.0 / 24.0, EC_URANUS,vec::Vector3(0, 0, 2871), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
-		"Neptune", 60200.0f, 16.0 / 24.0, vec::Vector3(0, 0, 4504), 9.5f));
+		"Neptune", 60200.0f, 16.0 / 24.0, EC_NEPTUNE,vec::Vector3(0, 0, 4504), 9.5f));
 
 	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
-		"Pluto", 90600.0f, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
+		"Pluto", 90600.0f,EC_PLUTO, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
 
 	m_print_Index = 0;
 	m_elapsedTime = 0;
+	simulationDeltaTime = 0.2f;
 }
 
 SolarSystem::~SolarSystem()
@@ -57,7 +59,6 @@ void SolarSystem::Load()
 {
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_COLOR_MATERIAL);
 
 	loadUniverTexture();
 
@@ -89,7 +90,6 @@ void SolarSystem::Load()
 
 void SolarSystem::Simulate(float deltaTime)
 {
-	m_elapsedTime += deltaTime;
 	if (Keyboard::getKeyPressed(NUM_0)) {
 		m_print_Index = 0;
 		Game::m_camera->setLookAt(
@@ -140,8 +140,16 @@ void SolarSystem::Simulate(float deltaTime)
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
 	}
+	if (Keyboard::getKeyPressed(KEY_Z)) {
+		simulationDeltaTime -= 0.01f;
+		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
+	}
+	if(Keyboard::getKeyPressed(KEY_X)) {
+		simulationDeltaTime += 0.01f;
+		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
+	}
 	for (size_t i = 0; i < m_Planets.size(); i++){
-		m_Planets[i]->Simulate(deltaTime);
+		m_Planets[i]->Simulate(simulationDeltaTime);
 	}
 }
 
@@ -152,15 +160,14 @@ void SolarSystem::preCameraTranslateDraw() const
 
 void SolarSystem::Draw() const
 {
-	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, m_Universetexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glPushMatrix();
 	glCallList(m_list + 2);
 	glPopMatrix();
-	glEnable(GL_LIGHTING);
 
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		if (i == 0) {
@@ -169,15 +176,15 @@ void SolarSystem::Draw() const
 			glEnable(GL_LIGHTING);
 		}
 		else {
+			glEnable(GL_LIGHTING);
 			m_Planets[i]->Draw();
+			glDisable(GL_LIGHTING);
 		}
 		if (i == m_print_Index) {
 			Settings->drawText(m_Planets[i]->planetSettigs(),
 				vec::Vector3(20, 150), 1.0f);
 		}
 	}
-
-	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 }
 
