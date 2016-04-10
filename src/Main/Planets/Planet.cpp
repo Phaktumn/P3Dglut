@@ -18,7 +18,7 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 	m_texture_path = texturePath;
 	m_years_elapsed = 0;
 	m_days_elapsed = 0;
-	m_PlanetOrbitList = glGenLists(2);
+	m_PlanetOrbitList = glGenLists(1);
 }
 
 Planet::~Planet()
@@ -31,13 +31,6 @@ Planet::~Planet()
 void Planet::Load()
 {
 	loadTexture();
-	glNewList(m_PlanetOrbitList + 1, GL_COMPILE);
-	for (float i = 0.0f; i < 6.28318530375f; i += 3.14 / 180) {
-		glVertex3f(sin(i) * m_orbit_distance,
-			m_Position.y,
-			cos(i) * m_orbit_distance);
-	}
-	glEndList();
 }
 
 void Planet::Simulate(float deltaTime)
@@ -83,7 +76,6 @@ void Planet::Draw() const
 	for (size_t i = 0; i < moons.size(); i++) {
 		moons[i]->Draw();
 	}
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Planet::loadTexture()
@@ -133,7 +125,11 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	glCallList(m_PlanetOrbitList + 1);
+	for (float i = 0.0f; i < 6.28318530375f; i += 3.14 / 180) {
+		glVertex3f(sin(i) * m_orbit_distance,
+			m_Position.y,
+			cos(i) * m_orbit_distance);
+	}
 	glEnd();
 
 	glPushMatrix();

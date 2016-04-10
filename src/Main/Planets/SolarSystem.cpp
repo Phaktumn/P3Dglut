@@ -6,9 +6,9 @@
 #include "Universe.h"
 #include <Misc/imageloader.h>
 
-GLuint SolarSystem::m_list = glGenLists(1);
+GLuint SolarSystem::m_list;
 
-SolarSystem::SolarSystem()
+SolarSystem::SolarSystem(): m_Universetexture(0)
 {
 	m_Planets.push_back(new Planet(std::string("Textures/sun.bmp"),
 		std::string("Sun"), NULL, NULL, vec::Vector3(0, 0, 0), 50));
@@ -73,17 +73,18 @@ void SolarSystem::Load()
 	gluQuadricNormals(sphere, GLU_SMOOTH);
 
 	glNewList(m_list + 1, GL_COMPILE);
-	gluSphere(sphere, 1, 50, 50);
+		gluSphere(sphere, 1, 50, 50);
 	glEndList();
 
 	glNewList(m_list + 2, GL_COMPILE);
-	glDisable(GL_DEPTH_TEST);
-	glDepthMask(0);
-	glScalef(10000, 10000, 10000);
-	Universe::drawQuads();
-	glDepthMask(1);
-	glEnable(GL_DEPTH_TEST);
+		glDisable(GL_DEPTH_TEST);
+		glDepthMask(0);
+		glScalef(10000, 10000, 10000);
+		Universe::drawQuads();
+		glDepthMask(1);
+		glEnable(GL_DEPTH_TEST);
 	glEndList();
+	glDisable(GL_TEXTURE_2D);
 }
 
 void SolarSystem::Simulate(float deltaTime)
@@ -151,6 +152,7 @@ void SolarSystem::preCameraTranslateDraw() const
 
 void SolarSystem::Draw() const
 {
+	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 	glBindTexture(GL_TEXTURE_2D, m_Universetexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -176,11 +178,11 @@ void SolarSystem::Draw() const
 	}
 
 	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void SolarSystem::renderOrbits()
 {
-	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
@@ -189,7 +191,6 @@ void SolarSystem::renderOrbits()
 	}
 
 	glDisable(GL_BLEND);
-	glEnable(GL_LIGHTING);
 }
 
 Planet& SolarSystem::findPlanetByName(const std::string& planetName)

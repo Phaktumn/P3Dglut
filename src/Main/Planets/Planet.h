@@ -1,6 +1,5 @@
 #pragma once
 #include "../../Vars/vec3f.h"
-#include "../../Misc/Physics/PhysicsObject.h"
 #include <vector>
 #include "../../LoadTGAs/Texture.h"
 
