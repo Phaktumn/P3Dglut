@@ -4,7 +4,7 @@
 #include <Main/Keyboard/Keyboard.h>
 #include <Main/Game.h>
 #include "Universe.h"
-#include <Misc/imageloader.h>
+#include <Main/LoadBMP.h>
 
 GLuint SolarSystem::m_list;
 
@@ -78,13 +78,15 @@ void SolarSystem::Load()
 	glEndList();
 
 	glNewList(m_list + 2, GL_COMPILE);
+		glDisable(GL_DEPTH);
 		glDisable(GL_DEPTH_TEST);
 		glDepthMask(0);
 		glScalef(10000, 10000, 10000);
 		Universe::drawQuads();
 		glDepthMask(1);
 		glEnable(GL_DEPTH_TEST);
-	glEndList();
+		glEnable(GL_DEPTH);
+		glEndList();
 	glDisable(GL_TEXTURE_2D);
 }
 
@@ -211,11 +213,13 @@ void SolarSystem::Draw() const
 	glPopMatrix();
 
 	for (size_t i = 0; i < m_Planets.size(); i++) {
+		//Se for o sol disable light
 		if (i == 0) {
 			glDisable(GL_LIGHTING);
 			m_Planets[i]->Draw();
 			glEnable(GL_LIGHTING);
 		}
+		//resto dos planetas enable Light
 		else {
 			glEnable(GL_LIGHTING);
 			m_Planets[i]->Draw();
@@ -261,23 +265,8 @@ void SolarSystem::addMoon()
 	}
 }
 
+/* Load Universe Texture */
 void SolarSystem::loadUniverTexture()
 {
-	Image* image = loadBMP("Textures/stars.bmp");
-	IO::printMessage("Image: { Textures / galaxy.bmp } Loaded with Success ");
-	GLuint textureId;
-	glGenTextures(1, &textureId);			 //Make room for our texture
-	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
-											 //Map the image to the texture
-	glTexImage2D(GL_TEXTURE_2D,       //Always GL_TEXTURE_2D
-		0,                            //0 for now
-		GL_RGB,                       //Format OpenGL uses for image
-		image->width, image->height,  //Width and height
-		0,                            //The border of the image
-		GL_RGB,					      //GL_RGB, because pixels are stored in RGB format
-		GL_UNSIGNED_BYTE,			  //GL_UNSIGNED_BYTE, because pixels are stored
-									  //as unsigned numbers
-		image->pixels);               //The actual pixel data
-	m_Universetexture = textureId;	  //Returns the id of the texture
-	delete image;
+	m_Universetexture = _loadBMP("Textures/stars.bmp");
 }

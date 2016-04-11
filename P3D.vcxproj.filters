@@ -77,5 +77,6 @@
     <ClInclude Include="src\Main\MainMenu.h" />
     <ClInclude Include="src\LoadTGAs\Texture.h" />
     <ClInclude Include="src\LoadTGAs\Tga.h" />
+    <ClInclude Include="src\Main\LoadBMP.h" />
   </ItemGroup>
 </Project>

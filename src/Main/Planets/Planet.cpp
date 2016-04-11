@@ -4,6 +4,7 @@
 #include "Misc/Debug/IO.h"
 #include "Misc/imageloader.h"
 #include <Misc/Lights/Lightning.h>
+#include <Main/LoadBMP.h>
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& position, float scale) : 
@@ -89,23 +90,7 @@ void Planet::Draw() const
 
 void Planet::loadTexture()
 {
-	Image* image = loadBMP(m_texture_path.c_str());	
-	IO::printMessage("Image: {" + m_texture_path + "} Loaded with Success ");
-	GLuint textureId;
-	glGenTextures(1, &textureId);			 //Make room for our texture
-	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
-											 //Map the image to the texture
-	glTexImage2D(GL_TEXTURE_2D,       //Always GL_TEXTURE_2D
-		0,                            //0 for now
-		GL_RGB,                       //Format OpenGL uses for image
-		image->width, image->height,  //Width and height
-		0,                            //The border of the image
-		GL_RGB,					      //GL_RGB, because pixels are stored in RGB format
-		GL_UNSIGNED_BYTE,			  //GL_UNSIGNED_BYTE, because pixels are stored
-									  //as unsigned numbers
-		image->pixels);               //The actual pixel data
-	m_idtexture = textureId;		  //Returns the id of the texture
-	delete image;
+	m_idtexture = _loadBMP(m_texture_path.c_str());
 	 /*if (LoadTGA(&m_texture, const_cast<char*>(m_texture_path.c_str()))) {
 		glGenTextures(1, &m_texture.texID);
 		glTexImage2D(GL_TEXTURE_2D, 0, m_texture.texID / 8, m_texture.width,

@@ -64,7 +64,6 @@ void Game::init()
 	glutDisplayFunc(render);
 	glutIdleFunc(Update);
 	glutReshapeFunc(resize);
-	//glutIdleFunc(render);
 
 	glutKeyboardFunc(Keyboard::keydoardCallback);
 	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
@@ -92,20 +91,20 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    //glutGameModeString(_1366_BY_768);
+		    glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
 				// Creates a new Camera for InGame Scene
 				// ReSharper disable once CppNonReclaimedResourceAcquisition
 				// ReSharper disable once CppMsExtBindingRValueToLvalueReference
+				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+				glutEnterGameMode();  //Enter Full Screen Game Mode
 				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
 				// ReSharper disable once CppNonReclaimedResourceAcquisition
 				solarSystem = new SolarSystem();
 				solarSystem->Load();  //Load all planets textures
-				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				//glutEnterGameMode();  //Enter Full Screen Game Mode
 				glutSetCursor(GLUT_CURSOR_NONE);
-				//init();
+				init();
 			}
 			else {
 				IO::printError("The selected Mode is not Available\n");

@@ -2,7 +2,6 @@
 #include "../../Vars/vec3f.h"
 #include <vector>
 #include "../../LoadTGAs/Texture.h" 
-#include <cstdlib>
 
 class Moon;
 
