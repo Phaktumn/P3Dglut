@@ -26,6 +26,7 @@ public:
 
 	void renderOrbits();
 
+	vec::Vector3 getPlanetPostion(const int planetID);
 	Planet& findPlanetByName(const std::string& planetName);
 	void addMoon();
 
@@ -41,6 +42,7 @@ private:
 	GLuint m_Universetexture;
 	void loadUniverTexture();
 
+	int m_last_PrintIndex;
 	int m_print_Index;
 	float m_elapsedTime;
 };

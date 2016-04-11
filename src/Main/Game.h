@@ -2,7 +2,6 @@
 #include "../Misc/RenderText.h"
 #include "../Vars/GameTime.h"
 #include "Camera/StaticCamera.h"
-#include "MainMenu.h"
 #include "Planets/SolarSystem.h"
 #pragma once
 
@@ -12,6 +11,8 @@
 #define _800_BY_600			"800x600:32"
 #define _1366_BY_768_RR_60  "1366x768:32@60"
 #define _1366_BY_768		"1366x768:32"
+#define _1920_BY_1080_RR_60	"1920x1080:32@60"
+#define _1920_BY_1080		"1920x1080:32"
 
 class Game
 {
@@ -33,7 +34,7 @@ public:
 		return instance;
 	}
 
-	int start(int windowHeigth, int windowWidth, std::string windowTitle) const;
+	static int start(int windowHeigth, int windowWidth, std::string windowTitle);
 
 	static SolarSystem* solarSystem;
 	static StaticCamera* m_camera;

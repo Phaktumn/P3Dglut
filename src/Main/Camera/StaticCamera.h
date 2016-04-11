@@ -5,7 +5,7 @@ class StaticCamera :
 	public Camera
 {
 public:
-	StaticCamera(vec::Vector3& position, float rotationAngle);
+	StaticCamera(const vec::Vector3& position, float rotationAngle);
 	~StaticCamera();
 
 	vec::Vector3 m_Orientation;
@@ -18,5 +18,8 @@ public:
 	void setLookAt(vec::Vector3& lookAt){
 		m_lookAt = lookAt;
 	}
+
+private:
+	float m_speed;
 };
 

@@ -9,7 +9,7 @@ Camera::Camera(Player& player): rotationAngle(0)
 	this->m_Position = vec::Vector3(0, 0, 0);
 }
 
-Camera::Camera(vec::Vector3& position)
+Camera::Camera(const vec::Vector3& position)
 	: player(nullptr), rotationAngle(0)
 {
 

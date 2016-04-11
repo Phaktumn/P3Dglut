@@ -1,7 +1,7 @@
 #include "StaticCamera.h"
 #include "../Keyboard/Keyboard.h"
 
-StaticCamera::StaticCamera(vec::Vector3& position, float):
+StaticCamera::StaticCamera(const vec::Vector3& position, float):
 	Camera(position)
 {
 	m_lookAt = vec::Vector3::zero();
@@ -9,8 +9,8 @@ StaticCamera::StaticCamera(vec::Vector3& position, float):
 	upVec = vec::Vector3::up();
 	m_Orientation = vec::Vector3::zero();
 	rotationAngle = 0.1;
-	this->m_Position = vec::Vector3(0, 0, 0);
-	m_Position.y = 15;
+	this->m_Position = position;
+	m_speed = 20;
 }
 
 StaticCamera::~StaticCamera()
@@ -21,19 +21,20 @@ StaticCamera::~StaticCamera()
 void StaticCamera::Update(float deltaTime)
 {
 	if(Keyboard::getKeyPressed(KEY_D)) {
-		rotate(0.005f);
+		rotate(deltaTime);
 	}
 	if (Keyboard::getKeyPressed(KEY_W)) {
-		m_Position += vec::Vector3(1, 0, 1) * m_Orientation * 0.1f;
+		m_Position += vec::Vector3(1, 0, 1) *
+			m_Orientation * m_speed * deltaTime;
 	}
 	if (Keyboard::getKeyPressed(KEY_A)) {
-		rotate(-0.005f);
+		rotate(-deltaTime);
 	}
 	if(Keyboard::getKeyPressed(KEY_Q)) {
-		m_Position -= upVec * 0.5f;
+		m_Position -= upVec * m_speed * deltaTime;
 	}
 	if (Keyboard::getKeyPressed(KEY_E)) {
-		m_Position += upVec * 0.5f;
+		m_Position += upVec * m_speed * deltaTime;
 	}
 	eye = m_Position;
 	eye += vec::Vector3(-sin(this->rotationAngle), 0, cos(rotationAngle));

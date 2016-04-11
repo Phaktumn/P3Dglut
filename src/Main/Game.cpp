@@ -33,7 +33,7 @@ Game::~Game()
 	std::cout << "\nClosed";
 }
 
-int Game::start(int windowHeigth, int windowWidth, std::string windowTitle) const
+int Game::start(int windowHeigth, int windowWidth, std::string windowTitle)
 {
 	glutInitWindowSize(windowWidth, windowHeigth);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -91,14 +91,13 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    glutGameModeString(_1366_BY_768);
+		    glutGameModeString(_1920_BY_1080_RR_60);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
 				// Creates a new Camera for InGame Scene
-				// ReSharper disable once CppNonReclaimedResourceAcquisition
-				// ReSharper disable once CppMsExtBindingRValueToLvalueReference
 				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
 				glutEnterGameMode();  //Enter Full Screen Game Mode
+				// ReSharper disable once CppNonReclaimedResourceAcquisition
 				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
 				// ReSharper disable once CppNonReclaimedResourceAcquisition
 				solarSystem = new SolarSystem();

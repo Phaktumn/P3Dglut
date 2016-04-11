@@ -42,8 +42,9 @@ SolarSystem::SolarSystem()
 		"Pluto", 90600.0f,EC_PLUTO, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
 
 	m_print_Index = 0;
+	m_last_PrintIndex = 0;
 	m_elapsedTime = 0;
-	simulationDeltaTime = 0.2f;
+	simulationDeltaTime = 0.01f;
 }
 
 SolarSystem::~SolarSystem()
@@ -73,11 +74,12 @@ void SolarSystem::Load()
 	gluQuadricTexture(sphere, GL_TRUE);
 	gluQuadricNormals(sphere, GLU_SMOOTH);
 
-	glNewList(m_list + 1, GL_COMPILE);
+	m_list = glGenLists(2);
+	glNewList(m_list, GL_COMPILE);
 		gluSphere(sphere, 1, 50, 50);
 	glEndList();
 
-	glNewList(m_list + 2, GL_COMPILE);
+	glNewList(m_list + 1, GL_COMPILE);
 		glDisable(GL_DEPTH);
 		glDisable(GL_DEPTH_TEST);
 		glDepthMask(0);
@@ -95,89 +97,80 @@ void SolarSystem::Simulate(float deltaTime)
 	if (Keyboard::getKeyPressed(NUM_0))
 	{
 		m_print_Index = 0;
+		m_last_PrintIndex = 0;
 		Game::m_camera->setLookAt(
 			m_Planets[m_print_Index]->getPositionVec());
 	}
 	if (Keyboard::getKeyPressed(NUM_1)) {
 		m_print_Index = 1;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 1;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_2)) {
 		m_print_Index = 2;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 2;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_3)) {
 		m_print_Index = 3;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 3;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_4)) {
-		m_print_Index = 4;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		m_print_Index = 3;
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 3;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_5)) {
 		m_print_Index = 5;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 5;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_6)) {
 		m_print_Index = 6;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 6;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_7)) {
 		m_print_Index = 7;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 7;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
-	if (Keyboard::getKeyPressed(NUM_8))
-	{
+	if (Keyboard::getKeyPressed(NUM_8)){
 		m_print_Index = 8;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 8;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_9)) {
 		m_print_Index = 9;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-		for (size_t i = 0; i < m_Planets.size(); i++) {
-			m_Planets[i]->setSelected(false);
-		}
+		if (m_last_PrintIndex != m_print_Index)
+			m_Planets[m_last_PrintIndex]->setSelected(false);
+		m_last_PrintIndex = 9;
+		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(KEY_Z)) {
@@ -191,15 +184,11 @@ void SolarSystem::Simulate(float deltaTime)
 	if (Keyboard::getKeyPressed(KEY_J)) {
 		addMoon();
 	}
+
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(simulationDeltaTime);
 	}
 }
-
-void SolarSystem::preCameraTranslateDraw() const
-{
-}
-
 
 void SolarSystem::Draw() const
 {
@@ -209,7 +198,7 @@ void SolarSystem::Draw() const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glPushMatrix();
-	glCallList(m_list + 2);
+	glCallList(m_list + 1);
 	glPopMatrix();
 
 	for (size_t i = 0; i < m_Planets.size(); i++) {
@@ -245,6 +234,12 @@ void SolarSystem::renderOrbits()
 	glDisable(GL_BLEND);
 }
 
+vec::Vector3 SolarSystem::getPlanetPostion(const int planetID)
+{
+	int _ID = MathHelper::Clampi(planetID, 0, 9);
+	return m_Planets[_ID]->getPositionVec();
+}
+
 Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
@@ -261,7 +256,7 @@ void SolarSystem::addMoon()
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{
 		if(m_Planets[planet_t]->IsSelected() == true)
-			m_Planets[planet_t]->addMoon(rand() % 100 + 50, rand() % 1 + 5);
+			m_Planets[planet_t]->addMoon(rand() % 100 + 10, rand() % 1 - 0.5f + 5);
 	}
 }
 

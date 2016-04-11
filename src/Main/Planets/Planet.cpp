@@ -30,6 +30,19 @@ void Planet::Load()
 {
 	loadTexture();
 	m_orbitInclination = 10;
+
+	//Generate All orbit vertices
+	for (float i = 0.0f; i <= 360.0f; i += 1) {
+		float m = MathHelper::ToRadians(i);
+		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m), m_Position.y, sin(m) * calculateKeplerOrbit(m)));
+	}
+
+	m_orbitList = glGenLists(1);
+	glNewList(m_orbitList, GL_COMPILE);
+	for (int i = 0; i < orbitVerices.size(); i++){
+		glVertex3f(orbitVerices[i].x, orbitVerices[i].y, orbitVerices[i].z);
+	}
+	glEndList();
 }
 
 float Planet::calculateKeplerOrbit(float radians)
@@ -80,7 +93,7 @@ void Planet::Draw() const
 	glRotatef(90, 1, 0, 0);
 	glRotatef(m_rotation, 0, 0, -1);
 	glScalef(m_scale, m_scale, m_scale);
-	glCallList(SolarSystem::m_list + 1);
+	glCallList(SolarSystem::m_list);
     glPopMatrix();
 
 	for (size_t i = 0; i < moons.size(); i++) {
@@ -122,12 +135,7 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 void Planet::renderOrbit()
 {
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0.0f; i < 360.0f; i += 1) {
-		float m = MathHelper::ToRadians(i);
-		glVertex3f(cos(m) * calculateKeplerOrbit(m),
-			m_Position.y,
-			sin(m) * calculateKeplerOrbit(m));
-	}
+	glCallList(m_orbitList);
 	glEnd();
 
 	glPushMatrix();

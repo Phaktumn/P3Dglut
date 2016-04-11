@@ -67,6 +67,8 @@ private:
 
 	GLuint m_idtexture;
 	GLuint list;
+	GLuint m_orbitList;
+	std::vector<vec::Vector3> orbitVerices;
 
 	float m_scale = 0;
 
