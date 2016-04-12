@@ -1,12 +1,10 @@
 #pragma once
-#include <vector>
 #include "Planets/SolarSystem.h"
 #include "LoadBMP.h"
 #include "Planets/Universe.h"
 
 template<class T> class Simple_Array
 {
-	//All Objects In Universe!
 	typedef struct Node{
 		T _Item;
 		Node* _Next;
@@ -46,7 +44,6 @@ public:
 	{
 		int _curr_Index = 0;
 		Node* _Ptr = _Front_Ptr;
-
 		if(_Ptr != nullptr) {
 			while (_curr_Index < _Index){
 				_Ptr = _Ptr->_Next;
@@ -58,9 +55,45 @@ public:
 		return nullptr;
 	}
 
+	void addAt(unsigned int _Index, T _data)
+	{
+		int _curr_Index = 0;
+		Node* _Ptr = _Front_Ptr;
+		Node* _last_Ptr = _Front_Ptr;
+		Node* _New_Data_;
+
+		while (_Ptr != nullptr)
+		{
+			_last_Ptr = _Ptr;
+			_Ptr = _Ptr->_Next;
+			if (_curr_Index == _Index)
+				break;
+			_curr_Index++;
+		}
+		_New_Data_ = const_cast<Node>(malloc(sizeof(Node)));
+		_New_Data_->_Item = _data;
+		_New_Data_->_Next = _Ptr;
+		_last_Ptr->_Next = _New_Data_;
+	}
+
 	void removeAt(unsigned int _Index)
 	{
-		
+		unsigned short int _curr_Index = 0;
+		Node* _last_Ptr = _Front_Ptr;
+		Node* _Ptr = _Front_Ptr;
+
+		while (_Ptr != nullptr)
+		{
+			_last_Ptr = _Ptr;
+			_Ptr = _Ptr->_Next;
+			if(_curr_Index == _Index){
+				break;
+			}
+			_curr_Index++;
+		}
+		_last_Ptr->_Next = _Ptr->_Next;
+		free(_Ptr);
+		_size--;
 	}
 
 	void Clear()
@@ -74,6 +107,12 @@ public:
 		}
 	}
 
+	unsigned int isEmpty() const
+	{
+		if (size() == 0) return TRUE;
+		return FALSE;
+	}
+
 	int size() const _NOEXCEPT {
 		return _size;
 	}
@@ -85,12 +124,6 @@ public:
 
 	~Simple_Array()
 	{ }
-	/*std::vector<T*> getArrayTemplates() 
-	{ return m_Universe; }
-
-	void addTemplate_TYPE(T* _item){
-		m_Universe.push_back(_item);
-	}*/
 };
 
 class UniverseSimulator
