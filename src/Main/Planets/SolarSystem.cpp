@@ -6,41 +6,43 @@
 #include "Universe.h"
 #include <Main/LoadBMP.h>
 
+#define PLANETS 1
 GLuint SolarSystem::m_list;
 
-SolarSystem::SolarSystem() 
+SolarSystem::SolarSystem(const std::string& _name)
 	: m_Universetexture(0)
 {
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
 		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
 
-	m_Planets.push_back(new Planet("Textures/mercury.bmp", 
-		"Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
+	//m_Planets.push_back(new Planet("Textures/mercury.bmp", 
+	//	"Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
 
-	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
-		"Venus", 225.0f, 241.0f,EC_VENUS, vec::Vector3(0, 0, 108), 0.4f));
-	
-	m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
-		"Earth", 365.0f, 1.0f,EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
-	
-	m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
-		"Mars", 687.0f, 1.01f,EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
+	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
+	//	"Venus", 225.0f, 241.0f,EC_VENUS, vec::Vector3(0, 0, 108), 0.4f));
+	//
+	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
+	//	"Earth", 365.0f, 1.0f,EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
+	//
+	//m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
+	//	"Mars", 687.0f, 1.01f,EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
 
-	m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
-		"Jupiter", 4332.0f, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
-	
-	m_Planets.push_back(new Planet(std::string("Textures/saturn.bmp"),
-		"Saturn", 10760.0f, 10.5 / 24.0, EC_SATURN,vec::Vector3(0, 0, 1443), 9.5f));
+	//m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
+	//	"Jupiter", 4332.0f, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
+	//
+	//m_Planets.push_back(new Planet(std::string("Textures/saturn.bmp"),
+	//	"Saturn", 10760.0f, 10.5 / 24.0, EC_SATURN,vec::Vector3(0, 0, 1443), 9.5f));
 
-	m_Planets.push_back(new Planet(std::string("Textures/uranus.bmp"),
-		"Uranus", 30700.0f, 17.0 / 24.0, EC_URANUS,vec::Vector3(0, 0, 2871), 9.5f));
+	//m_Planets.push_back(new Planet(std::string("Textures/uranus.bmp"),
+	//	"Uranus", 30700.0f, 17.0 / 24.0, EC_URANUS,vec::Vector3(0, 0, 2871), 9.5f));
 
-	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
-		"Neptune", 60200.0f, 16.0 / 24.0, EC_NEPTUNE,vec::Vector3(0, 0, 4504), 9.5f));
+	//m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
+	//	"Neptune", 60200.0f, 16.0 / 24.0, EC_NEPTUNE,vec::Vector3(0, 0, 4504), 9.5f));
 
-	m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
-		"Pluto", 90600.0f,EC_PLUTO, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
+	//m_Planets.push_back(new Planet(std::string("Textures/neptune.bmp"),
+	//	"Pluto", 90600.0f,EC_PLUTO, 0.6f, vec::Vector3(0, 0, 5913), 9.5f));
 
+	m_Name = _name;
 	m_print_Index = 0;
 	m_last_PrintIndex = 0;
 	m_elapsedTime = 0;
@@ -67,7 +69,12 @@ void SolarSystem::Load()
 		m_Planets[i]->Load();
 	}
 
-	findPlanetByName("Earth").addMoon(25.0f, 0.6f);
+	if (m_Planets.size() <= 1){
+		//Do nothing
+	}
+	else{
+		findPlanetByName("Earth").addMoon(25.0f, 0.6f);
+	}
 
 	sphere = gluNewQuadric();
 	gluQuadricDrawStyle(sphere, GLU_FILL);
@@ -94,6 +101,7 @@ void SolarSystem::Load()
 
 void SolarSystem::Simulate(float deltaTime)
 {
+#ifdef PLANETS 0
 	if (Keyboard::getKeyPressed(NUM_0))
 	{
 		m_print_Index = 0;
@@ -173,6 +181,7 @@ void SolarSystem::Simulate(float deltaTime)
 		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
 	}
+#endif
 	if (Keyboard::getKeyPressed(KEY_Z)) {
 		simulationDeltaTime -= 0.01f;
 		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
@@ -244,7 +253,7 @@ Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{
-		if(m_Planets[planet_t]->getPlanetName() == planetName){
+		if(m_Planets[planet_t]->getName() == planetName){
 			return *m_Planets[planet_t];
 		}
 	}
@@ -258,6 +267,12 @@ void SolarSystem::addMoon()
 		if(m_Planets[planet_t]->IsSelected() == true)
 			m_Planets[planet_t]->addMoon(rand() % 100 + 10, rand() % 1 - 0.5f + 5);
 	}
+}
+
+void SolarSystem::addPlanet(Planet* planet)
+{
+	m_Planets.push_back(planet);
+	findPlanetByName(planet->getName()).Load();
 }
 
 /* Load Universe Texture */

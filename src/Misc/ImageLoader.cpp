@@ -16,16 +16,16 @@ Image::~Image() {
 namespace {
 	//Converts a four-character array to an integer, using little-endian form
 	int toInt(const char* bytes) {
-		return (int)(((unsigned char)bytes[3] << 24) |
-					 ((unsigned char)bytes[2] << 16) |
-					 ((unsigned char)bytes[1] << 8) |
-					 (unsigned char)bytes[0]);
+		return int(unsigned char(bytes[3]) << 24 |
+			unsigned char(bytes[2]) << 16 |
+			unsigned char(bytes[1]) << 8 |
+			unsigned char(bytes[0]));
 	}
 
 	//Converts a two-character array to a short, using little-endian form
 	short toShort(const char* bytes) {
-		return (short)(((unsigned char)bytes[1] << 8) |
-					   (unsigned char)bytes[0]);
+		return short(unsigned char(bytes[1]) << 8 |
+			unsigned char(bytes[0]));
 	}
 
 	//Reads the next four bytes as an integer, using little-endian form
@@ -120,8 +120,8 @@ Image* loadBMP(const char* filename) {
 
 	//Read the header
 	int headerSize = readInt(input);
-	int width;
-	int height;
+	int width = 0;
+	int height = 0;
 	switch(headerSize) {
 		case 40:
 			//V3

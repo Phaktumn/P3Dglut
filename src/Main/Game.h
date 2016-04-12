@@ -3,6 +3,8 @@
 #include "../Vars/GameTime.h"
 #include "Camera/StaticCamera.h"
 #include "Planets/SolarSystem.h"
+#include "UniverseSimulator.h"
+
 #pragma once
 
 #define _640_BY_480_RR_60   "640x480:32@60"
@@ -36,7 +38,9 @@ public:
 
 	static int start(int windowHeigth, int windowWidth, std::string windowTitle);
 
+	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
+	static SolarSystem* solarSystem_1;
 	static StaticCamera* m_camera;
 	static void init();
 private:
@@ -46,6 +50,8 @@ private:
 	static void resize(int width, int height);
 	static void Update();
 	static void render();
+
+	static void AddItems();
 
 	static Game* instance;
 	static RenderText* text;

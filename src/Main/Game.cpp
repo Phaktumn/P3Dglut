@@ -15,7 +15,9 @@ RenderText* Game::m_text1 = new RenderText();
 GameTime Game::gameTime = GameTime();
 StaticCamera* Game::m_camera;
 SolarSystem* Game::solarSystem;
+SolarSystem* Game::solarSystem_1;
 Game::GameState Game::state = Menu;
+UniverseSimulator* Game::universe = new UniverseSimulator();
 
 GLuint GLUT_WINDOW0_ID = 0;
 GLuint GLUT_WINDOW1_ID = 0;
@@ -28,6 +30,7 @@ Game::Game(int argc, char** argv)
 
 Game::~Game()
 {
+	delete universe;
 	delete text;
 	delete m_text1;
 	std::cout << "\nClosed";
@@ -83,6 +86,15 @@ void Game::resize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void Game::AddItems()
+{
+	universe->add_A_Thing_To_Universe(solarSystem, new vec::Vector3(1,15,1));
+	universe->addPlanet_to_SolarSystem("Jorge 01", new Planet("Textures/mercury.bmp", "Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
+
+	universe->add_A_Thing_To_Universe(solarSystem_1, new vec::Vector3(250, 20, 250));
+	universe->addPlanet_to_SolarSystem("Jorge 02", new Planet("Textures/mercury.bmp", "Mercurio", 88.0f, 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
+}
+
 void Game::Update()
 {
 	gameTime.start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
@@ -91,29 +103,31 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    glutGameModeString(_1920_BY_1080_RR_60);
+		    //glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
 				// Creates a new Camera for InGame Scene
-				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				glutEnterGameMode();  //Enter Full Screen Game Mode
+				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+				//glutEnterGameMode();  //Enter Full Screen Game Mode
 				// ReSharper disable once CppNonReclaimedResourceAcquisition
 				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
 				// ReSharper disable once CppNonReclaimedResourceAcquisition
-				solarSystem = new SolarSystem();
+				solarSystem = new SolarSystem("Jorge 01");
 				solarSystem->Load();  //Load all planets textures
-				glutSetCursor(GLUT_CURSOR_NONE);
+				solarSystem_1 = new SolarSystem("Jorge 02");
+				solarSystem_1->Load();
+				//glutSetCursor(GLUT_CURSOR_NONE);
+				AddItems();
 				init();
 			}
 			else {
 				IO::printError("The selected Mode is not Available\n");
-				glutFullScreen();
 			}
 		}
 	} break;
 	case InGame: {	
 		m_camera->Update(gameTime.getDeltaTime());
-		solarSystem->Simulate(gameTime.getDeltaTime());
+		universe->simulate(gameTime.getDeltaTime());
 	}break;
 	default: break;
 	case Exiting: {
@@ -136,8 +150,7 @@ GLvoid Game::render()
 	case InGame: {	
 			m_camera->Draw();
 			Lightning::applyLights();
-			solarSystem->Draw();
-			solarSystem->renderOrbits();
+			universe->draw();
 	}break;
 	default: break;
 	}
@@ -149,5 +162,4 @@ GLvoid Game::render()
 	glutSwapBuffers();	
 	gameTime.end(glutGet(GLUT_ELAPSED_TIME) * 0.001);
 }
-
 

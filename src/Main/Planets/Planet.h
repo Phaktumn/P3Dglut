@@ -1,11 +1,9 @@
 #pragma once
 #include "../../Vars/vec3f.h"
 #include <vector>
-#include "../../LoadTGAs/Texture.h" 
+#include <GL/freeglut.h>
 
 class Moon;
-
-bool LoadTGA(Texture *, char *);
 
 class Planet
 {
@@ -26,7 +24,7 @@ public:
 	{ return m_moon_index; }
 
 	/* Planet Name */
-	std::string& getPlanetName()
+	std::string& getName()
 	{ return m_Name; }
 
 	/* Planet Position Debug String */
@@ -51,14 +49,22 @@ public:
 		m_isSelected = state;
 	}
 
+	/* Get object Type */
+	std::string& getType() 
+	{ return TYPE; }
+
 	std::string& planetSettigs();
 
 private:
+	/* In What solar sistem this planet is present*/
+	std::string m_solarSystem_ID;
+
+	std::string TYPE = "Planet";
+
 	/* Selected state to let the user add moon's */
 	bool m_isSelected = false;
 
 	std::string m_texture_path;
-	Texture m_texture;
 	std::string m_Name;
 	/* Position relative to sun vector3(0,0,0) */
 	vec::Vector3 m_Position;
@@ -68,13 +74,17 @@ private:
 	GLuint m_idtexture;
 	GLuint list;
 	GLuint m_orbitList;
+	/* All orbit vertices */
 	std::vector<vec::Vector3> orbitVerices;
 
 	float m_scale = 0;
 
 	//Distance from planet 0,0,0
+	/* Distance relative to this planet solar sistem Sun*/
 	float m_orbit_distance;
+
 	//Actual distance ftom planet to 0,0,0
+	/* Kepler Orbit Distance relative to this planet solar sistem Sun */
 	float m_KeplerOrbitDistance = 0;
 
 	float m_rotation;

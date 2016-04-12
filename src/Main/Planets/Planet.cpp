@@ -8,7 +8,7 @@
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& position, float scale) : 
-	m_orbitInclination(0), m_idtexture(0), list(0), m_orbit_distance(abs(position.z)),
+	m_orbitInclination(0), m_idtexture(0), list(0), m_orbitList(0), m_orbit_distance(abs(position.z)),
 	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
 {
 	m_Name = name;
@@ -21,6 +21,7 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 
 Planet::~Planet()
 {
+	//Delete all moons
 	for (size_t i = 0; i < moons.size(); i++){
 		delete moons[i];
 	}
@@ -29,6 +30,7 @@ Planet::~Planet()
 void Planet::Load()
 {
 	loadTexture();
+	//Orbit Inclination not implemented yet
 	m_orbitInclination = 10;
 
 	//Generate All orbit vertices
@@ -59,7 +61,8 @@ void Planet::Simulate(float deltaTime)
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
-	m_rotation += deltaTime * 360 / m_Rotation_Duration;
+	if (m_Rotation_Duration < 1.0f) m_Rotation_Duration += deltaTime * 180 * m_Rotation_Duration;
+	else m_rotation += deltaTime * 360 / m_Rotation_Duration;
 	if (m_rotation >= 360.0f ) {
 		m_rotation -= 360;
 		m_days_elapsed++;
@@ -76,6 +79,8 @@ void Planet::Simulate(float deltaTime)
 	m_Position.y = 0;
 	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
 
+	//Dont Update Moons if moon list is equals to zero
+	if (m_moon_index == 0) return;
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->Update(0.1f);
 	}
@@ -96,6 +101,8 @@ void Planet::Draw() const
 	glCallList(SolarSystem::m_list);
     glPopMatrix();
 
+	//Dont Draw Moons if moon list is equal to zero
+	if (m_moon_index == 0) return;
 	for (size_t i = 0; i < moons.size(); i++) {
 		moons[i]->Draw();
 	}
@@ -127,7 +134,7 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 	if (distanceToPlantet < m_scale) {
 		distanceToPlantet = m_scale + 5;
 	}
-	moons.push_back(new Moon(*this, distanceToPlantet, radius, 30));
+	moons.push_back(new Moon(*this, distanceToPlantet, radius, 0.0f));
 	moons[m_moon_index]->Load();
 	m_moon_index++;
 }
@@ -138,6 +145,7 @@ void Planet::renderOrbit()
 	glCallList(m_orbitList);
 	glEnd();
 
+	if (m_moon_index == 0) return;
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	for (size_t i = 0; i < moons.size(); i++){
@@ -160,13 +168,12 @@ std::string& Planet::planetSettigs()
 	m_planetSettings += "\n Orbit Duration: " 
 		+ std::to_string(int(m_Orbit_Duration)) + " Earth Days";
 
-	if(m_Rotation_Duration < 1) {
+	if(m_Rotation_Duration < 1.0f) 
 		m_planetSettings += "\n Day Duration: "
 			+ std::to_string(double(m_Rotation_Duration * 24)) + " Earth Hours";
-	}
 	else m_planetSettings += "\n Day Duration: "
 		+ std::to_string(int(m_Rotation_Duration)) + " Earth Days";
-	
+
 	m_planetSettings += "\n Days Elapsed on " + m_Name + ": "
 		+ std::to_string(m_days_elapsed) + " Days";
 	m_planetSettings += "\n Years Elapsed on " + m_Name + ": "

@@ -16,12 +16,16 @@
 class SolarSystem
 {
 public:
-	SolarSystem();
+	SolarSystem(const std::string& _name);
 	~SolarSystem();
+
+	std::string& getType()
+	{ return TYPE; }
+
 
 	void Load();
 	void Simulate(float deltaTime);
-	void preCameraTranslateDraw() const;
+	//void preCameraTranslateDraw() const;
 	void Draw() const;
 
 	void renderOrbits();
@@ -29,10 +33,15 @@ public:
 	vec::Vector3 getPlanetPostion(const int planetID);
 	Planet& findPlanetByName(const std::string& planetName);
 	void addMoon();
+	void addPlanet(Planet* planet);
 
 	static GLuint m_list;
 
+	std::string& getName() { return m_Name; }
+
 private: 
+	std::string TYPE = "Solar System";
+
 	std::vector<Planet*> m_Planets;
 	GLUquadricObj* sphere = nullptr;
 	RenderText* Settings = new RenderText();
@@ -41,7 +50,7 @@ private:
 
 	GLuint m_Universetexture;
 	void loadUniverTexture();
-
+	std::string m_Name;
 	int m_last_PrintIndex;
 	int m_print_Index;
 	float m_elapsedTime;
