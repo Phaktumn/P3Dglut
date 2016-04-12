@@ -48,8 +48,6 @@ private:
 
 	float simulationDeltaTime = 0.1f;
 
-	GLuint m_Universetexture;
-	void loadUniverTexture();
 	std::string m_Name;
 	int m_last_PrintIndex;
 	int m_print_Index;

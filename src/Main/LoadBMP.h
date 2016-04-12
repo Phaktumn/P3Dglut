@@ -7,7 +7,7 @@ inline GLuint _loadBMP(const std::string& texturePath)
 {
 	GLuint textureId = 0;
 	Image* image = loadBMP(texturePath.c_str());
-	IO::printMessage("Image: { Textures / galaxy.bmp } Loaded with Success ");
+	IO::printMessage("Image: {"+ texturePath + "} Loaded with Success ");
 	glGenTextures(1, &textureId);			 //Make room for our texture
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
 										 //Map the image to the texture

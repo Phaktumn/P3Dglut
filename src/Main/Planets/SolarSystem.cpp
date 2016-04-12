@@ -10,7 +10,6 @@
 GLuint SolarSystem::m_list;
 
 SolarSystem::SolarSystem(const std::string& _name)
-	: m_Universetexture(0)
 {
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
 		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
@@ -21,9 +20,8 @@ SolarSystem::SolarSystem(const std::string& _name)
 	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
 	//	"Venus", 225.0f, 241.0f,EC_VENUS, vec::Vector3(0, 0, 108), 0.4f));
 	//
-	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),
-	//	"Earth", 365.0f, 1.0f,EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
-	//
+	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),	"Earth", 365.0f, 1.0f, EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
+
 	//m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
 	//	"Mars", 687.0f, 1.01f,EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
 
@@ -63,8 +61,6 @@ void SolarSystem::Load()
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_TEXTURE_2D);
 
-	loadUniverTexture();
-
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->Load();
 	}
@@ -81,22 +77,10 @@ void SolarSystem::Load()
 	gluQuadricTexture(sphere, GL_TRUE);
 	gluQuadricNormals(sphere, GLU_SMOOTH);
 
-	m_list = glGenLists(2);
+	m_list = glGenLists(1);
 	glNewList(m_list, GL_COMPILE);
 		gluSphere(sphere, 1, 50, 50);
 	glEndList();
-
-	glNewList(m_list + 1, GL_COMPILE);
-		glDisable(GL_DEPTH);
-		glDisable(GL_DEPTH_TEST);
-		glDepthMask(0);
-		glScalef(10000, 10000, 10000);
-		Universe::drawQuads();
-		glDepthMask(1);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_DEPTH);
-		glEndList();
-	glDisable(GL_TEXTURE_2D);
 }
 
 void SolarSystem::Simulate(float deltaTime)
@@ -203,12 +187,6 @@ void SolarSystem::Draw() const
 {
 	glDisable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, m_Universetexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glPushMatrix();
-	glCallList(m_list + 1);
-	glPopMatrix();
 
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		//Se for o sol disable light
@@ -273,10 +251,4 @@ void SolarSystem::addPlanet(Planet* planet)
 {
 	m_Planets.push_back(planet);
 	findPlanetByName(planet->getName()).Load();
-}
-
-/* Load Universe Texture */
-void SolarSystem::loadUniverTexture()
-{
-	m_Universetexture = _loadBMP("Textures/stars.bmp");
 }

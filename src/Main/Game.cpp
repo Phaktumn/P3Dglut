@@ -17,7 +17,7 @@ StaticCamera* Game::m_camera;
 SolarSystem* Game::solarSystem;
 SolarSystem* Game::solarSystem_1;
 Game::GameState Game::state = Menu;
-UniverseSimulator* Game::universe = new UniverseSimulator();
+UniverseSimulator* Game::universe;
 
 GLuint GLUT_WINDOW0_ID = 0;
 GLuint GLUT_WINDOW1_ID = 0;
@@ -88,11 +88,13 @@ void Game::resize(int width, int height)
 
 void Game::AddItems()
 {
-	universe->add_A_Thing_To_Universe(solarSystem, new vec::Vector3(1,15,1));
+	universe->add_SolarSystem(solarSystem, new vec::Vector3(1,15,1));
 	universe->addPlanet_to_SolarSystem("Jorge 01", new Planet("Textures/mercury.bmp", "Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
 
-	universe->add_A_Thing_To_Universe(solarSystem_1, new vec::Vector3(250, 20, 250));
-	universe->addPlanet_to_SolarSystem("Jorge 02", new Planet("Textures/mercury.bmp", "Mercurio", 88.0f, 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
+	universe->add_SolarSystem(solarSystem_1, new vec::Vector3(500, 20, 500));
+	//                                   Solar System                  texture path       Planet Name
+	universe->addPlanet_to_SolarSystem("Jorge 02",		new Planet("Textures/mercury.bmp", "Mercurio", 88.0f , 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f ));
+	universe->addPlanet_to_SolarSystem("Jorge 02",		new Planet("Textures/earth.bmp"  , "Earth",    365.0f, 1.0f,  EC_EARTH,   vec::Vector3(0, 0, 150), 1.0f));
 }
 
 void Game::Update()
@@ -103,22 +105,21 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    //glutGameModeString(_1366_BY_768);
+		    glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
 				// Creates a new Camera for InGame Scene
-				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				//glutEnterGameMode();  //Enter Full Screen Game Mode
-				// ReSharper disable once CppNonReclaimedResourceAcquisition
+				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+				glutEnterGameMode();  //Enter Full Screen Game Mode
 				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
-				// ReSharper disable once CppNonReclaimedResourceAcquisition
-				solarSystem = new SolarSystem("Jorge 01");
-				solarSystem->Load();  //Load all planets textures
-				solarSystem_1 = new SolarSystem("Jorge 02");
-				solarSystem_1->Load();
-				//glutSetCursor(GLUT_CURSOR_NONE);
-				AddItems();
-				init();
+				universe = new UniverseSimulator();
+				solarSystem = new SolarSystem("Jorge 01"); //Create Solar System1
+				solarSystem->Load();    //Load all planets textures
+				solarSystem_1 = new SolarSystem("Jorge 02"); //Create Solar System2
+				solarSystem_1->Load();  //Load System Planets Textures
+				glutSetCursor(GLUT_CURSOR_NONE); //Cursor will be invisible
+				AddItems(); //Get The universe Together
+				init();     //Initialize all glut Properties
 			}
 			else {
 				IO::printError("The selected Mode is not Available\n");

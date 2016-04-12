@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "Planets/SolarSystem.h"
+#include "LoadBMP.h"
+#include "Planets/Universe.h"
 
 template<class T> class Simple_Array
 {
@@ -56,6 +58,22 @@ public:
 		return nullptr;
 	}
 
+	void removeAt(unsigned int _Index)
+	{
+		
+	}
+
+	void Clear()
+	{
+		Node* _Ptr = _Front_Ptr;
+		Node* _aux__Ptr = _Front_Ptr;
+		while (_aux__Ptr != nullptr){
+			_aux__Ptr = _Ptr->_Next;
+			free(_Ptr);
+			_size--;
+		}
+	}
+
 	int size() const _NOEXCEPT {
 		return _size;
 	}
@@ -84,11 +102,29 @@ public:
 	bool _getSimulateState() const
 	{ return m_simulate; }
 
-	
+	GLuint m_Universetexture;
+	GLuint m_list;
 	Simple_Array<SolarSystem*> solarSystems;
 	Simple_Array<vec::Vector3*> SolarPositions;
 
-	void add_A_Thing_To_Universe(SolarSystem* _Solar_System, vec::Vector3* position){
+	void load_Universe()
+	{
+		m_Universetexture = _loadBMP("Textures/stars.bmp");
+
+		m_list = glGenLists(1);
+		glNewList(m_list, GL_COMPILE);	
+		glDisable(GL_DEPTH);
+		glDisable(GL_DEPTH_TEST);
+		glDepthMask(0);
+		glScalef(10000, 10000, 10000);
+		Universe::drawQuads();
+		glDepthMask(1);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH);
+		glEndList();
+	}
+
+	void add_SolarSystem(SolarSystem* _Solar_System, vec::Vector3* position){
 		SolarPositions.push_back(position);
 		solarSystems.push_back(_Solar_System);
 	}
@@ -112,6 +148,7 @@ public:
 	
 	void draw()
 	{
+		drawUniverse();
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
 			glTranslatef(SolarPositions[i]->x, SolarPositions[i]->y, SolarPositions[i]->z);
@@ -122,12 +159,24 @@ public:
 
 	UniverseSimulator(): m_simulate(false)
 	{
-			
+		load_Universe();
 	}
 
 	~UniverseSimulator()
 	{
 		
+	}
+
+	void drawUniverse() const
+	{
+		glDisable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, m_Universetexture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glPushMatrix();
+		glCallList(m_list);
+		glPopMatrix();
 	}
 };
 
