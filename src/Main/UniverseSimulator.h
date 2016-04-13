@@ -3,7 +3,7 @@
 #include "LoadBMP.h"
 #include "Planets/Universe.h"
 
-template<class T> class Simple_Array
+template<class T> class List
 {
 	typedef struct Node{
 		T _Item;
@@ -117,12 +117,12 @@ public:
 		return _size;
 	}
 
-	Simple_Array()
+	List()
 		: _Front_Ptr{ nullptr },
 		_size{ 0 }
 	{ }
 
-	~Simple_Array()
+	~List()
 	{ }
 };
 
@@ -137,8 +137,8 @@ public:
 
 	GLuint m_Universetexture;
 	GLuint m_list;
-	Simple_Array<SolarSystem*> solarSystems;
-	Simple_Array<vec::Vector3*> SolarPositions;
+	List<SolarSystem*> solarSystems;
+	List<vec::Vector3*> SolarPositions;
 
 	void load_Universe()
 	{
