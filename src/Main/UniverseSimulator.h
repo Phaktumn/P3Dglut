@@ -1,3 +1,7 @@
+#ifndef __cplusplus
+#error A C++ compiler is required!
+#endif
+
 #pragma once
 #include "Planets/SolarSystem.h"
 #include "LoadBMP.h"
@@ -47,53 +51,67 @@ public:
 		if(_Ptr != nullptr) {
 			while (_curr_Index < _Index){
 				_Ptr = _Ptr->_Next;
+				//Getting some error when trying to return nullPtr and T = int
 				if (_Ptr == nullptr) return nullptr;
 				_curr_Index++;
 			}
 			return _Ptr->_Item;
 		}
+		//Getting some error when trying to return nullPtr and T = int
 		return nullptr;
 	}
 
 	void addAt(unsigned int _Index, T _data)
 	{
-		int _curr_Index = 0;
+		int _curr_Index = 1;
 		Node* _Ptr = _Front_Ptr;
 		Node* _last_Ptr = _Front_Ptr;
-		Node* _New_Data_;
-
-		while (_Ptr != nullptr)
-		{
-			_last_Ptr = _Ptr;
-			_Ptr = _Ptr->_Next;
-			if (_curr_Index == _Index)
-				break;
-			_curr_Index++;
+		if(_Index == 1){
+			_Front_Ptr->_Next = _last_Ptr;
+			_Front_Ptr->_Item = _data;
 		}
-		_New_Data_ = const_cast<Node>(malloc(sizeof(Node)));
-		_New_Data_->_Item = _data;
-		_New_Data_->_Next = _Ptr;
-		_last_Ptr->_Next = _New_Data_;
+		else {
+			Node* _New_Data_;
+			while (_Ptr != nullptr) {
+				_curr_Index++;
+				_last_Ptr = _Ptr;
+				_Ptr = _Ptr->_Next;
+				if (_curr_Index == _Index)
+					break;
+			}
+			_New_Data_ = (Node*)(malloc(sizeof(Node)));
+			_New_Data_->_Item = _data;
+			_New_Data_->_Next = _Ptr;
+			_last_Ptr->_Next = _New_Data_;	
+		}
+		_size++;
 	}
 
 	void removeAt(unsigned int _Index)
 	{
-		unsigned short int _curr_Index = 0;
-		Node* _last_Ptr = _Front_Ptr;
+		unsigned short int _curr_Index = 1;
 		Node* _Ptr = _Front_Ptr;
-
-		while (_Ptr != nullptr)
-		{
-			_last_Ptr = _Ptr;
-			_Ptr = _Ptr->_Next;
-			if(_curr_Index == _Index){
-				break;
-			}
-			_curr_Index++;
+		//Remove The first Node
+		if (_Index == 1) {
+			_Front_Ptr = _Ptr->_Next;
+			free(_Ptr);
+			_size--;
 		}
-		_last_Ptr->_Next = _Ptr->_Next;
-		free(_Ptr);
-		_size--;
+
+		else {
+			Node* _last_Ptr = _Front_Ptr;
+			while (_Ptr != nullptr) {
+				_curr_Index++;
+				_last_Ptr = _Ptr;
+				_Ptr = _Ptr->_Next;
+				if (_curr_Index == _Index) {
+					_size--;
+					break;
+				}
+			}
+			_last_Ptr->_Next = _Ptr->_Next;
+			free(_Ptr);
+		}
 	}
 
 	void Clear()
@@ -105,6 +123,23 @@ public:
 			free(_Ptr);
 			_size--;
 		}
+	}
+
+	T front()
+	{
+		if (_Front_Ptr == nullptr) return NULL;
+		return _Front_Ptr->_Item;
+	}
+
+	T back()
+	{
+		Node* _Ptr = _Front_Ptr;
+		while (_Ptr != nullptr) {
+			if (_Ptr->_Next == nullptr)
+				break;
+			_Ptr = _Ptr->_Next;
+		}
+		return _Ptr->_Item;
 	}
 
 	unsigned int isEmpty() const
