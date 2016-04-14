@@ -28,6 +28,12 @@ public:
 
 		m_list = glGenLists(1);
 		glNewList(m_list, GL_COMPILE);	
+		glDisable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, m_Universetexture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glPushMatrix();
 		glDisable(GL_DEPTH);
 		glDisable(GL_DEPTH_TEST);
 		glDepthMask(0);
@@ -36,6 +42,7 @@ public:
 		glDepthMask(1);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_DEPTH);
+		glPopMatrix();
 		glEndList();
 	}
 
@@ -85,14 +92,15 @@ public:
 
 	void drawUniverse() const
 	{
+		//2
 		glDisable(GL_LIGHTING);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, m_Universetexture);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glPushMatrix();
+		//glEnable(GL_TEXTURE_2D);
+		//glBindTexture(GL_TEXTURE_2D, m_Universetexture);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		//glPushMatrix();
 		glCallList(m_list);
-		glPopMatrix();
+		//glPopMatrix();
 	}
 };
 

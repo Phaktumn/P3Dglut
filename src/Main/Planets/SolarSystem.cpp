@@ -5,7 +5,6 @@
 #include <Main/Game.h>
 
 #define PLANETS 1
-GLuint SolarSystem::m_list;
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
@@ -25,48 +24,26 @@ SolarSystem::~SolarSystem()
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		delete m_Planets[i];
 	}
-	free(sphere);
 	delete Settings;
 }
 
 void SolarSystem::Load()
 {
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_TEXTURE_2D);
-
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->Load();
 	}
 
-	if (m_Planets.size() <= 1){
-		//Do nothing
-	}
-	else{
-		findPlanetByName("Earth").addMoon(25.0f, 0.6f);
-	}
-
-	sphere = gluNewQuadric();
-	gluQuadricDrawStyle(sphere, GLU_FILL);
-	gluQuadricTexture(sphere, GL_TRUE);
-	gluQuadricNormals(sphere, GLU_SMOOTH);
-
-	m_list = glGenLists(1);
-	glNewList(m_list, GL_COMPILE);
-		gluSphere(sphere, 1, 50, 50);
-	glEndList();
+	//if (m_Planets.size() <= 1){
+	//	//Do nothing
+	//}
+	//else{
+	//	findPlanetByName("Earth").addMoon(25.0f, 0.6f);
+	//}
 }
 
 void SolarSystem::Simulate(float deltaTime)
 {
-#ifdef PLANETS 0
-	if (Keyboard::getKeyPressed(NUM_0))
-	{
-		m_print_Index = 0;
-		m_last_PrintIndex = 0;
-		Game::m_camera->setLookAt(
-			m_Planets[m_print_Index]->getPositionVec());
-	}
-	if (Keyboard::getKeyPressed(NUM_1)) {
+	/*if (Keyboard::getKeyPressed(NUM_1)) {
 		m_print_Index = 1;
 		if (m_last_PrintIndex != m_print_Index)
 			m_Planets[m_last_PrintIndex]->setSelected(false);
@@ -75,12 +52,14 @@ void SolarSystem::Simulate(float deltaTime)
 		m_Planets[m_print_Index]->setSelected(true);
 	}
 	if (Keyboard::getKeyPressed(NUM_2)) {
-		m_print_Index = 2;
-		if (m_last_PrintIndex != m_print_Index)
-			m_Planets[m_last_PrintIndex]->setSelected(false);
-		m_last_PrintIndex = 2;
-		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
-		m_Planets[m_print_Index]->setSelected(true);
+		if (m_Planets.size() < 2) {
+			m_print_Index = 2;
+			if (m_last_PrintIndex != m_print_Index)
+				m_Planets[m_last_PrintIndex]->setSelected(false);
+			m_last_PrintIndex = 2;
+			Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
+			m_Planets[m_print_Index]->setSelected(true);
+		}
 	}
 	if (Keyboard::getKeyPressed(NUM_3)) {
 		m_print_Index = 3;
@@ -137,8 +116,7 @@ void SolarSystem::Simulate(float deltaTime)
 		m_last_PrintIndex = 9;
 		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
-	}
-#endif
+	}*/
 	if (Keyboard::getKeyPressed(KEY_Z)) {
 		simulationDeltaTime -= 0.01f;
 		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.0001f, 1.0f);
@@ -164,34 +142,25 @@ void SolarSystem::Draw() const
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		//Se for o sol disable light
 		if (i == 0) {
-			glDisable(GL_LIGHTING);
 			m_Planets[i]->Draw();
-			glEnable(GL_LIGHTING);
 		}
 		//resto dos planetas enable Light
 		else {
-			glEnable(GL_LIGHTING);
 			m_Planets[i]->Draw();
-			glDisable(GL_LIGHTING);
 		}
-		if (i == m_print_Index) {
-			Settings->drawText(m_Planets[i]->planetSettigs(),
-				vec::Vector3(20, 150), 1.0f);
-		}
+		//if (i == m_print_Index) {
+			//Settings->drawText(m_Planets[i]->planetSettigs(),
+				//vec::Vector3(20, 150), 1.0f);
+		//}
 	}
 	glDisable(GL_TEXTURE_2D);
 }
 
 void SolarSystem::renderOrbits() const
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->renderOrbit();
 	}
-
-	glDisable(GL_BLEND);
 }
 
 vec::Vector3 SolarSystem::getPlanetPostion(const int planetID) const

@@ -1,14 +1,13 @@
 #include "Planet.h"
-#include "SolarSystem.h"
 #include "Moon.h"
-#include "Misc/Debug/IO.h"
-#include "Misc/imageloader.h"
 #include <Misc/Lights/Lightning.h>
 #include <Main/LoadBMP.h>
 
+GLuint Planet::list;
+
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& position, float scale) : 
-	m_orbitInclination(0), m_idtexture(0), list(0), m_orbitList(0), m_orbit_distance(abs(position.z)),
+	m_orbitInclination(0), m_idtexture(0), m_orbit_distance(abs(position.z)),
 	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
 {
 	m_Name = name;
@@ -25,25 +24,52 @@ Planet::~Planet()
 	for (size_t i = 0; i < moons.size(); i++){
 		delete moons[i];
 	}
+	free(sphere);
 }
 
 void Planet::Load()
 {
 	loadTexture();
+
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_TEXTURE_2D);
+	sphere = gluNewQuadric();
+	gluQuadricDrawStyle(sphere, GLU_FILL);
+	gluQuadricTexture(sphere, GL_TRUE);
+	gluQuadricNormals(sphere, GLU_SMOOTH);
+
+	list = glGenLists(1);
+
+	glNewList(list, GL_COMPILE);
+	Lightning::applyMaterial();
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	gluSphere(sphere, 1, 15, 15);
+	glEndList();
+
 	//Orbit Inclination not implemented yet
 	m_orbitInclination = 10;
 
 	//Generate All orbit vertices
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
-		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m), m_Position.y, sin(m) * calculateKeplerOrbit(m)));
+		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m),
+			m_Position.y, sin(m) * calculateKeplerOrbit(m)));
 	}
 
-	m_orbitList = glGenLists(1);
-	glNewList(m_orbitList, GL_COMPILE);
+	m_OrbitList = glGenLists(1);
+
+	glNewList(m_OrbitList, GL_COMPILE);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_LINE_STRIP);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	for (int i = 0; i < orbitVerices.size(); i++){
 		glVertex3f(orbitVerices[i].x, orbitVerices[i].y, orbitVerices[i].z);
 	}
+	glDisable(GL_BLEND);
+	glEnd();
+	glEnable(GL_LIGHTING);
 	glEndList();
 }
 
@@ -74,7 +100,7 @@ void Planet::Simulate(float deltaTime)
 	}
 
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
-
+	
 	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
 	m_Position.y = 0;
 	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
@@ -88,20 +114,21 @@ void Planet::Simulate(float deltaTime)
 
 void Planet::Draw() const
 {
-	Lightning::applyMaterial();
-	glBindTexture(GL_TEXTURE_2D, m_idtexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) 
+		glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	//Rodar o planeta para a textura parecer legit XD
 	glRotatef(90, 1, 0, 0);
 	glRotatef(m_rotation, 0, 0, -1);
 	glScalef(m_scale, m_scale, m_scale);
-	glCallList(SolarSystem::m_list);
+	glBindTexture(GL_TEXTURE_2D, m_idtexture);
+	glCallList(list);
     glPopMatrix();
+	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
+		glEnable(GL_LIGHTING);
 
-	//Dont Draw Moons if moon list is equal to zero
+	//Dont Draw Moons if moon list size is equal to zero
 	if (m_moon_index == 0) return;
 	for (size_t i = 0; i < moons.size(); i++) {
 		moons[i]->Draw();
@@ -139,11 +166,9 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 	m_moon_index++;
 }
 
-void Planet::renderOrbit()
+void Planet::renderOrbit() const
 {
-	glBegin(GL_LINE_STRIP);
-	glCallList(m_orbitList);
-	glEnd();
+	glCallList(m_OrbitList);
 
 	if (m_moon_index == 0) return;
 	glPushMatrix();

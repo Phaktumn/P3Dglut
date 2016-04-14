@@ -28,10 +28,14 @@ void Moon::Load()
 
 	m_orbitList = glGenLists(1);
 	glNewList(m_orbitList, GL_COMPILE);
+	glEnable(GL_LIGHTING);
+	glBegin(GL_LINE_STRIP);
 	for (int i = 0; i < m_orbitVertexes.size(); i++) {
 		glVertex3f(m_orbitVertexes[i].x, 0, 
 			m_orbitVertexes[i].z);
 	}
+	glEnd();
+	glDisable(GL_LIGHTING);
 	glEndList();
 }
 
@@ -44,7 +48,6 @@ void Moon::Update(float deltaTime)
 
 	m_position = planet_.getPositionVec();
 	m_position.x += cos(MathHelper::ToRadians(m_rotation_angle)) * m_distance_to_planet;
-	//ReWrite This ples!
 	m_position.y += planet_.getPositionVec().y;
 	m_position.z += sin(MathHelper::ToRadians(m_rotation_angle)) * m_distance_to_planet;
 }
@@ -55,13 +58,11 @@ void Moon::Draw() const
 	glTranslatef(m_position.x, m_position.y, m_position.z);
 	glRotatef(m_rotation_angle, 0, 0, -1);
 	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
-	glCallList(SolarSystem::m_list);
+	glCallList(Planet::list);
 	glPopMatrix();
 }
 
 void Moon::renderOrbit() const
 {
-	glBegin(GL_LINE_STRIP);
 	glCallList(m_orbitList);
-	glEnd();
 }

@@ -36,16 +36,12 @@ public:
 	void addMoon() const;
 	void addPlanet(Planet* planet);
 
-	static GLuint m_list;
-
 	std::string& getName() { return m_Name; }
 
 private: 
 	std::string TYPE = "Solar System";
 
 	List<Planet*> m_Planets;
-	//std::vector<Planet*> m_Planets;
-	GLUquadricObj* sphere = nullptr;
 	RenderText* Settings = new RenderText();
 
 	float simulationDeltaTime = 0.1f;

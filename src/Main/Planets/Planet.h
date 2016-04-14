@@ -1,6 +1,5 @@
 #pragma once
 #include "../../Vars/vec3f.h"
-#include <vector>
 #include <GL/freeglut.h>
 #include <Main/List.h>
 
@@ -18,7 +17,7 @@ public:
 
 	void loadTexture();
 	void addMoon(float distanceToPlanet, float radius);
-	void renderOrbit();
+	void renderOrbit() const;
 
 	/* Number Of Moons */
 	int getMoonCount() const
@@ -36,10 +35,6 @@ public:
 	vec::Vector3& getPositionVec()
 	{ return m_Position; }
 
-	/* display list */
-	void setList(GLuint _list)
-	{ list = _list; }
-
 	/* Get if Planet is the selected ONE */
 	bool IsSelected() const
 	{ return m_isSelected; }
@@ -55,8 +50,12 @@ public:
 	{ return TYPE; }
 
 	std::string& planetSettigs();
+	static GLuint list;
+	GLuint m_OrbitList;
 
 private:
+	GLUquadricObj* sphere = nullptr;
+
 	/* In What solar sistem this planet is present*/
 	std::string m_solarSystem_ID;
 
@@ -73,8 +72,6 @@ private:
 	std::string m_planetSettings;
 
 	GLuint m_idtexture;
-	GLuint list;
-	GLuint m_orbitList;
 	/* All orbit vertices */
 	List<vec::Vector3> orbitVerices;
 
