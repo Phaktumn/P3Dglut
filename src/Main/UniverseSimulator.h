@@ -44,7 +44,8 @@ public:
 		solarSystems.push_back(_Solar_System);
 	}
 
-	void addPlanet_to_SolarSystem(const std::string& _solarSistemName, Planet* _planetToAdd){
+	void addPlanet_to_SolarSystem(const std::string& _solarSistemName, Planet* _planetToAdd) const
+	{
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
 			if(solarSystems[i]->getName() == _solarSistemName) {
@@ -53,7 +54,7 @@ public:
 		}
 	}
 
-	void simulate(float deltaTime)
+	void simulate(float deltaTime) const
 	{
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
@@ -61,7 +62,7 @@ public:
 		}
 	}
 	
-	void draw()
+	void draw() const
 	{
 		drawUniverse();
 		for (size_t i = 0; i < solarSystems.size(); i++)

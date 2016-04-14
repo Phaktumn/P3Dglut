@@ -11,7 +11,8 @@
 #define TRUE  1
 #define FALSE 0
 
-template<class T> class Node
+template<class T> 
+class Node
 {
 public:
 	T _Item;
@@ -50,9 +51,26 @@ public:
 		}
 	}
 
+	void pop_Back()
+	{
+		if (_Front_Ptr == nullptr) return;
+		Node<T>* _Ptr = _Front_Ptr;
+		Node<T>* _Prev_Ptr;
+		while (_Ptr != nullptr) {
+			_Prev_Ptr = _Ptr;
+			_Ptr = _Ptr->_Next;
+			if (_Ptr->_Next == nullptr) {
+				_Prev_Ptr->_Next = nullptr;
+				free(_Ptr);
+				_size--;
+				break;
+			}
+		}
+	}
+
 	T operator [](int _Index) const
 	{
-		if (_Index >= _size){
+		if (_Index >= _size || _Index < 0){
 			std::cout << ERROR << std::endl;
 			exit(1);
 		}
@@ -76,13 +94,15 @@ public:
 	{
 		int _curr_Index = 1;
 		Node<T>* _Ptr = _Front_Ptr;
-		Node<T>* _last_Ptr = _Front_Ptr;
+		Node<T>* _last_Ptr = nullptr;
+		Node<T>* _New_Data_;
 		if (_Index == 1) {
-			_Front_Ptr->_Next = _last_Ptr;
-			_Front_Ptr->_Item = _data;
+			_New_Data_ = (Node<T>*)malloc(sizeof(Node<T>));
+			_New_Data_->_Item = _data;
+			_New_Data_->_Next = _Ptr;
+			_Front_Ptr = _New_Data_;
 		}
 		else {
-			Node<T>* _New_Data_;
 			while (_Ptr != nullptr) {
 				_curr_Index++;
 				_last_Ptr = _Ptr;
