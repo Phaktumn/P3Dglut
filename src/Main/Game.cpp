@@ -86,6 +86,7 @@ void Game::resize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 }
 
+//Use this to add some planets!
 void Game::AddItems()
 {
 	universe->add_SolarSystem(solarSystem, new vec::Vector3(1,15,1));

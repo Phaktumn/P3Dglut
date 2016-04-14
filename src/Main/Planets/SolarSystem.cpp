@@ -3,14 +3,13 @@
 #include <Misc/RenderText.h>
 #include <Main/Keyboard/Keyboard.h>
 #include <Main/Game.h>
-#include "Universe.h"
-#include <Main/LoadBMP.h>
 
 #define PLANETS 1
 GLuint SolarSystem::m_list;
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
+	//Add Only a sun to each System created
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
 		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
 
@@ -19,15 +18,16 @@ SolarSystem::SolarSystem(const std::string& _name)
 
 	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"), 
 	//	"Venus", 225.0f, 241.0f,EC_VENUS, vec::Vector3(0, 0, 108), 0.4f));
-	//
-	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),	"Earth", 365.0f, 1.0f, EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
+
+	//m_Planets.push_back(new Planet(std::string("Textures/earth.bmp"),	
+	//"Earth", 365.0f, 1.0f, EC_EARTH, vec::Vector3(0, 0, 150), 1.0f));
 
 	//m_Planets.push_back(new Planet(std::string("Textures/mars.bmp"),
 	//	"Mars", 687.0f, 1.01f,EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
 
 	//m_Planets.push_back(new Planet(std::string("Textures/jupiter.bmp"),
 	//	"Jupiter", 4332.0f, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
-	//
+
 	//m_Planets.push_back(new Planet(std::string("Textures/saturn.bmp"),
 	//	"Saturn", 10760.0f, 10.5 / 24.0, EC_SATURN,vec::Vector3(0, 0, 1443), 9.5f));
 
@@ -209,7 +209,7 @@ void SolarSystem::Draw() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void SolarSystem::renderOrbits()
+void SolarSystem::renderOrbits() const
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -221,7 +221,7 @@ void SolarSystem::renderOrbits()
 	glDisable(GL_BLEND);
 }
 
-vec::Vector3 SolarSystem::getPlanetPostion(const int planetID)
+vec::Vector3 SolarSystem::getPlanetPostion(const int planetID) const
 {
 	int _ID = MathHelper::Clampi(planetID, 0, 9);
 	return m_Planets[_ID]->getPositionVec();
@@ -238,7 +238,7 @@ Planet& SolarSystem::findPlanetByName(const std::string& planetName)
 	IO::printError("No Planet Found With Name: {" + planetName + "}");
 }
 
-void SolarSystem::addMoon()
+void SolarSystem::addMoon() const
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{

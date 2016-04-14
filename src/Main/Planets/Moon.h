@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Vars/vec3f.h"
 #include <GL/freeglut.h>
-#include <vector>
+#include <Main/List.h>
 
 class Planet;
 
@@ -23,7 +23,7 @@ public:
 
 private:
 	/* Store all orbit vertexes in this list*/
-	std::vector<vec::Vector3> m_orbitVertexes;
+	List<vec::Vector3> m_orbitVertexes;
 	/* Orbit draw list */
 	GLuint m_orbitList;
 

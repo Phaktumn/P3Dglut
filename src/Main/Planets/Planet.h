@@ -2,6 +2,7 @@
 #include "../../Vars/vec3f.h"
 #include <vector>
 #include <GL/freeglut.h>
+#include <Main/List.h>
 
 class Moon;
 
@@ -75,7 +76,7 @@ private:
 	GLuint list;
 	GLuint m_orbitList;
 	/* All orbit vertices */
-	std::vector<vec::Vector3> orbitVerices;
+	List<vec::Vector3> orbitVerices;
 
 	float m_scale = 0;
 
@@ -96,7 +97,7 @@ private:
 	float m_eccentricity;
 
 	int m_moon_index = 0;
-	std::vector<Moon*> moons;
+	List<Moon*> moons;
 
 	/* Days Elapsed in Earth Since simulation has started */
 	int m_days_elapsed = 0;

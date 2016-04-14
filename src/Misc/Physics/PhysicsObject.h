@@ -18,14 +18,7 @@ class PhysicsObject
 public:
 	explicit PhysicsObject(vec::Vector3 pos, Collider& collider);
 	/* No Collisions Expected */
-	explicit PhysicsObject(vec::Vector3 pos, float Mass) : m_collider(Collider(1)){
-		m_collider.AddReference();
-		m_position = pos;
-		m_rotation = vec::Vector3::zero();
-		rigidBody = new RigidBody(Mass);
-		rigidBody->initializeRigidBodies(m_position);
-		rigidBody->addForce(vec::Vector3::zero());
-	}
+	explicit PhysicsObject(vec::Vector3 pos, float Mass);
 
 	~PhysicsObject();
 

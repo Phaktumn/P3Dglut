@@ -12,7 +12,18 @@ PhysicsObject::PhysicsObject(vec::Vector3 pos,
 	rigidBody->initializeRigidBodies(m_position);
 	rigidBody->addForce(vec::Vector3(0, 0, 0));
 }
- 
+
+// ReSharper disable once CppMsExtBindingRValueToLvalueReference
+PhysicsObject::PhysicsObject(vec::Vector3 pos, float Mass): m_collider(Collider(1))
+{
+	m_collider.AddReference();
+	m_position = pos;
+	m_rotation = vec::Vector3::zero();
+	rigidBody = new RigidBody(Mass);
+	rigidBody->initializeRigidBodies(m_position);
+	rigidBody->addForce(vec::Vector3::zero());
+}
+
 PhysicsObject::~PhysicsObject()
 {
 

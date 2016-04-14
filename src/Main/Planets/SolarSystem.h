@@ -2,6 +2,7 @@
 #include <vector>
 #include "Planet.h"
 #include <Misc/RenderText.h>
+#include <Main/List.h>
 
 #define EC_MERCURY    0.2056
 #define EC_VENUS      0.0068
@@ -28,11 +29,11 @@ public:
 	//void preCameraTranslateDraw() const;
 	void Draw() const;
 
-	void renderOrbits();
+	void renderOrbits() const;
 
-	vec::Vector3 getPlanetPostion(const int planetID);
+	vec::Vector3 getPlanetPostion(const int planetID) const;
 	Planet& findPlanetByName(const std::string& planetName);
-	void addMoon();
+	void addMoon() const;
 	void addPlanet(Planet* planet);
 
 	static GLuint m_list;
@@ -42,7 +43,8 @@ public:
 private: 
 	std::string TYPE = "Solar System";
 
-	std::vector<Planet*> m_Planets;
+	List<Planet*> m_Planets;
+	//std::vector<Planet*> m_Planets;
 	GLUquadricObj* sphere = nullptr;
 	RenderText* Settings = new RenderText();
 
