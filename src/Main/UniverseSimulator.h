@@ -12,7 +12,6 @@ class UniverseSimulator
 {
 public:
 	//All Objects In Universe!
-
 	bool m_simulate;
 	bool _getSimulateState() const
 	{ return m_simulate; }
@@ -36,13 +35,14 @@ public:
 		glPushMatrix();
 		glDisable(GL_DEPTH);
 		glDisable(GL_DEPTH_TEST);
-		glDepthMask(0);
+		//glDepthMask(0);
 		glScalef(10000, 10000, 10000);
 		Universe::drawQuads();
-		glDepthMask(1);
+		//glDepthMask(1);
+		glPopMatrix();
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_DEPTH);
-		glPopMatrix();
+		glEnable(GL_LIGHTING);
 		glEndList();
 	}
 
@@ -63,8 +63,7 @@ public:
 
 	void simulate(float deltaTime) const
 	{
-		for (size_t i = 0; i < solarSystems.size(); i++)
-		{
+		for (size_t i = 0; i < solarSystems.size(); i++){
 			solarSystems[i]->Simulate(deltaTime);
 		}
 	}
@@ -80,7 +79,8 @@ public:
 		}
 	}
 
-	UniverseSimulator(): m_simulate(false)
+	explicit UniverseSimulator()
+		: m_simulate(false)
 	{
 		load_Universe();
 	}
@@ -92,15 +92,7 @@ public:
 
 	void drawUniverse() const
 	{
-		//2
-		glDisable(GL_LIGHTING);
-		//glEnable(GL_TEXTURE_2D);
-		//glBindTexture(GL_TEXTURE_2D, m_Universetexture);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//glPushMatrix();
 		glCallList(m_list);
-		//glPopMatrix();
 	}
 };
 

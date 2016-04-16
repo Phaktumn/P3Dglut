@@ -1,12 +1,13 @@
 #define  LIST_H
-#include <cstdlib>
-#include <iostream>
 #ifdef LIST_H
 #ifndef __cplusplus
 #error A C++ compiler is required!
 #endif
 
 #pragma once
+
+#include <cstdlib>
+#include <iostream>
 
 #define TRUE  1
 #define FALSE 0

@@ -10,6 +10,7 @@ public:
 	//gluLookAt()
 	explicit Camera(Player& player);
 	explicit Camera(const vec::Vector3& position);
+	explicit Camera();
 	virtual ~Camera();
 
 	//Sets the player to follow!

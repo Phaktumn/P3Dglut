@@ -10,7 +10,7 @@ StaticCamera::StaticCamera(const vec::Vector3& position, float):
 	m_Orientation = vec::Vector3::zero();
 	rotationAngle = 0.1;
 	this->m_Position = position;
-	m_speed = 20;
+	m_speed = 50;
 }
 
 StaticCamera::~StaticCamera()

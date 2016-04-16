@@ -53,7 +53,7 @@ namespace vec
 
 		static Vector3 Clamp(Vector3& value1, Vector3& min, Vector3& max);
 		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
-		static float Distance(Vector3& vector1, Vector3& vector2);
+		static float Distance(Vector3& vector1,Vector3& vector2);
 		static float DistanceSquared(Vector3& vector1, Vector3& vector2);
 		static Vector3 Normalize(Vector3& value);
 		static Vector3 Reflect(Vector3& v1, Vector3& v2);

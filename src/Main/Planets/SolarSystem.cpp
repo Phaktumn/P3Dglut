@@ -1,10 +1,6 @@
 #include "SolarSystem.h"
 #include "../../Misc/Debug/IO.h"
-#include <Misc/RenderText.h>
 #include <Main/Keyboard/Keyboard.h>
-#include <Main/Game.h>
-
-#define PLANETS 1
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
@@ -27,18 +23,11 @@ SolarSystem::~SolarSystem()
 	delete Settings;
 }
 
-void SolarSystem::Load()
+void SolarSystem::Load() const
 {
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->Load();
 	}
-
-	//if (m_Planets.size() <= 1){
-	//	//Do nothing
-	//}
-	//else{
-	//	findPlanetByName("Earth").addMoon(25.0f, 0.6f);
-	//}
 }
 
 void SolarSystem::Simulate(float deltaTime)
@@ -169,7 +158,7 @@ vec::Vector3 SolarSystem::getPlanetPostion(const int planetID) const
 	return m_Planets[_ID]->getPositionVec();
 }
 
-Planet& SolarSystem::findPlanetByName(const std::string& planetName)
+Planet& SolarSystem::findPlanetByName(const std::string& planetName) const
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{

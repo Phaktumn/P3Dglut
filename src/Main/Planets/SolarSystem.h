@@ -1,3 +1,6 @@
+#define SOLAR_SYSTEM_H
+#ifdef SOLAR_SYSTEM_H
+
 #pragma once
 #include <vector>
 #include "Planet.h"
@@ -17,14 +20,14 @@
 class SolarSystem
 {
 public:
-	SolarSystem(const std::string& _name);
+	explicit SolarSystem(const std::string& _name);
 	~SolarSystem();
 
 	std::string& getType()
 	{ return TYPE; }
 
 
-	void Load();
+	void Load() const;
 	void Simulate(float deltaTime);
 	//void preCameraTranslateDraw() const;
 	void Draw() const;
@@ -32,7 +35,7 @@ public:
 	void renderOrbits() const;
 
 	vec::Vector3 getPlanetPostion(const int planetID) const;
-	Planet& findPlanetByName(const std::string& planetName);
+	Planet& findPlanetByName(const std::string& planetName) const;
 	void addMoon() const;
 	void addPlanet(Planet* planet);
 
@@ -51,4 +54,6 @@ private:
 	int m_print_Index;
 	float m_elapsedTime;
 };
+
+#endif
 

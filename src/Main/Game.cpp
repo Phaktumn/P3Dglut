@@ -55,7 +55,6 @@ void Game::init()
 	glShadeModel(GL_SMOOTH);						   // Enable Smooth Shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glDepthFunc(GL_LEQUAL);							   // The Type Of Depth Testing To Do
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);             // Pixel Storage Mode To Byte Alignment
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);			   // Black Background (CHANGED)
 	glClearDepth(1.0f);								   // Depth Buffer Setup					
 	glEnable(GL_DEPTH_TEST);						   // Enables Depth Testing						  
@@ -89,13 +88,22 @@ void Game::resize(int width, int height)
 //Use this to add some planets!
 void Game::AddItems()
 {
-	universe->add_SolarSystem(solarSystem, new vec::Vector3(1,15,1));
-	universe->addPlanet_to_SolarSystem("Jorge 01", new Planet("Textures/mercury.bmp", "Mercurio", 88.0f, 58.0f,EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f));
+	solarSystem = new SolarSystem("Solar System");	 //Create Solar System1
+	solarSystem->Load();						 //Load all planets texture
 
-	universe->add_SolarSystem(solarSystem_1, new vec::Vector3(500, 20, 500));
+	universe->add_SolarSystem(solarSystem, new vec::Vector3(250, 20, 250));
 	//                                   Solar System                  texture path       Planet Name
-	universe->addPlanet_to_SolarSystem("Jorge 02",		new Planet("Textures/mercury.bmp", "Mercurio", 88.0f , 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f ));
-	universe->addPlanet_to_SolarSystem("Jorge 02",		new Planet("Textures/earth.bmp"  , "Earth",    365.0f, 1.0f,  EC_EARTH,   vec::Vector3(0, 0, 150), 1.0f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio", 88.0f , 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f ));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",    225.0f,241.0f, EC_VENUS,   vec::Vector3(0, 0, 108), 0.4f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",    365.0f, 1.0f,  EC_EARTH,   vec::Vector3(0, 0, 150), 1.0f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",     687.0f, 1.01f, EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/jupiter.bmp", "Jupiter",  4332.0f  / 2, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/saturn.bmp",  "Saturn",   10760.0f / 4, 10.5 / 24.0, EC_SATURN, vec::Vector3(0, 0, 1443), 9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Neptune",  60200.0f / 6, 16.0 / 24.0, EC_NEPTUNE, vec::Vector3(0, 0, 4504), 9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",   30700.0f / 8, 17.0 / 24.0, EC_URANUS, vec::Vector3(0, 0, 2871), 9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	   90600.0f / 10, 0.6f, EC_PLUTO, vec::Vector3(0, 0, 5913), 9.5f));
+
+	solarSystem->findPlanetByName("Earth").addMoon(25, 0.3f);
 }
 
 void Game::Update()
@@ -109,18 +117,13 @@ void Game::Update()
 		    glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				// Creates a new Camera for InGame Scene
 				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				glutEnterGameMode();  //Enter Full Screen Game Mode
+				glutEnterGameMode();						//Enter Full Screen Game Mode
 				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
 				universe = new UniverseSimulator();
-				solarSystem = new SolarSystem("Jorge 01"); //Create Solar System1
-				solarSystem->Load();    //Load all planets textures
-				solarSystem_1 = new SolarSystem("Jorge 02"); //Create Solar System2
-				solarSystem_1->Load();  //Load System Planets Textures
-				glutSetCursor(GLUT_CURSOR_NONE); //Cursor will be invisible
-				AddItems(); //Get The universe Together
-				init();     //Initialize all glut Properties
+				glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
+				AddItems();									 //Get The universe Together
+				init();							             //Initialize all glut Properties
 			}
 			else {
 				IO::printError("The selected Mode is not Available\n");

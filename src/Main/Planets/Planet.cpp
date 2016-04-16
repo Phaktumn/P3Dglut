@@ -87,7 +87,7 @@ void Planet::Simulate(float deltaTime)
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
-	if (m_Rotation_Duration < 1.0f) m_Rotation_Duration += deltaTime * 180 * m_Rotation_Duration;
+	if (m_Rotation_Duration < 1.0f) m_Rotation_Duration += deltaTime * 360 * m_Rotation_Duration;
 	else m_rotation += deltaTime * 360 / m_Rotation_Duration;
 	if (m_rotation >= 360.0f ) {
 		m_rotation -= 360;

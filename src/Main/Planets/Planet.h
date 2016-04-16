@@ -78,11 +78,11 @@ private:
 	float m_scale = 0;
 
 	//Distance from planet 0,0,0
-	/* Distance relative to this planet solar sistem Sun*/
+	/* Distance relative to this planet solar system Sun*/
 	float m_orbit_distance;
 
-	//Actual distance ftom planet to 0,0,0
-	/* Kepler Orbit Distance relative to this planet solar sistem Sun */
+	//Actual distance from planet to 0,0,0
+	/* Kepler Orbit Distance relative to this planet solar system Sun */
 	float m_KeplerOrbitDistance = 0;
 
 	float m_rotation;

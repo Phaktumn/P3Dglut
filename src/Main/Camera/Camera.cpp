@@ -15,6 +15,12 @@ Camera::Camera(const vec::Vector3& position)
 
 }
 
+Camera::Camera(): 
+	player(nullptr), rotationAngle(0)
+{
+
+}
+
 Camera::~Camera()
 { }
 

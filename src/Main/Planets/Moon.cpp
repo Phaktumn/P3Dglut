@@ -3,7 +3,7 @@
 #include "SolarSystem.h"
 
 Moon::Moon(Planet& planet,float distanceToPLanet, float scale, float orbitAngle) 
-	: planet_(planet)
+	: m_orbitList(0), planet_(planet)
 {
 	this->m_distance_to_planet = distanceToPLanet;
 	m_planet_scale = scale;
