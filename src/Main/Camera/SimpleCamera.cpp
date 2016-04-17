@@ -1,7 +1,7 @@
-#include "StaticCamera.h"
 #include "../Keyboard/Keyboard.h"
+#include "SimpleCamera.h"
 
-StaticCamera::StaticCamera(const vec::Vector3& position, float):
+SimpleCamera::SimpleCamera(const vec::Vector3& position, float):
 	Camera(position)
 {
 	m_lookAt = vec::Vector3::zero();
@@ -13,12 +13,12 @@ StaticCamera::StaticCamera(const vec::Vector3& position, float):
 	m_speed = 50;
 }
 
-StaticCamera::~StaticCamera()
+SimpleCamera::~SimpleCamera()
 {
 
 }
 
-void StaticCamera::Update(float deltaTime)
+void SimpleCamera::Update(float deltaTime)
 {
 	if(Keyboard::getKeyPressed(KEY_D)) {
 		rotate(deltaTime);
@@ -45,12 +45,12 @@ void StaticCamera::Update(float deltaTime)
 
 
 
-void StaticCamera::Draw() const
+void SimpleCamera::Draw() const
 {
 	Camera::Draw();
 }
 
-void StaticCamera::rotate(float angle) 
+void SimpleCamera::rotate(float angle) 
 {
 	this->rotationAngle += angle;
 	m_Orientation.x = sin(rotationAngle);

@@ -28,14 +28,14 @@ void Moon::Load()
 
 	m_orbitList = glGenLists(1);
 	glNewList(m_orbitList, GL_COMPILE);
-	glEnable(GL_LIGHTING);
+	glDisable(GL_LIGHTING);
 	glBegin(GL_LINE_STRIP);
 	for (int i = 0; i < m_orbitVertexes.size(); i++) {
 		glVertex3f(m_orbitVertexes[i].x, 0, 
 			m_orbitVertexes[i].z);
 	}
 	glEnd();
-	glDisable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 	glEndList();
 }
 

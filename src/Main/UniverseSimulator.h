@@ -3,10 +3,11 @@
 #endif
 
 #pragma once
-#include "Planets/SolarSystem.h"
 #include "LoadBMP.h"
-#include "Planets/Universe.h"
 #include "List.h"
+#include "Space/Planets/Universe.h"
+#include "Space/Planets/SolarSystem.h"
+#include "Space/Comet.h"
 
 class UniverseSimulator
 {
@@ -19,12 +20,12 @@ public:
 	GLuint m_Universetexture;
 	GLuint m_list;
 	List<SolarSystem*> solarSystems;
+	List<Comet*> Comets;
 	List<vec::Vector3*> SolarPositions;
 
 	void load_Universe()
 	{
 		m_Universetexture = _loadBMP("Textures/stars.bmp");
-
 		m_list = glGenLists(1);
 		glNewList(m_list, GL_COMPILE);	
 		glDisable(GL_LIGHTING);
@@ -33,15 +34,9 @@ public:
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glPushMatrix();
-		glDisable(GL_DEPTH);
-		glDisable(GL_DEPTH_TEST);
-		//glDepthMask(0);
 		glScalef(10000, 10000, 10000);
 		Universe::drawQuads();
-		//glDepthMask(1);
 		glPopMatrix();
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_DEPTH);
 		glEnable(GL_LIGHTING);
 		glEndList();
 	}
@@ -66,16 +61,22 @@ public:
 		for (size_t i = 0; i < solarSystems.size(); i++){
 			solarSystems[i]->Simulate(deltaTime);
 		}
+		for (size_t i = 0; i < Comets.size(); i++){
+			Comets[i]->simulate(deltaTime);
+		}
 	}
 	
 	void draw() const
 	{
 		drawUniverse();
-		for (size_t i = 0; i < solarSystems.size(); i++)
-		{
+		for (size_t i = 0; i < solarSystems.size(); i++){
 			glTranslatef(SolarPositions[i]->x, SolarPositions[i]->y, SolarPositions[i]->z);
 			solarSystems[i]->Draw();
 			solarSystems[i]->renderOrbits();
+		}
+		for (size_t i = 0; i < Comets.size(); i++){
+			Comets[i]->draw();
+			Comets[i]->renderOrbit();
 		}
 	}
 
@@ -83,6 +84,10 @@ public:
 		: m_simulate(false)
 	{
 		load_Universe();
+		Comets.push_back(
+			new Comet("Textures/Earth.bmp", "Halley", 
+				vec::Vector3(0, 0, 3200), 0.967, 75.3f, 0.0f, 0.4f));
+		Comets[0]->load();
 	}
 
 	~UniverseSimulator()
@@ -90,8 +95,7 @@ public:
 		
 	}
 
-	void drawUniverse() const
-	{
+	void drawUniverse() const{
 		glCallList(m_list);
 	}
 };

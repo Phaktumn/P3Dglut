@@ -1,9 +1,9 @@
 #include <string>
 #include "../Misc/RenderText.h"
 #include "../Vars/GameTime.h"
-#include "Camera/StaticCamera.h"
-#include "Planets/SolarSystem.h"
 #include "UniverseSimulator.h"
+#include "Camera/SimpleCamera.h"
+#include "Space/Planets/SolarSystem.h"
 
 #pragma once
 
@@ -41,7 +41,7 @@ public:
 	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
 	static SolarSystem* solarSystem_1;
-	static StaticCamera* m_camera;
+	static SimpleCamera* m_camera;
 	static void init();
 private:
 	Game(int argc, char **argv);

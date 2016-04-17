@@ -1,6 +1,6 @@
 #include "SolarSystem.h"
-#include "../../Misc/Debug/IO.h"
 #include <Main/Keyboard/Keyboard.h>
+#include <Misc/Debug/IO.h>
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
@@ -125,24 +125,9 @@ void SolarSystem::Simulate(float deltaTime)
 
 void SolarSystem::Draw() const
 {
-	glDisable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
-
 	for (size_t i = 0; i < m_Planets.size(); i++) {
-		//Se for o sol disable light
-		if (i == 0) {
-			m_Planets[i]->Draw();
-		}
-		//resto dos planetas enable Light
-		else {
-			m_Planets[i]->Draw();
-		}
-		//if (i == m_print_Index) {
-			//Settings->drawText(m_Planets[i]->planetSettigs(),
-				//vec::Vector3(20, 150), 1.0f);
-		//}
+		m_Planets[i]->Draw();
 	}
-	glDisable(GL_TEXTURE_2D);
 }
 
 void SolarSystem::renderOrbits() const

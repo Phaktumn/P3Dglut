@@ -1,12 +1,9 @@
 #include "MainMenu.h"
-#include "Keyboard/Keyboard.h"
-#include "Game.h"
-#include <Misc/Debug/IO.h>
 
 
 MainMenu::MainMenu()
 {
-	text = new RenderText();
+
 }
 
 

@@ -1,7 +1,7 @@
 #pragma once
-#include "../../Vars/vec3f.h"
 #include <GL/freeglut.h>
 #include <Main/List.h>
+#include <Vars/vec3f.h>
 
 class Moon;
 
@@ -64,7 +64,9 @@ private:
 	/* Selected state to let the user add moon's */
 	bool m_isSelected = false;
 
+	/* Tex */
 	std::string m_texture_path;
+	/* Planet Name */
 	std::string m_Name;
 	/* Position relative to sun vector3(0,0,0) */
 	vec::Vector3 m_Position;
@@ -79,7 +81,7 @@ private:
 
 	//Distance from planet 0,0,0
 	/* Distance relative to this planet solar system Sun*/
-	float m_orbit_distance;
+	float m_Aphelion;
 
 	//Actual distance from planet to 0,0,0
 	/* Kepler Orbit Distance relative to this planet solar system Sun */
@@ -90,14 +92,17 @@ private:
 	float m_Orbit_Duration;
 	float m_Rotation_Duration;
 
+	/* Calculates the distance to sun given an angle in radians */
 	float calculateKeplerOrbit(float radians);
+	/* Float Value used to calculate Kepler Orbit */
 	float m_eccentricity;
 
 	int m_moon_index = 0;
 	List<Moon*> moons;
 
-	/* Days Elapsed in Earth Since simulation has started */
+	/* Days Elapsed in this planet Since simulation has started */
 	int m_days_elapsed = 0;
+	/* Years Elapsed in this planet Since simulations has starte */
 	int m_years_elapsed = 0;
 };
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "Camera.h"
 
-class StaticCamera :
+class SimpleCamera :
 	public Camera
 {
 public:
-	StaticCamera(const vec::Vector3& position, float rotationAngle);
-	~StaticCamera();
+	SimpleCamera(const vec::Vector3& position, float rotationAngle);
+	~SimpleCamera();
 
 	vec::Vector3 m_Orientation;
 

@@ -6,8 +6,9 @@
 GLuint Planet::list;
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
-	float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& position, float scale) : 
-	m_orbitInclination(0), m_idtexture(0), m_orbit_distance(abs(position.z)),
+	float orbitDuration, float rotatioDuration, float eccentricity, 
+	const vec::Vector3& position, float scale) :
+	m_OrbitList(0), m_orbitInclination(0), m_idtexture(0), m_Aphelion(abs(position.z)),
 	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
 {
 	m_Name = name;
@@ -75,7 +76,7 @@ void Planet::Load()
 
 float Planet::calculateKeplerOrbit(float radians)
 {
-	float semiLatus = m_orbit_distance * (1 - m_eccentricity);
+	float semiLatus = m_Aphelion * (1 - m_eccentricity);
 	float keplerOrbit = semiLatus / (1 + m_eccentricity * cos(radians));
 	//just filter and set class variable m_... to keplerOrbit
 	m_KeplerOrbitDistance = keplerOrbit;
@@ -114,6 +115,7 @@ void Planet::Simulate(float deltaTime)
 
 void Planet::Draw() const
 {
+	//Disable light if its sun time to get draw
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) 
 		glDisable(GL_LIGHTING);
 	glPushMatrix();
@@ -125,11 +127,13 @@ void Planet::Draw() const
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glCallList(list);
     glPopMatrix();
+	//Enable Light Again!
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
 		glEnable(GL_LIGHTING);
 
 	//Dont Draw Moons if moon list size is equal to zero
 	if (m_moon_index == 0) return;
+	//Else draw this planet moons
 	for (size_t i = 0; i < moons.size(); i++) {
 		moons[i]->Draw();
 	}
@@ -168,40 +172,37 @@ void Planet::addMoon(float distanceToPlantet, float radius)
 
 void Planet::renderOrbit() const
 {
+	glDisable(GL_TEXTURE_2D);
+
+	//Draw Planets Orbit Lists
 	glCallList(m_OrbitList);
 
+	//No moons just return
 	if (m_moon_index == 0) return;
+	//esle push new matrix and draw moon's orbits
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->renderOrbit();
 	}
 	glPopMatrix();
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 std::string& Planet::planetSettigs()
 {
-	m_planetSettings = "Name: " + m_Name;
-	m_planetSettings += "\n Position: " 
-		+ getPosition();
-	m_planetSettings += "\n Distance to Sun: " 
-		+ std::to_string(m_KeplerOrbitDistance) + "Mill km";
-	m_planetSettings += "\n Rotation: " 
-		+ std::to_string(m_rotation);
-	m_planetSettings += "\n Orbit Angle: "
-		+ std::to_string(m_orbit_Angle);
-	m_planetSettings += "\n Orbit Duration: " 
-		+ std::to_string(int(m_Orbit_Duration)) + " Earth Days";
-
+	m_planetSettings = "Name: "                  + m_Name;
+	m_planetSettings += "\n Position: "          + getPosition();
+	m_planetSettings += "\n Distance to Sun: "   + std::to_string(m_KeplerOrbitDistance)              + "Mill km";
+	m_planetSettings += "\n Rotation: "          + std::to_string(m_rotation);
+	m_planetSettings += "\n Orbit Angle: "       + std::to_string(m_orbit_Angle);
+	m_planetSettings += "\n Orbit Duration: "    + std::to_string(int(m_Orbit_Duration))              + " Earth Days";
 	if(m_Rotation_Duration < 1.0f) 
-		m_planetSettings += "\n Day Duration: "
-			+ std::to_string(double(m_Rotation_Duration * 24)) + " Earth Hours";
-	else m_planetSettings += "\n Day Duration: "
-		+ std::to_string(int(m_Rotation_Duration)) + " Earth Days";
-
-	m_planetSettings += "\n Days Elapsed on " + m_Name + ": "
-		+ std::to_string(m_days_elapsed) + " Days";
-	m_planetSettings += "\n Years Elapsed on " + m_Name + ": "
-		+ std::to_string(m_years_elapsed) + " Years";
+		m_planetSettings +=  "\n Day Duration: " + std::to_string(double(m_Rotation_Duration * 24))   + " Earth Hours";
+	else m_planetSettings += "\n Day Duration: " + std::to_string(int(m_Rotation_Duration))           + " Earth Days";
+	m_planetSettings += "\n Days Elapsed on "    + m_Name + ": " + std::to_string(m_days_elapsed)     + " Days";
+	m_planetSettings += "\n Years Elapsed on "   + m_Name + ": " + std::to_string(m_years_elapsed)    + " Years";
+	
 	return {m_planetSettings};
 }

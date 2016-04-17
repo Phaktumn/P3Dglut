@@ -2,18 +2,18 @@
 #include <iostream>
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
-#include "Planets/SolarSystem.h"
 #include <Misc/Lights/Lightning.h>
 #include <Misc/Debug/IO.h>
+#include "Space/Planets/SolarSystem.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _DEBUG_                  1
 
 Game* Game::instance = nullptr;
-RenderText* Game::text = new RenderText();
-RenderText* Game::m_text1 = new RenderText();
+RenderText* Game::text;
+RenderText* Game::m_text1;
 GameTime Game::gameTime = GameTime();
-StaticCamera* Game::m_camera;
+SimpleCamera* Game::m_camera;
 SolarSystem* Game::solarSystem;
 SolarSystem* Game::solarSystem_1;
 Game::GameState Game::state = Menu;
@@ -71,6 +71,10 @@ void Game::init()
 	glutKeyboardUpFunc(Keyboard::keyboardUpCallback);
 
 	Lightning::enableLight();		//enables all lights properties positional light
+	
+	text = new RenderText(vec::Vector3(20, 20, 0), 0.1);
+	m_text1 = new RenderText(vec::Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2 - 50,
+		glutGet(GLUT_WINDOW_HEIGHT) / 2), 1.0f);
 }
 
 void Game::resize(int width, int height)
@@ -92,17 +96,19 @@ void Game::AddItems()
 	solarSystem->Load();						 //Load all planets texture
 
 	universe->add_SolarSystem(solarSystem, new vec::Vector3(250, 20, 250));
-	//                                   Solar System                  texture path       Planet Name
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio", 88.0f , 58.0f, EC_MERCURY, vec::Vector3(0, 0, 70), 0.3f ));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",    225.0f,241.0f, EC_VENUS,   vec::Vector3(0, 0, 108), 0.4f));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",    365.0f, 1.0f,  EC_EARTH,   vec::Vector3(0, 0, 150), 1.0f));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",     687.0f, 1.01f, EC_MARS, vec::Vector3(0, 0, 228), 0.9f));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/jupiter.bmp", "Jupiter",  4332.0f  / 2, 9.8 / 24.0, EC_JUPITER, vec::Vector3(0, 0, 772), 11.5f));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/saturn.bmp",  "Saturn",   10760.0f / 4, 10.5 / 24.0, EC_SATURN, vec::Vector3(0, 0, 1443), 9.5f));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Neptune",  60200.0f / 6, 16.0 / 24.0, EC_NEPTUNE, vec::Vector3(0, 0, 4504), 9.5f));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",   30700.0f / 8, 17.0 / 24.0, EC_URANUS, vec::Vector3(0, 0, 2871), 9.5f));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	   90600.0f / 10, 0.6f, EC_PLUTO, vec::Vector3(0, 0, 5913), 9.5f));
+	//																										Orbit Duration  planet Rotation eccentricity   Planet Initial			planet scale
+	//                                   Solar System                      texture path        Planet Name   in earth days	  in earth days	   Value	   Position(Z = dist sun)   earth equals to 1.0f
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio",   88.0f ,	     58.0f,	        EC_MERCURY, vec::Vector3(0, 0, 70),		0.3f ));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",      225.0f,         241.0f,	    EC_VENUS,   vec::Vector3(0, 0, 108),	0.4f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",      365.0f,		 1.0f,          EC_EARTH,   vec::Vector3(0, 0, 150),	1.0f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",       687.0f,         1.01f,	        EC_MARS,    vec::Vector3(0, 0, 228),	0.9f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/jupiter.bmp", "Jupiter",    4332.0f  / 2,   9.8 / 24.0,    EC_JUPITER, vec::Vector3(0, 0, 772),	11.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/saturn.bmp",  "Saturn",     10760.0f / 4,   10.5 / 24.0,   EC_SATURN,  vec::Vector3(0, 0, 1443),	9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Neptune",    60200.0f / 6,   16.0 / 24.0,   EC_NEPTUNE, vec::Vector3(0, 0, 4504),	9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",     30700.0f / 8,   17.0 / 24.0,   EC_URANUS,  vec::Vector3(0, 0, 2871),	9.5f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	     90600.0f / 10,  0.6f,		    EC_PLUTO,   vec::Vector3(0, 0, 5913),	9.5f));
 
+	//Add a moon to selected planet
 	solarSystem->findPlanetByName("Earth").addMoon(25, 0.3f);
 }
 
@@ -114,14 +120,14 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    glutGameModeString(_1366_BY_768);
+		    //glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				glutEnterGameMode();						//Enter Full Screen Game Mode
-				m_camera = new StaticCamera(vec::Vector3(0, 0, 0), 0.0f);
+				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+				//glutEnterGameMode();						//Enter Full Screen Game Mode
+				m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
 				universe = new UniverseSimulator();
-				glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
+				//glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
 				AddItems();									 //Get The universe Together
 				init();							             //Initialize all glut Properties
 			}
@@ -149,8 +155,7 @@ GLvoid Game::render()
 	switch (state) {
 	case Menu: {
 		//Draw a Simple text just to help player on how to start the Game
-		m_text1->drawText("Press 'S' to Start",
-			vec::Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2 - 50, glutGet(GLUT_WINDOW_HEIGHT) / 2), 1.0f);
+		m_text1->drawText("Press 'S' to Start");
 	}break;
 	case InGame: {	
 			m_camera->Draw();
@@ -162,7 +167,7 @@ GLvoid Game::render()
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());
 	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
-	text->drawText(fps, vec::Vector3(20, 20, 0), 0.1);
+	text->drawText(fps);
 #endif
 	glutSwapBuffers();	
 	gameTime.end(glutGet(GLUT_ELAPSED_TIME) * 0.001);

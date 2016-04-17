@@ -1,7 +1,7 @@
 #pragma once
-#include "../../Vars/vec3f.h"
 #include <GL/freeglut.h>
 #include <Main/List.h>
+#include <Vars/vec3f.h>
 
 class Planet;
 

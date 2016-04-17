@@ -1,13 +1,14 @@
 #include "RenderText.h"
 #include "../Vars/vec3f.h"
 
-RenderText::RenderText(): string(nullptr)
+RenderText::RenderText(const vec::Vector3& position, float scale): string(nullptr)
 {
 	rgb = vec::Vector3(1, 1, 1);
+	m_text_list = glGenLists(1);
+	initList(position, scale);
 }
 
-GLvoid RenderText::drawText(const std::string& text, 
-	const vec::Vector3& position, float scale)
+GLvoid RenderText::drawText(const std::string& text)
 {
 	string = reinterpret_cast<const unsigned char*>(text.c_str());
 	////Suavizar a font!
@@ -31,9 +32,7 @@ GLvoid RenderText::drawText(const std::string& text,
 	//espessura da linha
 	glLineWidth(2.0);
 
-	glScalef(scale, scale, 1);
-	glColor3f(rgb.x, rgb.y, rgb.z);
-	glRasterPos2f(position.x, position.z);
+	glCallList(m_text_list);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, string);
 	glPopMatrix();
 
@@ -45,4 +44,15 @@ GLvoid RenderText::drawText(const std::string& text,
 	glEnable(GL_LIGHTING);
 
 	glLineWidth(1.0);
+}
+
+void RenderText::initList(const vec::Vector3& position, float scale) const
+{
+	glNewList(m_text_list, GL_COMPILE);
+
+	glScalef(scale, scale, 1);
+	glColor3f(rgb.x, rgb.y, rgb.z);
+	glRasterPos2f(position.x, position.z);
+
+	glEndList();
 }

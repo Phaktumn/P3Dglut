@@ -35,17 +35,25 @@ public:
 	void renderOrbits() const;
 
 	vec::Vector3 getPlanetPostion(const int planetID) const;
+
+	/* Finds a planet with the given Name */
 	Planet& findPlanetByName(const std::string& planetName) const;
+
+	/* Adds a Moon to selected planet
+	* Unable to select planets (input disabled) 
+	*/
 	void addMoon() const;
+	/* Adds a planet to this* Solar system  */
 	void addPlanet(Planet* planet);
 
+	/* Returns this Solar Sistem Name */
 	std::string& getName() { return m_Name; }
 
 private: 
 	std::string TYPE = "Solar System";
 
 	List<Planet*> m_Planets;
-	RenderText* Settings = new RenderText();
+	RenderText* Settings = new RenderText(vec::Vector3(20, 150), 1.0f);
 
 	float simulationDeltaTime = 0.1f;
 

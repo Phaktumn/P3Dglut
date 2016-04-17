@@ -1,3 +1,6 @@
+#define RENDER_TEXT_H
+#ifdef RENDER_TEXT_H
+
 #include "gl/freeglut.h"
 #include <string>
 #include "../Vars/vec3f.h"
@@ -9,11 +12,17 @@
 class RenderText
 {
 public:
-	RenderText();
-	GLvoid drawText(const std::string& text, 
-		const vec::Vector3& position, float scale);
+	RenderText(const vec::Vector3& position, float scale);
+	GLvoid drawText(const std::string& text);
 private:
+
+	void initList(const vec::Vector3& position, float scale) const;
+
 	vec::Vector3 rgb;
 	const unsigned char* string;
+	GLuint m_text_list;
 };
+
+#endif
+
 
