@@ -53,7 +53,7 @@ private:
 	std::string TYPE = "Solar System";
 
 	List<Planet*> m_Planets;
-	RenderText* Settings = new RenderText(vec::Vector3(20, 150), 1.0f);
+	RenderText* m_planet_settings_text = new RenderText(vec::Vector3(25, 150), 1.0f);
 
 	float simulationDeltaTime = 0.1f;
 

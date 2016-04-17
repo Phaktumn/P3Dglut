@@ -16,6 +16,9 @@ public:
 	GLvoid drawText(const std::string& text);
 private:
 
+	vec::Vector3 m_Position;
+	float m_scale;
+
 	void initList(const vec::Vector3& position, float scale) const;
 
 	vec::Vector3 rgb;

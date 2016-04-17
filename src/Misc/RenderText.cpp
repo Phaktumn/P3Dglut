@@ -5,6 +5,8 @@ RenderText::RenderText(const vec::Vector3& position, float scale): string(nullpt
 {
 	rgb = vec::Vector3(1, 1, 1);
 	m_text_list = glGenLists(1);
+	m_Position = position;
+	m_scale = scale;
 	initList(position, scale);
 }
 
@@ -25,6 +27,7 @@ GLvoid RenderText::drawText(const std::string& text)
 	glMatrixMode(GL_MODELVIEW);
 
 	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 
 	glPushMatrix();
 	glLoadIdentity();
@@ -32,7 +35,10 @@ GLvoid RenderText::drawText(const std::string& text)
 	//espessura da linha
 	glLineWidth(2.0);
 
-	glCallList(m_text_list);
+	//glCallList(m_text_list);
+	glScalef(m_scale, m_scale, 1);
+	glColor3f(rgb.x, rgb.y, rgb.z);
+	glRasterPos2f(m_Position.x, m_Position.z);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, string);
 	glPopMatrix();
 
@@ -41,6 +47,7 @@ GLvoid RenderText::drawText(const std::string& text)
 
 	glMatrixMode(GL_MODELVIEW);
 
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 
 	glLineWidth(1.0);
@@ -49,7 +56,7 @@ GLvoid RenderText::drawText(const std::string& text)
 void RenderText::initList(const vec::Vector3& position, float scale) const
 {
 	glNewList(m_text_list, GL_COMPILE);
-
+	
 	glScalef(scale, scale, 1);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glRasterPos2f(position.x, position.z);

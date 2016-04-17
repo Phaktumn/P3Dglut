@@ -81,12 +81,9 @@ public:
 	}
 
 	explicit UniverseSimulator()
-		: m_simulate(false)
-	{
+		: m_simulate(false){
 		load_Universe();
-		Comets.push_back(
-			new Comet("Textures/Earth.bmp", "Halley", 
-				vec::Vector3(0, 0, 3200), 0.967, 75.3f, 0.0f, 0.4f));
+		Comets.push_back( new Comet("Textures/Earth.bmp", "Halley", vec::Vector3(0, 0, 3200), 0.967, 75.3f, 0.0f, 0.4f));
 		Comets[0]->load();
 	}
 

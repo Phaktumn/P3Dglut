@@ -42,9 +42,9 @@ void Planet::Load()
 	list = glGenLists(1);
 
 	glNewList(list, GL_COMPILE);
-	Lightning::applyMaterial();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	Lightning::applyMaterial();
 	gluSphere(sphere, 1, 15, 15);
 	glEndList();
 
@@ -87,14 +87,29 @@ void Planet::Simulate(float deltaTime)
 {
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
-	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) return;	
-	if (m_Rotation_Duration < 1.0f) m_Rotation_Duration += deltaTime * 360 * m_Rotation_Duration;
-	else m_rotation += deltaTime * 360 / m_Rotation_Duration;
-	if (m_rotation >= 360.0f ) {
+	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
+	{
+		return;
+	}
+	
+	if (m_Rotation_Duration < 1.0f) {
+		m_rotation += deltaTime;
+		float stepRot = 360.0f * m_Rotation_Duration;
+		m_rotation += 1 * 360.0f / stepRot;
+	}
+	else 
+	{
+		m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
+	}
+
+	if (m_rotation >= 360.0f) 
+	{
 		m_rotation -= 360;
 		m_days_elapsed++;
 	}
-	m_orbit_Angle +=  deltaTime * 360 / m_Orbit_Duration;
+
+	float orbitDeltaStep = 360 / m_Orbit_Duration;
+	m_orbit_Angle += deltaTime * orbitDeltaStep;
 	if (m_orbit_Angle >= 360) {
 		m_years_elapsed++;
 		m_orbit_Angle -= 360;
@@ -109,7 +124,7 @@ void Planet::Simulate(float deltaTime)
 	//Dont Update Moons if moon list is equals to zero
 	if (m_moon_index == 0) return;
 	for (size_t i = 0; i < moons.size(); i++){
-		moons[i]->Update(0.1f);
+		moons[i]->Update(deltaTime);
 	}
 }
 

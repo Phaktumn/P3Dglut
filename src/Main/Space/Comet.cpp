@@ -31,8 +31,6 @@ void Comet::load()
 
 	glNewList(list, GL_COMPILE);
 	Lightning::applyMaterial();
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	gluSphere(sphere, 1, 15, 15);
 	glEndList();
 
@@ -84,6 +82,8 @@ void Comet::draw() const
 	glRotatef(90, 1, 0, 0);
 	glScalef(m_size, m_size, m_size);
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glCallList(list);
 	glPopMatrix();
 }
