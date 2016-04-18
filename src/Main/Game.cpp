@@ -109,8 +109,10 @@ void Game::AddItems()
 	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",     30700.0f * 0.5,    17.0 / 24.0,   EC_URANUS,  vec::Vector3(0, 0, 5871 * 0.5),	 9.5f));
 	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	     90600.0f * 0.5,    0.6f,		   EC_PLUTO,   vec::Vector3(0, 0, 5913 * 0.5),	 9.5f));
 
+	universe->add_Comet_to_SolarSystem("Solar System",      new Comet("Textures/Earth.bmp",   "Halley",   vec::Vector3(0, 0, 3200),/* Eccentricity */ 0.967 /* Eccentricity */, 75.3f, 0.0f, 0.4f));
+
 	//Add a moon to selected planet
-	solarSystem->findPlanetByName("Earth").addMoon(25, 0.3f);
+	solarSystem->findPlanetByName("Earth").addMoon(7.5f, 0.3f);
 }
 
 void Game::Update()
@@ -121,14 +123,14 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    //glutGameModeString(_1366_BY_768);
+		    glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-			    //glutEnterGameMode();						//Enter Full Screen Game Mode
+				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+			    glutEnterGameMode();						//Enter Full Screen Game Mode
+				glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
 				m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
 				universe = new UniverseSimulator();
-				//glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
 				AddItems();									 //Get The universe Together
 				init();							             //Initialize all glut Properties
 			}

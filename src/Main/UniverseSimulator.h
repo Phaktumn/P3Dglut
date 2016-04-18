@@ -44,6 +44,16 @@ public:
 	void add_SolarSystem(SolarSystem* _Solar_System, vec::Vector3* position){
 		SolarPositions.push_back(position);
 		solarSystems.push_back(_Solar_System);
+	}  
+
+	void add_Comet_to_SolarSystem(const std::string& solaSystem_name, Comet* _comet){
+		for (size_t i = 0; i < solarSystems.size(); i++)
+		{
+			if(solarSystems[i]->getName() == solaSystem_name) {
+				Comets.push_back(_comet);
+				Comets[i]->load();
+			}
+		}
 	}
 
 	void addPlanet_to_SolarSystem(const std::string& _solarSistemName, Planet* _planetToAdd) const
@@ -61,7 +71,7 @@ public:
 		for (size_t i = 0; i < solarSystems.size(); i++){
 			solarSystems[i]->Simulate(deltaTime);
 		}
-		for (size_t i = 0; i < Comets.size(); i++){
+		for (size_t i = 0; i < Comets.size(); i++) {
 			Comets[i]->simulate(deltaTime);
 		}
 	}
@@ -83,8 +93,6 @@ public:
 	explicit UniverseSimulator()
 		: m_simulate(false){
 		load_Universe();
-		Comets.push_back( new Comet("Textures/Earth.bmp", "Halley", vec::Vector3(0, 0, 3200), 0.967, 75.3f, 0.0f, 0.4f));
-		Comets[0]->load();
 	}
 
 	~UniverseSimulator()
