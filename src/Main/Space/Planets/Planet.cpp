@@ -49,13 +49,13 @@ void Planet::Load()
 	glEndList();
 
 	//Orbit Inclination not implemented yet
-	m_orbitInclination = 10;
+	m_orbitInclination = 90;
 
 	//Generate All orbit vertices
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m),
-			m_Position.y, sin(m) * calculateKeplerOrbit(m)));
+			(m_Position.y + calculateHeight(0.1f)), sin(m) * calculateKeplerOrbit(m)));
 	}
 
 	m_OrbitList = glGenLists(1);
@@ -81,6 +81,12 @@ float Planet::calculateKeplerOrbit(float radians)
 	//just filter and set class variable m_... to keplerOrbit
 	m_KeplerOrbitDistance = keplerOrbit;
 	return keplerOrbit;
+}
+
+float Planet::calculateHeight(float deltaTIme)
+{
+	m_CurrPlnateInc += deltaTIme * 360 / m_orbitInclination;
+	return cos(m_CurrPlnateInc);
 }
 
 void Planet::Simulate(float deltaTime)
@@ -118,7 +124,7 @@ void Planet::Simulate(float deltaTime)
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	
 	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
-	m_Position.y = 0;
+	m_Position.y = calculateHeight(deltaTime);
 	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
 
 	//Dont Update Moons if moon list is equals to zero

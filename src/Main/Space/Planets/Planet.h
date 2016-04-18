@@ -87,6 +87,9 @@ private:
 	/* Kepler Orbit Distance relative to this planet solar system Sun */
 	float m_KeplerOrbitDistance = 0;
 
+	float m_PlanetHeight;
+	float m_CurrPlnateInc = 0;
+
 	float m_rotation;
 	float m_orbit_Angle;
 	float m_Orbit_Duration;
@@ -94,6 +97,7 @@ private:
 
 	/* Calculates the distance to sun given an angle in radians */
 	float calculateKeplerOrbit(float radians);
+	float calculateHeight(float deltaTIme);
 	/* Float Value used to calculate Kepler Orbit */
 	float m_eccentricity;
 
