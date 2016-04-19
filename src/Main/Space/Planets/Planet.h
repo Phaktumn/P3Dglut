@@ -94,10 +94,11 @@ private:
 	float m_orbit_Angle;
 	float m_Orbit_Duration;
 	float m_Rotation_Duration;
+	float pitch = 0;
 
 	/* Calculates the distance to sun given an angle in radians */
 	float calculateKeplerOrbit(float radians);
-	float calculateHeight(float deltaTIme);
+	float calculateHeight(float deltaTime,float angle_x);
 	/* Float Value used to calculate Kepler Orbit */
 	float m_eccentricity;
 

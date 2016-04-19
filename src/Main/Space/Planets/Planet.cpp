@@ -2,6 +2,8 @@
 #include "Moon.h"
 #include <Misc/Lights/Lightning.h>
 #include <Main/LoadBMP.h>
+#include <Vars/Quaternion/Quaternion.h>
+#include <Vars/EulerAngle.h>
 
 GLuint Planet::list;
 
@@ -49,13 +51,13 @@ void Planet::Load()
 	glEndList();
 
 	//Orbit Inclination not implemented yet
-	m_orbitInclination = 90;
+	m_orbitInclination = 30;
 
 	//Generate All orbit vertices
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m),
-			(m_Position.y + calculateHeight(0.1f)), sin(m) * calculateKeplerOrbit(m)));
+			(m_Position.y + calculateHeight(0.01f, m)), sin(m) * calculateKeplerOrbit(m)));
 	}
 
 	m_OrbitList = glGenLists(1);
@@ -83,10 +85,17 @@ float Planet::calculateKeplerOrbit(float radians)
 	return keplerOrbit;
 }
 
-float Planet::calculateHeight(float deltaTIme)
+float Planet::calculateHeight(float deltaTime, float radians)
 {
-	m_CurrPlnateInc += deltaTIme * 360 / m_orbitInclination;
-	return cos(m_CurrPlnateInc);
+	//Pitch max = orbit Inclination
+	/*= MathHelper::ToRadians(m_orbitInclination)*/
+	pitch += deltaTime * m_orbitInclination / 360.0f;
+	pitch = MathHelper::Clampf(pitch, 0.0f, m_orbit_Angle);
+	float radians_pitch = MathHelper::ToRadians(pitch);
+	float radians_yaw = radians;
+	EulerAngle inclination = EulerAngle(radians_yaw, radians_pitch, 0.0f);
+	vec::Vector3 inc = inclination.toVector3();
+	return inc.y;
 }
 
 void Planet::Simulate(float deltaTime)
@@ -98,15 +107,7 @@ void Planet::Simulate(float deltaTime)
 		return;
 	}
 	
-	if (m_Rotation_Duration < 1.0f) {
-		m_rotation += deltaTime;
-		float stepRot = 360.0f * m_Rotation_Duration;
-		m_rotation += 1 * 360.0f / stepRot;
-	}
-	else 
-	{
-		m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
-	}
+    m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
 
 	if (m_rotation >= 360.0f) 
 	{
@@ -124,7 +125,7 @@ void Planet::Simulate(float deltaTime)
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	
 	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
-	m_Position.y = calculateHeight(deltaTime);
+	m_Position.y = calculateHeight(deltaTime, radians);
 	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
 
 	//Dont Update Moons if moon list is equals to zero

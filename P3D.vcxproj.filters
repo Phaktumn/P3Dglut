@@ -82,5 +82,6 @@
     <ClInclude Include="src\Main\Space\Planets\Planet.h" />
     <ClInclude Include="src\Main\Space\Planets\SolarSystem.h" />
     <ClInclude Include="src\Main\Space\Planets\Universe.h" />
+    <ClInclude Include="src\Vars\EulerAngle.h" />
   </ItemGroup>
 </Project>

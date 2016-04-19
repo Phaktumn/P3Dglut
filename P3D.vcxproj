@@ -213,6 +213,7 @@
     <ClInclude Include="src\Main\Camera\Camera.h" />
     <ClInclude Include="src\Main\Keyboard\Keyboard.h" />
     <ClInclude Include="src\Misc\Physics\IntersectData.h" />
+    <ClInclude Include="src\Vars\EulerAngle.h" />
     <ClInclude Include="src\Vars\GameTime.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\BoxShape.h" />
     <ClInclude Include="src\Misc\Physics\RigidBody.h" />
