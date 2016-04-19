@@ -5,8 +5,8 @@
 Comet::Comet(const std::string& texturePath, const  std::string& name, 
 	const vec::Vector3& position, const float m_eccentricity, 
 	const float m_orbit_duration, const float m_rotation_duration, float scale): 
-	m_isSelected(false), m_orbitInclination(0), m_idtexture(0),m_eccentricity{m_eccentricity},
-	m_orbitDuration{m_orbit_duration},m_rotationDuration{m_rotation_duration},
+	m_OrbitList(0), list(0),m_isSelected(false), m_orbitInclination(0), m_idtexture(0),
+	m_eccentricity{m_eccentricity}, m_orbitDuration{m_orbit_duration},m_rotationDuration{m_rotation_duration},
 	m_size(0), m_orbit_Angle(0)
 {
 	m_Aphelion = position.z;
@@ -30,7 +30,6 @@ void Comet::load()
 	list = glGenLists(1);
 
 	glNewList(list, GL_COMPILE);
-	Lightning::applyMaterial();
 	gluSphere(sphere, 1, 15, 15);
 	glEndList();
 
@@ -76,14 +75,15 @@ void Comet::simulate(float simulationDelta)
 
 void Comet::draw() const
 {
-	glPushMatrix();
-	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
-	//Rodar o planeta para a textura parecer legit XD
-	glRotatef(90, 1, 0, 0);
 	glScalef(m_size, m_size, m_size);
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glPushMatrix();
+	Lightning::applyMaterial();
+	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
+	//Rodar o planeta para a textura parecer legit XD
+	glRotatef(90, 1, 0, 0);
 	glCallList(list);
 	glPopMatrix();
 }
@@ -94,7 +94,6 @@ void Comet::renderOrbit() const
 	//Draw Comet Orbit List
 	glCallList(m_OrbitList);
 	glPopMatrix();
-
 	glEnable(GL_TEXTURE_2D);
 }
 

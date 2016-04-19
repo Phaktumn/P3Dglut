@@ -5,6 +5,11 @@
 
 GLuint Planet::list;
 
+Planet::Planet(): m_OrbitList(0), m_orbitInclination(0), m_idtexture(0), m_Aphelion(0),
+m_rotation(0), m_orbit_Angle(0), m_Orbit_Duration(0), m_Rotation_Duration(0), m_eccentricity(0)
+{
+}
+
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, 
 	const vec::Vector3& position, float scale) :

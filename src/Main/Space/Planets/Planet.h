@@ -8,6 +8,7 @@ class Moon;
 class Planet
 {
 public:
+	Planet();
 	explicit Planet(const std::string& modelPath, const  std::string& name,
 		float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& pos, float scale);
 	~Planet();

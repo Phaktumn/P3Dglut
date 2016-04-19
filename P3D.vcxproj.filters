@@ -34,6 +34,7 @@
     <ClCompile Include="src\Main\Space\Planets\Moon.cpp" />
     <ClCompile Include="src\Main\Space\Planets\Planet.cpp" />
     <ClCompile Include="src\Main\Space\Planets\SolarSystem.cpp" />
+    <ClCompile Include="src\Main\Camera\OrbitCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ECS\Component.h" />
@@ -82,5 +83,6 @@
     <ClInclude Include="src\Main\Space\Planets\Planet.h" />
     <ClInclude Include="src\Main\Space\Planets\SolarSystem.h" />
     <ClInclude Include="src\Main\Space\Planets\Universe.h" />
+    <ClInclude Include="src\Main\Camera\OrbitCamera.h" />
   </ItemGroup>
 </Project>

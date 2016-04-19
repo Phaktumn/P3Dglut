@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Main\Camera\OrbitCamera.cpp" />
     <ClCompile Include="src\Main\Space\Comet.cpp" />
     <ClCompile Include="src\Main\MainMenu.cpp" />
     <ClCompile Include="src\LoadTGAs\TGALoader.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="src\Main\Camera\SimpleCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Main\Camera\OrbitCamera.h" />
     <ClInclude Include="src\Main\Space\Comet.h" />
     <ClInclude Include="src\Main\List.h" />
     <ClInclude Include="src\Main\LoadBMP.h" />
