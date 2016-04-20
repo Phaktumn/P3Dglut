@@ -66,6 +66,16 @@ public:
 		}
 	}
 
+	SolarSystem& findSolarSystem(const std::string& _solarSystemName) const
+	{
+		for (size_t i = 0; i < solarSystems.size(); i++)
+		{
+			if(solarSystems[i]->getName() == _solarSystemName){
+				return *solarSystems[i];
+			}
+		}
+	}
+
 	void simulate(float deltaTime) const
 	{
 		for (size_t i = 0; i < solarSystems.size(); i++){

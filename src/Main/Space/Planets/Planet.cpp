@@ -92,7 +92,7 @@ void Planet::Simulate(float deltaTime)
 {
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
-	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
+	if (m_Orbit_Duration == 0)
 	{
 		return;
 	}
@@ -136,7 +136,7 @@ void Planet::Simulate(float deltaTime)
 void Planet::Draw() const
 {
 	//Disable light if its sun time to get draw
-	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) 
+	if (m_Orbit_Duration == 0) 
 		glDisable(GL_LIGHTING);
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
@@ -148,7 +148,7 @@ void Planet::Draw() const
 	glCallList(list);
     glPopMatrix();
 	//Enable Light Again!
-	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
+	if (m_Orbit_Duration == 0)
 		glEnable(GL_LIGHTING);
 
 	//Dont Draw Moons if moon list size is equal to zero

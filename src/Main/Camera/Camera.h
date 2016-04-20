@@ -9,7 +9,6 @@ class Camera
 public:
 	//gluLookAt()
 	explicit Camera(Player& player);
-	explicit Camera(const vec::Vector3& position);
 	explicit Camera();
 	virtual ~Camera();
 
@@ -35,6 +34,9 @@ protected:
 	vec::Vector3 m_lookAt;
 	vec::Vector3 eye;
 	vec::Vector3 upVec;
+
+	vec::Vector3 m_Forward;
+	vec::Vector3 m_Right;
 
 	vec::Vector3 m_Position;
 

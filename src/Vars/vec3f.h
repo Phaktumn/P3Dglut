@@ -52,10 +52,10 @@ namespace vec
 		std::string debugString() const;
 
 		static Vector3 Clamp(Vector3& value1, Vector3& min, Vector3& max);
-		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
-		static float Distance(Vector3& vector1,Vector3& vector2);
-		static float DistanceSquared(Vector3& vector1, Vector3& vector2);
-		static Vector3 Normalize(Vector3& value);
+		static Vector3 Cross(const Vector3& vector1, const  Vector3& vector2);
+		static float Distance(const Vector3& vector1, const Vector3& vector2);
+		static float DistanceSquared(const Vector3& vector1, const  Vector3& vector2);
+		static Vector3 Normalize(const Vector3& value);
 		static Vector3 Reflect(Vector3& v1, Vector3& v2);
 		static float Dot(Vector3& v1, Vector3& v2);
 
@@ -276,7 +276,7 @@ namespace vec
 			MathHelper::Clampf(value1.z, min.z, max.z));
 	}
 
-	inline Vector3 Vector3::Cross(Vector3& vector1, Vector3& vector2)
+	inline Vector3 Vector3::Cross(const Vector3& vector1, const Vector3& vector2)
 	{
 		auto x = vector1.y * vector2.z - vector2.y * vector1.z;
 		auto y = vector1.z * vector2.x - vector2.z * vector1.x;
@@ -284,21 +284,21 @@ namespace vec
 		return Vector3(x, y, z);
 	}
 
-	inline float Vector3::Distance(Vector3& vector1, Vector3& vector2)
+	inline float Vector3::Distance(const Vector3& vector1, const  Vector3& vector2)
 	{
 		float result;
 		result = DistanceSquared(vector1, vector2);
 		return static_cast<float>(sqrtf(result));
 	}
 
-	inline float Vector3::DistanceSquared(Vector3& vector1, Vector3& vector2)
+	inline float Vector3::DistanceSquared(const Vector3& vector1, const  Vector3& vector2)
 	{
 		return (vector1.x - vector2.x) * (vector1.x - vector2.x) +
 			   (vector1.y - vector2.y) * (vector1.y - vector2.y) +
 			   (vector1.z - vector2.z) * (vector1.z - vector2.z);
 	}
 
-	inline Vector3 Vector3::Normalize(Vector3& value)
+	inline Vector3 Vector3::Normalize(const Vector3& value)
 	{
 		auto Factor = Distance(value, zero());
 		Factor = 1.0f / Factor;

@@ -4,6 +4,7 @@
 #include "UniverseSimulator.h"
 #include "Camera/SimpleCamera.h"
 #include "Space/Planets/SolarSystem.h"
+#include "Camera/OrbitCamera.h"
 
 #pragma once
 
@@ -41,7 +42,8 @@ public:
 	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
 	static SolarSystem* solarSystem_1;
-	static SimpleCamera* m_camera;
+	//static SimpleCamera* m_camera;
+	static Camera* m_camera;
 	static void init();
 private:
 	Game(int argc, char **argv);

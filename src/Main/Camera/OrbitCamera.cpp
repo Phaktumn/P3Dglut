@@ -3,18 +3,22 @@
 
 
 OrbitCamera::OrbitCamera()
-	: Camera(), m_distance(0), m_angle(0), m_speed(0)
+	: Camera(), m_angle(0), m_speed(0), m_distance(0)
 {
 	m_focus = Planet();
 }
 
-OrbitCamera::OrbitCamera(Planet& _Focus, vec::Vector3& _Position)
-	: Camera(_Position)
+OrbitCamera::OrbitCamera(Planet& _Focus, float distance)
+	: Camera()
 {
+	m_distance = distance;
 	m_focus = _Focus;
-	m_distance = 150;
 	m_angle = 0;
 	m_speed = 20;
+	m_Position = vec::Vector3(0, 0, m_distance);
+	eye = m_Position;
+	m_lookAt = m_focus.getPositionVec();
+	upVec = vec::Vector3::up();
 }
 
 OrbitCamera::~OrbitCamera()
@@ -22,15 +26,19 @@ OrbitCamera::~OrbitCamera()
 
 void OrbitCamera::Update(float deltaTime)
 {
-	m_angle = MathHelper::Clampf(m_angle, 0, 360);
+	m_angle = MathHelper::Clampf(m_angle, -360, 360);
 	if(Keyboard::getKeyPressed(KEY_D))
 	{
-		rotate(MathHelper::ToRadians(m_angle), deltaTime);
+		m_angle += deltaTime * m_speed;
+		isMoving = true;
 	}
 	if(Keyboard::getKeyPressed(KEY_A))
 	{
-		rotate(MathHelper::ToRadians(m_angle), -deltaTime);
+		m_angle -= deltaTime * m_speed;
+		isMoving = true; 
 	}
+	move();
+	Camera::Update(deltaTime);
 }
 
 void OrbitCamera::Draw() const
@@ -38,12 +46,16 @@ void OrbitCamera::Draw() const
 	Camera::Draw();
 }
 
-void OrbitCamera::rotate(float _radians, float _deltaTime)
+void OrbitCamera::move()
 {
-	m_angle += _deltaTime * m_speed;
-	m_Position.x = sin(_radians) * m_distance;
-	m_Position.z = cos(_radians) * m_distance;
-	eye = m_Position;
-	m_lookAt = m_focus.getPositionVec();
-	upVec = vec::Vector3::up();
+	if (isMoving)
+	{
+		m_Position.x = sin(MathHelper::ToRadians(m_angle));
+		m_Position.z = cos(MathHelper::ToRadians(m_angle));
+		m_Position *= m_distance;
+		// m_Position.y += 25;
+		eye = m_Position;
+		m_lookAt = m_focus.getPositionVec();
+		upVec = vec::Vector3::up();
+	}
 }

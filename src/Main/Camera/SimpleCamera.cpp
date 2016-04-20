@@ -2,7 +2,7 @@
 #include "SimpleCamera.h"
 
 SimpleCamera::SimpleCamera(const vec::Vector3& position, float):
-	Camera(position)
+	Camera()
 {
 	m_lookAt = vec::Vector3::zero();
 	eye = position;

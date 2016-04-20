@@ -1,16 +1,15 @@
 #include "SolarSystem.h"
 #include <Main/Keyboard/Keyboard.h>
 #include <Misc/Debug/IO.h>
-#include <Main/Game.h>
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
 	//Add Only a sun to each System created
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
-		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
+		"Sun", NULL, 0.1f,NULL, vec::Vector3(0, 0, 0), 20));
 
 	m_Name = _name;
-	m_print_Index = 0;
+	m_print_Index = 3;
 	m_last_PrintIndex = 0;
 	m_elapsedTime = 0;
 	simulationDeltaTime = 0.03f;
@@ -44,7 +43,7 @@ void SolarSystem::Simulate(float deltaTime)
 	if (Keyboard::getKeyPressed(KEY_J)) {
 		addMoon();
 	}
-	if (Keyboard::getKeyPressed(NUM_1)) {
+	/*if (Keyboard::getKeyPressed(NUM_1)) {
 		m_print_Index = 1;
 		if (m_last_PrintIndex != m_print_Index)
 			m_Planets[m_last_PrintIndex]->setSelected(false);
@@ -117,7 +116,7 @@ void SolarSystem::Simulate(float deltaTime)
 		m_last_PrintIndex = 9;
 		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
-	}
+	}*/
 
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(simulationDeltaTime);
