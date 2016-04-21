@@ -92,8 +92,8 @@ void Game::resize(int width, int height)
 //Use this to add some planets!
 void Game::AddItems()
 {
-	float scale = 0.20f;
-	float scaled = 0.5f;
+	float scale = 1.0f;
+	float scaled = 1.0f;
 	float planetSizeScale = 1.5f;
 
 	solarSystem = new SolarSystem("Solar System");	 //Create Solar System1
