@@ -101,17 +101,17 @@ void Game::AddItems()
 	solarSystem->Load();						     //Load all planets texture
 
 	universe->add_SolarSystem(solarSystem, new vec::Vector3(0, 0, 0));
-	//																										Orbit Duration  planet Rotation eccentricity      Planet Initial			planet scale
-	//                                   Solar System                      texture path        Planet Name   in earth days	  in earth days	   Value	   Position(Z = dist sun)     earth equals to 1.0f
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio",   88.0f    * scale,	  58.0       * scale,	EC_MERCURY, vec::Vector3(0, 0, 70   * scaled),	 0.3f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",      225.0f   * scale,    241.0f     * scale,	EC_VENUS,   vec::Vector3(0, 0, 108  * scaled),	 0.4f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",      365.0f   * scale,	  1.0f       * scale,   EC_EARTH,   vec::Vector3(0, 0, 150  * scaled),	 1.0f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",       687.0f   * scale,    1.01f      * scale,	EC_MARS,    vec::Vector3(0, 0, 228  * scaled),	 0.9f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/jupiter.bmp", "Jupiter",    4332.0f  * scale,    9.8 / 24.0 * scale,   EC_JUPITER, vec::Vector3(0, 0, 772  * scaled),	 11.5 * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/saturn.bmp",  "Saturn",     10760.0f * scale,    10.5 / 24.0* scale,   EC_SATURN,  vec::Vector3(0, 0, 1443 * scaled),	 9.5f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Neptune",    60200.0f * scale,    16.0 / 24.0* scale,   EC_NEPTUNE, vec::Vector3(0, 0, 4504 * scaled),	 9.5f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",     30700.0f * scale,    17.0 / 24.0* scale,   EC_URANUS,  vec::Vector3(0, 0, 5871 * scaled),	 9.5f * planetSizeScale));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	     90600.0f * scale,    0.6f       * scale,	EC_PLUTO,   vec::Vector3(0, 0, 5913 * scaled),	 9.5f * planetSizeScale));
+	//																										Orbit Duration         planet Rotation     eccentricity      Planet Initial			planet scale
+	//                                   Solar System                      texture path        Planet Name   in earth days	       in earth days	      Value	      Position(Z = dist sun)     earth equals to 1.0f
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio",   88.0f    * scale,	  58.0       * scale,	EC_MERCURY, vec::Vector3(0, 0, 70   * scaled),	 0.3f * planetSizeScale, 7.0f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",      225.0f   * scale,    241.0f     * scale,	EC_VENUS,   vec::Vector3(0, 0, 108  * scaled),	 0.4f * planetSizeScale, 3.4f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",      365.0f   * scale,	  1.0f       * scale,   EC_EARTH,   vec::Vector3(0, 0, 150  * scaled),	 1.0f * planetSizeScale, 0.0f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",       687.0f   * scale,    1.01f      * scale,	EC_MARS,    vec::Vector3(0, 0, 228  * scaled),	 0.9f * planetSizeScale, 1.85f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/jupiter.bmp", "Jupiter",    4332.0f  * scale,    9.8 / 24.0 * scale,   EC_JUPITER, vec::Vector3(0, 0, 772  * scaled),	 11.5 * planetSizeScale, 1.31f));
+	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/saturn.bmp",  "Saturn",     10760.0f * scale,    10.5 / 24.0* scale,   EC_SATURN,  vec::Vector3(0, 0, 1443 * scaled),	 9.5f * planetSizeScale, 2.49f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Neptune",    60200.0f * scale,    16.0 / 24.0* scale,   EC_NEPTUNE, vec::Vector3(0, 0, 4504 * scaled),	 9.5f * planetSizeScale, 0.77f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/uranus.bmp",  "Uranus",     30700.0f * scale,    17.0 / 24.0* scale,   EC_URANUS,  vec::Vector3(0, 0, 5871 * scaled),	 9.5f * planetSizeScale, 1.77f));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/neptune.bmp", "Pluto",	     90600.0f * scale,    0.6f       * scale,	EC_PLUTO,   vec::Vector3(0, 0, 5913 * scaled),	 9.5f * planetSizeScale, 17.01f));
 
 	universe->add_Comet_to_SolarSystem("Solar System",      new Comet("Textures/Earth.bmp",   "Halley",   vec::Vector3(0, 0, 3200),/* Eccentricity */ 0.967 /* Eccentricity */, 75.3f, 0.0f, 0.4f));
 
@@ -165,7 +165,7 @@ GLvoid Game::render()
 		m_text1->drawText("Press 'S' to Start");
 	}break;
 	case InGame: {	
-		m_camera->Draw();
+			m_camera->Draw();
 			Lightning::applyLights();
 			universe->draw();
 	}break;

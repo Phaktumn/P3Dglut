@@ -7,7 +7,7 @@ SolarSystem::SolarSystem(const std::string& _name)
 {
 	//Add Only a sun to each System created
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
-		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 20));
+		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 40, 0.0f));
 
 	m_Name = _name;
 	m_print_Index = 0;

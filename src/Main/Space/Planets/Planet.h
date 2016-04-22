@@ -9,7 +9,7 @@ class Planet
 {
 public:
 	explicit Planet(const std::string& modelPath, const  std::string& name,
-		float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& pos, float scale);
+		float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& pos, float scale, float orbitInclination);
 	~Planet();
 	void Load();
 	void Simulate(float deltaTime);

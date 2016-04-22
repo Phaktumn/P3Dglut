@@ -2,14 +2,13 @@
 #include "Moon.h"
 #include <Misc/Lights/Lightning.h>
 #include <Main/LoadBMP.h>
-#include <Vars/Quaternion/Quaternion.h>
 #include <Vars/EulerAngle.h>
 
 GLuint Planet::list;
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, 
-	const vec::Vector3& position, float scale) :
+	const vec::Vector3& position, float scale, float orbitInclination) :
 	m_OrbitList(0), m_orbitInclination(0), m_idtexture(0), m_Aphelion(abs(position.z)),
 	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
 {
@@ -19,6 +18,7 @@ Planet::Planet(const std::string& texturePath, const  std::string& name,
 	this->m_Rotation_Duration = rotatioDuration;
 	m_scale = scale;
 	m_texture_path = texturePath;
+	m_orbitInclination = orbitInclination;
 }
 
 Planet::~Planet()
@@ -50,16 +50,13 @@ void Planet::Load()
 	gluSphere(sphere, 1, 15, 15);
 	glEndList();
 
-	//Orbit Inclination not implemented yet
-	m_orbitInclination = 30;
-
 	//Generate All orbit vertices
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		orbitVerices.push_back(
 			vec::Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(0.01f, m).x,
-				(m_Position.y + calculateHeight(0.01f, m).y),
-				sin(m)* calculateKeplerOrbit(m)) + calculateHeight(0.01f, m).z);
+				calculateHeight(0.01f, m).y,
+				sin(m)* calculateKeplerOrbit(m) + calculateHeight(0.01f, m).z));
 	}
 
 	m_OrbitList = glGenLists(1);
@@ -124,9 +121,11 @@ void Planet::Simulate(float deltaTime)
 
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	
-	m_Position.x = cos(radians) *  calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).x;
+	m_Position.x = cos(radians) *  calculateKeplerOrbit(radians)
+		+ calculateHeight(deltaTime, radians).x;
 	m_Position.y = calculateHeight(deltaTime, radians).y;
-	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).z;
+	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) 
+		+ calculateHeight(deltaTime, radians).z;
 
 	//Dont Update Moons if moon list is equals to zero
 	if (m_moon_index == 0) return;
