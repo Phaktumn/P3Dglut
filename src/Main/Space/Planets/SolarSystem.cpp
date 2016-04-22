@@ -44,7 +44,7 @@ void SolarSystem::Simulate(float deltaTime)
 	if (Keyboard::getKeyPressed(KEY_J)) {
 		addMoon();
 	}
-	if (Keyboard::getKeyPressed(NUM_1)) {
+	/*if (Keyboard::getKeyPressed(NUM_1)) {
 		m_print_Index = 1;
 		if (m_last_PrintIndex != m_print_Index)
 			m_Planets[m_last_PrintIndex]->setSelected(false);
@@ -117,7 +117,7 @@ void SolarSystem::Simulate(float deltaTime)
 		m_last_PrintIndex = 9;
 		Game::m_camera->setLookAt(m_Planets[m_print_Index]->getPositionVec());
 		m_Planets[m_print_Index]->setSelected(true);
-	}
+	}*/
 
 	for (size_t i = 0; i < m_Planets.size(); i++){
 		m_Planets[i]->Simulate(simulationDeltaTime);

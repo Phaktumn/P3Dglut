@@ -1,6 +1,5 @@
 #pragma once
 #include "vec3f.h"
-#include <vector>
 
 class EulerAngle
 {
@@ -33,8 +32,14 @@ inline EulerAngle::EulerAngle(float _Yaw,float _Pitch, float _Roll)
 inline vec::Vector3& EulerAngle::toVector3() const
 {
 	vec::Vector3 vecEuler;
-	vecEuler.x = sin(Yaw);
-	vecEuler.y = -(sin(Pitch)*cos(Yaw));
-	vecEuler.z = -(cos(Pitch)*cos(Yaw));
+    //vecEuler.x = sin(Yaw);
+	//vecEuler.y = -(sin(Pitch)*cos(Yaw));
+	//vecEuler.z = -(cos(Pitch)*cos(Yaw));
+	vecEuler.x = cos(MathHelper::ToRadians(Yaw)) * cos(MathHelper::ToRadians(Pitch));
+	vecEuler.y = sin(MathHelper::ToRadians(Pitch));
+	vecEuler.z = sin(MathHelper::ToRadians(Yaw)) * cos(MathHelper::ToRadians(Pitch));
+	/*(float)Math.Cos(MathHelper.ToRadians(pitch)) * (float)Math.Cos(MathHelper.ToRadians(yaw + yawOffset)),
+		(float)Math.Sin(MathHelper.ToRadians(pitch)),
+		(float)Math.Cos(MathHelper.ToRadians(pitch)) * (float)Math.Sin(MathHelper.ToRadians(yaw + yawOffset)));*/
 	return vecEuler;
 }

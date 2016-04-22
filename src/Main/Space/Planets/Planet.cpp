@@ -47,7 +47,7 @@ void Planet::Load()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	Lightning::applyMaterial();
-	gluSphere(sphere, 1, 15, 15);
+	gluSphere(sphere, 1, 35, 35);
 	glEndList();
 
 	//Generate All orbit vertices

@@ -35,11 +35,11 @@ namespace vec
 		float length() const;
 		float Max() const;
 		Vector3 Normalized() const;
-		Vector3 Reflect(Vector3& vec);
-		float Dot(Vector3& other) const;
+		Vector3 Reflect(const Vector3& vec);
+		float Dot(const Vector3& other) const;
 		void setZero();
 
-		static Vector3 Max(Vector3& vec1, Vector3& vec2);
+		static Vector3 Max(const Vector3& vec1, const Vector3& vec2);
 
 		static Vector3 localToWord(const Vector3& local, Matrix::Matrix4& transform);
 		static Vector3 worldToLocal(const Vector3& local, Matrix::Matrix4& transform);
@@ -51,13 +51,13 @@ namespace vec
 
 		std::string debugString() const;
 
-		static Vector3 Clamp(Vector3& value1, Vector3& min, Vector3& max);
-		static Vector3 Cross(Vector3& vector1, Vector3& vector2);
-		static float Distance(Vector3& vector1,Vector3& vector2);
-		static float DistanceSquared(Vector3& vector1, Vector3& vector2);
-		static Vector3 Normalize(Vector3& value);
-		static Vector3 Reflect(Vector3& v1, Vector3& v2);
-		static float Dot(Vector3& v1, Vector3& v2);
+		static Vector3 Clamp(const Vector3& value1, const  Vector3& min, Vector3& max);
+		static Vector3 Cross(const Vector3& vector1, const  Vector3& vector2);
+		static float Distance(const Vector3& vector1, const Vector3& vector2);
+		static float DistanceSquared(const Vector3& vector1, const  Vector3& vector2);
+		static Vector3 Normalize(const Vector3& value);
+		static Vector3 Reflect(const Vector3& v1, const  Vector3& v2);
+		static float Dot(const Vector3& v1, const Vector3& v2);
 
 		Vector3 operator+(const Vector3 & v) const
 		{
@@ -185,7 +185,7 @@ namespace vec
 		return sqrt(x * x + y * y + z * z);
 	}
 
-	inline Vector3 Vector3::Max(Vector3& vec1, Vector3& vec2)
+	inline Vector3 Vector3::Max(const Vector3& vec1, const  Vector3& vec2)
 	{
 		auto res= Vector3();
 		if (vec1.x > vec2.x)res.x = vec1.x;
@@ -213,7 +213,7 @@ namespace vec
 		return res;
 	}
 
-	inline Vector3 Vector3::Reflect(Vector3& vec)
+	inline Vector3 Vector3::Reflect(const Vector3& vec)
 	{
 		Vector3 res;
 		res.x = this->x - 2.f * Dot(*this, vec) * vec.x;
@@ -222,7 +222,7 @@ namespace vec
 		return res;
 	}
 
-	inline float Vector3::Dot(Vector3& other) const
+	inline float Vector3::Dot(const Vector3& other) const
 	{
 		return x * other.x + y * other.y + z * other.z;
 	}
@@ -268,7 +268,7 @@ namespace vec
 		return debug;
 	}
 
-	inline Vector3 Vector3::Clamp(Vector3& value1, Vector3& min, Vector3& max)
+	inline Vector3 Vector3::Clamp(const Vector3& value1, const  Vector3& min, Vector3& max)
 	{
 		return Vector3(
 			MathHelper::Clampf(value1.x, min.y, max.z),
@@ -276,7 +276,7 @@ namespace vec
 			MathHelper::Clampf(value1.z, min.z, max.z));
 	}
 
-	inline Vector3 Vector3::Cross(Vector3& vector1, Vector3& vector2)
+	inline Vector3 Vector3::Cross(const Vector3& vector1, const  Vector3& vector2)
 	{
 		auto x = vector1.y * vector2.z - vector2.y * vector1.z;
 		auto y = vector1.z * vector2.x - vector2.z * vector1.x;
@@ -284,28 +284,28 @@ namespace vec
 		return Vector3(x, y, z);
 	}
 
-	inline float Vector3::Distance(Vector3& vector1, Vector3& vector2)
+	inline float Vector3::Distance(const Vector3& vector1,const  Vector3& vector2)
 	{
 		float result;
 		result = DistanceSquared(vector1, vector2);
 		return static_cast<float>(sqrtf(result));
 	}
 
-	inline float Vector3::DistanceSquared(Vector3& vector1, Vector3& vector2)
+	inline float Vector3::DistanceSquared(const Vector3& vector1, const  Vector3& vector2)
 	{
 		return (vector1.x - vector2.x) * (vector1.x - vector2.x) +
 			   (vector1.y - vector2.y) * (vector1.y - vector2.y) +
 			   (vector1.z - vector2.z) * (vector1.z - vector2.z);
 	}
 
-	inline Vector3 Vector3::Normalize(Vector3& value)
+	inline Vector3 Vector3::Normalize(const Vector3& value)
 	{
 		auto Factor = Distance(value, zero());
 		Factor = 1.0f / Factor;
 		return Vector3(value.x * Factor, value.y * Factor, value.z * Factor);
 	}
 
-	inline Vector3 Vector3::Reflect(Vector3& v1, Vector3& v2)
+	inline Vector3 Vector3::Reflect(const Vector3& v1, const  Vector3& v2)
 	{
 		//REFLECT R = 2* dot(N,L) * N - L
 		Vector3 res;
@@ -315,7 +315,7 @@ namespace vec
 		return res;
 	}
 
-	inline float Vector3::Dot(Vector3& v1, Vector3& v2)
+	inline float Vector3::Dot(const Vector3& v1, const  Vector3& v2)
 	{
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	}

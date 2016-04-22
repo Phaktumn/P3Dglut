@@ -41,7 +41,7 @@ public:
 	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
 	static SolarSystem* solarSystem_1;
-	static SimpleCamera* m_camera;
+	static Camera* m_camera;
 	static void init();
 private:
 	Game(int argc, char **argv);
