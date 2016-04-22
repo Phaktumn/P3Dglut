@@ -25,7 +25,6 @@
     <ClCompile Include="src\Misc\Axis.cpp" />
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
     <ClCompile Include="src\Misc\imageloader.cpp" />
     <ClCompile Include="src\Main\MainMenu.cpp" />
     <ClCompile Include="src\LoadTGAs\TGALoader.cpp" />
@@ -35,6 +34,8 @@
     <ClCompile Include="src\Main\Space\Planets\Planet.cpp" />
     <ClCompile Include="src\Main\Space\Planets\SolarSystem.cpp" />
     <ClCompile Include="src\Main\Camera\OrbitCamera.cpp" />
+    <ClCompile Include="src\Main\Camera\MultiPurposeCamera.cpp" />
+    <ClCompile Include="src\Main\Camera\FPScamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ECS\Component.h" />
@@ -84,5 +85,9 @@
     <ClInclude Include="src\Main\Space\Planets\SolarSystem.h" />
     <ClInclude Include="src\Main\Space\Planets\Universe.h" />
     <ClInclude Include="src\Main\Camera\OrbitCamera.h" />
+    <ClInclude Include="src\Vars\Matrix\Matrix4.h" />
+    <ClInclude Include="src\Main\Tools\Program.h" />
+    <ClInclude Include="src\Main\Camera\FPScamera.h" />
+    <ClInclude Include="src\Main\Mouse\Mouse.h" />
   </ItemGroup>
 </Project>

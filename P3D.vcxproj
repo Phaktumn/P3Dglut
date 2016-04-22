@@ -149,12 +149,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Main\Camera\FPScamera.cpp" />
     <ClCompile Include="src\Main\Camera\OrbitCamera.cpp" />
     <ClCompile Include="src\Main\Space\Comet.cpp" />
     <ClCompile Include="src\Main\MainMenu.cpp" />
     <ClCompile Include="src\LoadTGAs\TGALoader.cpp" />
     <ClCompile Include="src\Main\Space\Planets\Moon.cpp" />
-    <ClCompile Include="src\Main\Camera\MultyPurposeCamera.cpp" />
+    <ClCompile Include="src\Main\Camera\MultiPurposeCamera.cpp" />
     <ClCompile Include="src\Main\Space\Planets\SolarSystem.cpp" />
     <ClCompile Include="src\Main\Space\Planets\Planet.cpp" />
     <ClCompile Include="src\ECS\Engine.cpp" />
@@ -185,7 +186,10 @@
     <ClCompile Include="src\Main\Camera\SimpleCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Main\Camera\FPScamera.h" />
     <ClInclude Include="src\Main\Camera\OrbitCamera.h" />
+    <ClInclude Include="src\Main\Mouse\Mouse.h" />
+    <ClInclude Include="src\Main\Tools\Program.h" />
     <ClInclude Include="src\Main\Space\Comet.h" />
     <ClInclude Include="src\Main\List.h" />
     <ClInclude Include="src\Main\LoadBMP.h" />
@@ -218,6 +222,7 @@
     <ClInclude Include="src\Vars\GameTime.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\BoxShape.h" />
     <ClInclude Include="src\Misc\Physics\RigidBody.h" />
+    <ClInclude Include="src\Vars\Matrix\Matrix4.h" />
     <ClInclude Include="src\Vars\Quaternion\Quaternion.h" />
     <ClInclude Include="src\Vars\Matrix\Matrix.h" />
     <ClInclude Include="src\Main\Player\Player.h" />
