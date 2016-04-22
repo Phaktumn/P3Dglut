@@ -76,6 +76,7 @@ void Comet::simulate(float simulationDelta)
 
 void Comet::draw() const
 {
+	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	//Rodar o planeta para a textura parecer legit XD
@@ -86,6 +87,7 @@ void Comet::draw() const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glCallList(list);
 	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Comet::renderOrbit() const

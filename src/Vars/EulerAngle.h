@@ -23,7 +23,7 @@ inline EulerAngle::EulerAngle()
 inline EulerAngle::~EulerAngle() { }
 
 
-inline EulerAngle::EulerAngle(float _Pitch,float _Yaw, float _Roll)
+inline EulerAngle::EulerAngle(float _Yaw,float _Pitch, float _Roll)
 {
 	Pitch = _Pitch;
 	Yaw = _Yaw;
@@ -33,8 +33,8 @@ inline EulerAngle::EulerAngle(float _Pitch,float _Yaw, float _Roll)
 inline vec::Vector3& EulerAngle::toVector3() const
 {
 	vec::Vector3 vecEuler;
-	vecEuler.x = cos(Yaw) * cos(Pitch);
-	vecEuler.y = sin(Pitch);
-	vecEuler.z = sin(Yaw) * cos(Pitch);
+	vecEuler.x = sin(Yaw);
+	vecEuler.y = -(sin(Pitch)*cos(Yaw));
+	vecEuler.z = -(cos(Pitch)*cos(Yaw));
 	return vecEuler;
 }

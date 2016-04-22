@@ -94,7 +94,7 @@ void Game::AddItems()
 {
 	float scale = 1.0f;
 	float scaled = 1.0f;
-	float planetSizeScale = 1.5f;
+	float planetSizeScale = 4.0f;
 
 	solarSystem = new SolarSystem("Solar System");	 //Create Solar System1
 	//Only Sun was Pushed Back to the list
@@ -165,7 +165,7 @@ GLvoid Game::render()
 		m_text1->drawText("Press 'S' to Start");
 	}break;
 	case InGame: {	
-			m_camera->Draw();
+		m_camera->Draw();
 			Lightning::applyLights();
 			universe->draw();
 	}break;
@@ -173,7 +173,6 @@ GLvoid Game::render()
 	}
 #if _DEBUG_ 1
 	auto fps = "FPS: " + std::to_string(gameTime.getFps());
-	// ReSharper disable once CppMsExtBindingRValueToLvalueReference
 	text->drawText(fps);
 #endif
 	glutSwapBuffers();	

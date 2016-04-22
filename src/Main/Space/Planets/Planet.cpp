@@ -56,8 +56,10 @@ void Planet::Load()
 	//Generate All orbit vertices
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
-		orbitVerices.push_back(vec::Vector3(cos(m) * calculateKeplerOrbit(m),
-			(m_Position.y + calculateHeight(0.01f, m)), sin(m) * calculateKeplerOrbit(m)));
+		orbitVerices.push_back(
+			vec::Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(0.01f, m).x,
+				(m_Position.y + calculateHeight(0.01f, m).y),
+				sin(m)* calculateKeplerOrbit(m)) + calculateHeight(0.01f, m).z);
 	}
 
 	m_OrbitList = glGenLists(1);
@@ -85,17 +87,16 @@ float Planet::calculateKeplerOrbit(float radians)
 	return keplerOrbit;
 }
 
-float Planet::calculateHeight(float deltaTime, float radians)
+vec::Vector3 Planet::calculateHeight(float deltaTime, float radians) const
 {
 	//Pitch max = orbit Inclination
 	/*= MathHelper::ToRadians(m_orbitInclination)*/
-	pitch += deltaTime * m_orbitInclination / 360.0f;
-	pitch = MathHelper::Clampf(pitch, 0.0f, m_orbit_Angle);
-	float radians_pitch = MathHelper::ToRadians(pitch);
-	float radians_yaw = radians;
-	EulerAngle inclination = EulerAngle(radians_yaw, radians_pitch, 0.0f);
+	float maxHeigth = m_orbitInclination * m_Aphelion / 90.0f;
+	float radians_pitch = MathHelper::ToRadians(m_orbitInclination);
+	EulerAngle inclination = EulerAngle(radians, radians_pitch, 0.0f);
 	vec::Vector3 inc = inclination.toVector3();
-	return inc.y;
+	inc.y *= maxHeigth;
+	return inc;
 }
 
 void Planet::Simulate(float deltaTime)
@@ -108,7 +109,6 @@ void Planet::Simulate(float deltaTime)
 	}
 	
     m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
-
 	if (m_rotation >= 360.0f) 
 	{
 		m_rotation -= 360;
@@ -117,16 +117,16 @@ void Planet::Simulate(float deltaTime)
 
 	float orbitDeltaStep = 360 / m_Orbit_Duration;
 	m_orbit_Angle += deltaTime * orbitDeltaStep;
-	if (m_orbit_Angle >= 360) {
+	if (m_orbit_Angle > 360) {
 		m_years_elapsed++;
 		m_orbit_Angle -= 360;
 	}
 
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	
-	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
-	m_Position.y = calculateHeight(deltaTime, radians);
-	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
+	m_Position.x = cos(radians) *  calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).x;
+	m_Position.y = calculateHeight(deltaTime, radians).y;
+	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).z;
 
 	//Dont Update Moons if moon list is equals to zero
 	if (m_moon_index == 0) return;
@@ -140,15 +140,18 @@ void Planet::Draw() const
 	//Disable light if its sun time to get draw
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) 
 		glDisable(GL_LIGHTING);
+
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
 	//Rodar o planeta para a textura parecer legit XD
 	glRotatef(90, 1, 0, 0);
+	glRotatef(30, 0, 1, 0);
 	glRotatef(m_rotation, 0, 0, -1);
 	glScalef(m_scale, m_scale, m_scale);
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glCallList(list);
     glPopMatrix();
+
 	//Enable Light Again!
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
 		glEnable(GL_LIGHTING);
