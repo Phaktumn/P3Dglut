@@ -30,7 +30,7 @@ void Comet::load()
 	list = glGenLists(1);
 
 	glNewList(list, GL_COMPILE);
-	Lightning::applyMaterial();
+	Lightning::applyMaterial1();
 	gluSphere(sphere, 1, 15, 15);
 	glEndList();
 

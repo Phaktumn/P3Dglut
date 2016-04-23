@@ -48,8 +48,8 @@ public:
 
 	/* Returns this Solar Sistem Name */
 	std::string& getName() { return m_Name; }
+private:
 
-private: 
 	std::string TYPE = "Solar System";
 
 	List<Planet*> m_Planets;

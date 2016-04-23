@@ -1,16 +1,16 @@
 #include "SolarSystem.h"
 #include <Main/Keyboard/Keyboard.h>
 #include <Misc/Debug/IO.h>
-#include <Main/Game.h>
+#include <Main/Globals.h>
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
 	//Add Only a sun to each System created
 	m_Planets.push_back(new Planet("Textures/sun.bmp",
-		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 40, 0.0f));
+		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 150000.0f * Universal_Size_Scale, 0.0f, 0.0f));
 
 	m_Name = _name;
-	m_print_Index = 0;
+	m_print_Index = 3;
 	m_last_PrintIndex = 0;
 	m_elapsedTime = 0;
 	simulationDeltaTime = 0.03f;

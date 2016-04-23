@@ -6,20 +6,13 @@
 FPScamera::~FPScamera()
 {
 	delete angle;
+	delete settings;
 }
 
 void FPScamera::Update(float deltaTime)
 {
-	prevMousePos = currentMousePosition;
-	currentMousePosition = Mouse::getMousePos();
-
-	viewPortCenter = vec::Vector3(
-		glutGet(GLUT_WINDOW_WIDTH) / 2,
-		glutGet(GLUT_WINDOW_HEIGHT) / 2,
-		0);
-	vec::Vector3 diff = vec::Vector3((currentMousePosition - prevMousePos).x, 
-		(currentMousePosition - prevMousePos).y, (currentMousePosition - prevMousePos).z);
-	if (diff.x != 0.0f && diff.y != 0.0f || diff.z != 0.0f)
+	computeMouse();
+	if (diff.x != 0.0f || diff.y != 0.0f)
 	{
 		yaw += (currentMousePosition.x - viewPortCenter.x) * sensitivity;
 		pitch -= (currentMousePosition.y - viewPortCenter.y) * sensitivity;
@@ -57,11 +50,20 @@ void FPScamera::Update(float deltaTime)
 
 	eye = m_Position;
 	m_lookAt = m_Position + forwardVec;
-	Camera::upVec = upVec;
+	Camera::upVec = this->upVec;
 	Camera::Update(deltaTime);
 }
 
 void FPScamera::Draw() const
 {
+	settings->drawText("Your Speed: " + std::to_string(this->speed) + " m/s\nThis speed is relative to this solar system scale");
 	Camera::Draw();
+}
+
+void FPScamera::computeMouse()
+{
+	prevMousePos = currentMousePosition;
+	currentMousePosition = Mouse::getMousePos();
+	diff = vec::Vector3((currentMousePosition - prevMousePos).x,
+		(currentMousePosition - prevMousePos).y, 0.0);
 }

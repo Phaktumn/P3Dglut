@@ -1,24 +1,30 @@
+#define PLANET_H_
+#ifdef PLANET_H_
+
 #pragma once
 #include <GL/freeglut.h>
 #include <Main/List.h>
 #include <Vars/vec3f.h>
+#include "Moon.h"
 
-class Moon;
+class Ring;
 
 class Planet
 {
 public:
+	Planet();
 	explicit Planet(const std::string& modelPath, const  std::string& name,
-		float orbitDuration, float rotatioDuration, float eccentricity, const vec::Vector3& pos, float scale, float orbitInclination);
+		float orbitDuration, float rotatioDuration, float eccentricity, 
+		const vec::Vector3& pos, float scale, float orbitInclination, float planetInclination);
 	~Planet();
 	void Load();
 	void Simulate(float deltaTime);
-	void Draw() const;
+	void Draw();
 
 	void loadTexture();
 	void addMoon(float distanceToPlanet, float radius);
 	void renderOrbit() const;
-
+	void addRings(float innerRadius, float outterRadius);
 	/* Number Of Moons */
 	int getMoonCount() const
 	{ return m_moon_index; }
@@ -45,6 +51,12 @@ public:
 		m_isSelected = state;
 	}
 
+	float getPlanetInclination() const
+	{ return planetInclination; }
+
+	float getScale() const
+	{ return this->m_scale; }
+
 	/* Get object Type */
 	std::string& getType() 
 	{ return TYPE; }
@@ -54,6 +66,7 @@ public:
 	GLuint m_OrbitList;
 
 private:
+	Ring* ring;
 	GLUquadricObj* sphere = nullptr;
 
 	/* In What solar sistem this planet is present*/
@@ -87,7 +100,6 @@ private:
 	/* Kepler Orbit Distance relative to this planet solar system Sun */
 	float m_KeplerOrbitDistance = 0;
 
-	float m_PlanetHeight;
 	float m_CurrPlnateInc = 0;
 
 	float m_rotation;
@@ -95,6 +107,9 @@ private:
 	float m_Orbit_Duration;
 	float m_Rotation_Duration;
 	float yaw = 0;
+
+	/* Planet Inclination relative to solar Equator */
+	float planetInclination;
 
 	/* Calculates the distance to sun given an angle in radians */
 	float calculateKeplerOrbit(float radians);
@@ -110,4 +125,6 @@ private:
 	/* Years Elapsed in this planet Since simulations has starte */
 	int m_years_elapsed = 0;
 };
+#endif
+
 

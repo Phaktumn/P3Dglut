@@ -1,19 +1,24 @@
 #include "Planet.h"
-#include "Moon.h"
 #include <Misc/Lights/Lightning.h>
 #include <Main/LoadBMP.h>
 #include <Vars/EulerAngle.h>
+#include <Main/Space/Rings.h>
 
 GLuint Planet::list;
 
+Planet::Planet(): m_OrbitList(0), ring(nullptr), m_orbitInclination(0), m_idtexture(0), m_Aphelion(0), 
+m_rotation(0), m_orbit_Angle(0), m_Orbit_Duration(0), m_Rotation_Duration(0), planetInclination(0), m_eccentricity(0)
+{
+}
+
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, 
-	const vec::Vector3& position, float scale, float orbitInclination) :
-	m_OrbitList(0), m_orbitInclination(0), m_idtexture(0), m_Aphelion(abs(position.z)),
-	m_rotation(0), m_orbit_Angle(0), m_eccentricity(eccentricity)
+	const vec::Vector3& position, float scale, float orbitInclination, float planetInclnation) :
+	m_OrbitList(0), ring(nullptr), m_idtexture(0), m_Aphelion(abs(position.z)),
+	m_rotation(0), m_orbit_Angle(45), planetInclination(planetInclnation), m_eccentricity(eccentricity)
 {
 	m_Name = name;
-	this->m_Position = position;
+	this->m_Position = vec::Vector3(0,0,0);
 	this->m_Orbit_Duration = orbitDuration;
 	this->m_Rotation_Duration = rotatioDuration;
 	m_scale = scale;
@@ -28,6 +33,7 @@ Planet::~Planet()
 		delete moons[i];
 	}
 	free(sphere);
+	delete ring;
 }
 
 void Planet::Load()
@@ -38,15 +44,17 @@ void Planet::Load()
 	glEnable(GL_TEXTURE_2D);
 	sphere = gluNewQuadric();
 	gluQuadricDrawStyle(sphere, GLU_FILL);
-	gluQuadricTexture(sphere, GL_TRUE);
-	gluQuadricNormals(sphere, GLU_SMOOTH);
+	gluQuadricTexture(  sphere, GL_TRUE);
+	gluQuadricNormals(  sphere, GLU_SMOOTH);
 
 	list = glGenLists(1);
 
 	glNewList(list, GL_COMPILE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	Lightning::applyMaterial();
+	Lightning::applyMaterial1();
+	//Rodar o planeta para a textura parecer legit XD
+	glRotatef(90, 1, 0, 0);
 	gluSphere(sphere, 1, 35, 35);
 	glEndList();
 
@@ -88,9 +96,9 @@ vec::Vector3 Planet::calculateHeight(float deltaTime, float radians) const
 {
 	//Pitch max = orbit Inclination
 	/*= MathHelper::ToRadians(m_orbitInclination)*/
-	float maxHeigth = m_orbitInclination * m_Aphelion / 90.0f;
-	float radians_pitch = MathHelper::ToRadians(m_orbitInclination);
-	EulerAngle inclination = EulerAngle(radians, radians_pitch, 0.0f);
+	float maxHeigth = m_orbitInclination * m_Aphelion / 45.0f;
+	float radians_Pitch = MathHelper::ToRadians(m_orbitInclination);
+	EulerAngle inclination = EulerAngle(radians, radians_Pitch, 0.0f);
 	vec::Vector3 inc = inclination.toVector3();
 	inc.y *= maxHeigth;
 	return inc;
@@ -100,8 +108,7 @@ void Planet::Simulate(float deltaTime)
 {
 	//If is Sun -> just dont Simulate 
 	//rotation Duration and orbit Duration == 0
-	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
-	{
+	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0){
 		return;
 	}
 	
@@ -114,7 +121,8 @@ void Planet::Simulate(float deltaTime)
 
 	float orbitDeltaStep = 360 / m_Orbit_Duration;
 	m_orbit_Angle += deltaTime * orbitDeltaStep;
-	if (m_orbit_Angle > 360) {
+	if (m_orbit_Angle > 360)
+	{
 		m_years_elapsed++;
 		m_orbit_Angle -= 360;
 	}
@@ -134,7 +142,7 @@ void Planet::Simulate(float deltaTime)
 	}
 }
 
-void Planet::Draw() const
+void Planet::Draw()
 {
 	//Disable light if its sun time to get draw
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0) 
@@ -142,14 +150,14 @@ void Planet::Draw() const
 
 	glPushMatrix();
 	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
-	//Rodar o planeta para a textura parecer legit XD
-	glRotatef(90, 1, 0, 0);
-	glRotatef(30, 0, 1, 0);
-	glRotatef(m_rotation, 0, 0, -1);
+	glRotatef(planetInclination, 0, 0, 1);
+	glRotatef(m_rotation, 0, -1, 0);
 	glScalef(m_scale, m_scale, m_scale);
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glCallList(list);
     glPopMatrix();
+	if(ring != nullptr)
+		ring->draw(*this);
 
 	//Enable Light Again!
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
@@ -229,4 +237,11 @@ std::string& Planet::planetSettigs()
 	m_planetSettings += "\n Years Elapsed on "   + m_Name + ": " + std::to_string(m_years_elapsed)    + " Years";
 	
 	return {m_planetSettings};
+}
+
+void Planet::addRings(float innerRadius, float outterRadius)
+{
+	ring = new Ring(innerRadius, outterRadius, 50, 1);
+	ring->load();
+	ring->attachToPlanet(*this);
 }

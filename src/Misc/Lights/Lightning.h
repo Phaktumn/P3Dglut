@@ -17,7 +17,8 @@ class Lightning
 {
 public:
 	static void enableLight();
-	static void applyMaterial();
+	static void applyMaterial1();
+	static void applyMaterial2();
 	static void applyLights();
 };
 

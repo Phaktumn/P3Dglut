@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Main\Camera\FPScamera.h" />
+    <ClInclude Include="src\Main\Globals.h" />
     <ClInclude Include="src\Main\Mouse\Mouse.h" />
     <ClInclude Include="src\Main\Space\Comet.h" />
     <ClInclude Include="src\Main\List.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\ECS\TypeMapper.h" />
     <ClInclude Include="src\Main\Space\Planets\Universe.h" />
+    <ClInclude Include="src\Main\Space\Rings.h" />
     <ClInclude Include="src\Misc\Debug\IO.h" />
     <ClInclude Include="src\Misc\imageloader.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />

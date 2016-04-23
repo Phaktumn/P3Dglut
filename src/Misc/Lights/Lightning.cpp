@@ -25,19 +25,24 @@ void Lightning::enableLight()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 }
 
-void Lightning::applyMaterial()
+void Lightning::applyMaterial1()
 {
-	GLfloat mat_ambient  [] = { 0.05f , 0.05f , 0.05f , 1.0f };
-	GLfloat mat_specular [] = { 1.0f , 1.0f , 1.0f , 1.0f };
+	GLfloat mat_ambient[] = { 0.05f , 0.05f , 0.05f , 1.0f };
+	GLfloat mat_specular[] = { 1.0f , 1.0f , 1.0f , 1.0f };
 	GLfloat mat_shininess[] = { 40.0f };
-	GLfloat mat_emission [] = { 0.1f , 0.1f , 0.1f , 1.0f };
-	GLfloat mat_diffuse  [] = { 1.0f , 1.0f , 1.0f , 1.0f };
+	GLfloat mat_emission[] = { 0.1f , 0.1f , 0.1f , 1.0f };
+	GLfloat mat_diffuse[] = { 1.0f , 1.0f , 1.0f , 1.0f };
 
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+}
+
+void Lightning::applyMaterial2()
+{
+
 }
 
 void Lightning::applyLights()
