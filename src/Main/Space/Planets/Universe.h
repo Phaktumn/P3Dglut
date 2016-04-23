@@ -9,6 +9,7 @@ public:
 
 inline void Universe::drawQuads()
 {
+	
 	glBegin(GL_QUADS);
 
 	// new face

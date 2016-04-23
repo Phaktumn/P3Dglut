@@ -88,7 +88,7 @@ void Game::resize(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45, ratio, 0.01, 15000);
+	gluPerspective(55, ratio, 0.01, INFINITE);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -170,7 +170,7 @@ GLvoid Game::render()
 		//Draw a Simple text just to help player on how to start the Game
 		m_text1->drawText("Press 'S' to Start");
 	}break;
-	case InGame: {	
+	case InGame: {
 			m_camera->Draw();
 			Lightning::applyLights();
 			universe->draw();
