@@ -54,9 +54,7 @@ void FPScamera::Update(float deltaTime)
 	Camera::Update(deltaTime);
 }
 
-void FPScamera::Draw() const
-{
-	settings->drawText("Your Speed: " + std::to_string(this->speed) + " m/s\nThis speed is relative to this solar system scale");
+void FPScamera::Draw() const{
 	Camera::Draw();
 }
 

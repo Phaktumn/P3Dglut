@@ -29,7 +29,8 @@ public:
 		m_list = glGenLists(1);
 		glNewList(m_list, GL_COMPILE);	
 		glDisable(GL_LIGHTING);
-		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE);
+		glPushMatrix();
 		glBindTexture(GL_TEXTURE_2D, m_Universetexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -37,6 +38,8 @@ public:
 		glScalef(20000, 20000, 20000);
 		Universe::drawQuads();
 		glEnable(GL_DEPTH_TEST); glDepthMask(GL_TRUE);
+		glDisable(GL_TEXTURE);
+		glPopMatrix();
 		glEnable(GL_LIGHTING);
 		glEndList();
 	}
@@ -101,9 +104,7 @@ public:
 	}
 
 	void drawUniverse() const{
-		glPushMatrix();
 		glCallList(m_list);
-		glPopMatrix();
 	}
 };
 
