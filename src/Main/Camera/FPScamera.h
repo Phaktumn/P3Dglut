@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿#ifndef FPS_CAMERA_H
+#define FPS_CAMERA_H
+
+#pragma once
 #include "Camera.h"
 #include <Vars/EulerAngle.h>
 #include <Main/Globals.h>
@@ -48,3 +51,5 @@ private:
 	float yaw = 0;
 	float sensitivity = .10f;
 };
+#endif
+

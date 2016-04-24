@@ -1,5 +1,5 @@
+#ifndef PLANET_H_
 #define PLANET_H_
-#ifdef PLANET_H_
 
 #pragma once
 #include <GL/freeglut.h>

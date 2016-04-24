@@ -1,3 +1,6 @@
+#ifndef _UNIVERSE_SIMULATOR_H_
+#define _UNIVERSE_SIMULATOR_H_
+
 #ifndef __cplusplus
 #error A C++ compiler is required!
 #endif
@@ -8,6 +11,7 @@
 #include "Space/Planets/Universe.h"
 #include "Space/Planets/SolarSystem.h"
 #include "Space/Comet.h"
+#include "FreeGlutWrap.h"
 
 class UniverseSimulator
 {
@@ -29,17 +33,14 @@ public:
 		m_list = glGenLists(1);
 		glNewList(m_list, GL_COMPILE);	
 		glDisable(GL_LIGHTING);
-		glEnable(GL_TEXTURE);
-		glPushMatrix();
+		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, m_Universetexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glDisable(GL_DEPTH_TEST); glDepthMask(GL_FALSE);
-		glScalef(20000, 20000, 20000);
+	    _Scale(Vector3(20000));
 		Universe::drawQuads();
 		glEnable(GL_DEPTH_TEST); glDepthMask(GL_TRUE);
-		glDisable(GL_TEXTURE);
-		glPopMatrix();
 		glEnable(GL_LIGHTING);
 		glEndList();
 	}
@@ -83,7 +84,7 @@ public:
 	{
 		drawUniverse();
 		for (size_t i = 0; i < solarSystems.size(); i++){
-			glTranslatef(SolarPositions[i]->x, SolarPositions[i]->y, SolarPositions[i]->z);
+			_glTranslate(*SolarPositions[i]);
 			solarSystems[i]->Draw();
 			solarSystems[i]->renderOrbits();
 		}
@@ -104,7 +105,11 @@ public:
 	}
 
 	void drawUniverse() const{
+		glPushMatrix();
 		glCallList(m_list);
+		glPopMatrix();
 	}
 };
+
+#endif
 

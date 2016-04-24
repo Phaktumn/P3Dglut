@@ -1,3 +1,6 @@
+#ifndef CAMERA_H_
+#define CAMERA_H_
+
 #pragma once
 #include "../../Vars/vec3f.h"
 #include "../Player/Player.h"
@@ -41,4 +44,7 @@ protected:
 	//Player angle rotation in Degrees
 	float rotationAngle;
 };
+
+#endif
+
 

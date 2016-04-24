@@ -88,5 +88,6 @@
     <ClInclude Include="src\Main\Mouse\Mouse.h" />
     <ClInclude Include="src\Main\Space\Rings.h" />
     <ClInclude Include="src\Main\Globals.h" />
+    <ClInclude Include="src\Main\FreeGlutWrap.h" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,13 @@
+#ifndef GAME_H_
+#define GAME_H_
+
 #include <string>
 #include "../Misc/RenderText.h"
 #include "../Vars/GameTime.h"
 #include "UniverseSimulator.h"
 #include "Camera/SimpleCamera.h"
 #include "Space/Planets/SolarSystem.h"
+#include <Main/FreeGlutWrap.h>
 
 #pragma once
 
@@ -58,4 +62,7 @@ private:
 	static RenderText* m_text1;
 	static GameTime gameTime;
 };
+
+#endif
+
 

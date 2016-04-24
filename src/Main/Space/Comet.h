@@ -1,5 +1,5 @@
-﻿#define COMET_H
-#ifdef COMET_H
+﻿#ifndef COMET_H
+#define COMET_H
 
 #pragma once
 #include <Vars/vec3f.h>

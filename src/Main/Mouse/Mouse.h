@@ -1,3 +1,6 @@
+#ifndef MOUSE_H_
+#define MOUSE_H_
+
 #pragma once
 #include <Vars/vec3f.h>
 
@@ -41,4 +44,6 @@ inline void Mouse::passiveMouseFunc(int x, int y)
 		glutGet(GLUT_WINDOW_HEIGHT) / 2);
 	justWarped = true;
 }
+
+#endif
 

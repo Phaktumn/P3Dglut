@@ -1,5 +1,5 @@
+#ifndef RENDER_TEXT_H
 #define RENDER_TEXT_H
-#ifdef RENDER_TEXT_H
 
 #include "gl/freeglut.h"
 #include <string>

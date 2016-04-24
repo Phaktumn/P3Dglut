@@ -1,3 +1,6 @@
+#ifndef KEYBOARD_H_
+#define KEYBOARD_H_
+
 #pragma once
 
 #define KEY_W             0x57
@@ -282,4 +285,7 @@ public:
 private :
 	static float KEYS[256];
 };
+
+#endif
+
 

@@ -1,3 +1,6 @@
+#ifndef EULER_H_
+#define EULER_H_
+
 #pragma once
 #include "vec3f.h"
 
@@ -40,3 +43,5 @@ inline vec::Vector3& EulerAngle::toVector3() const
 	vecEuler.z = sin(MathHelper::ToRadians(Yaw)) * cos(MathHelper::ToRadians(Pitch));
 	return vecEuler;
 }
+
+#endif

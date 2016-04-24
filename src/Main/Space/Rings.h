@@ -1,11 +1,12 @@
+#ifndef RINGS_H
 #define RINGS_H
-#ifdef RINGS_H
 
 #pragma once
 
 #include <Misc/Lights/Lightning.h>
 #include <Main/LoadBMP.h>
 #include <Main/Space/Planets/Planet.h>
+#include <Main/FreeGlutWrap.h>
 
 class Ring
 {
@@ -60,8 +61,8 @@ inline void Ring::load()
 inline void Ring::draw(Planet& planet) const
 {
 	glPushMatrix();
-	glTranslatef(planet.getPositionVec().x, planet.getPositionVec().y, planet.getPositionVec().z);
-	glScalef(planet.getScale(), planet.getScale(), planet.getScale());
+	_glTranslate(planet.getPositionVec());
+	_Scale(Vector3(planet.getScale()));
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glCallList(listIndex);
 	glPopMatrix();
@@ -74,8 +75,8 @@ inline void Ring::attachToPlanet(Planet& _planet) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	Lightning::applyMaterial1();
 	glPushMatrix();
-	glRotatef(-90, 1, 0, 0);
-	glRotatef(_planet.getPlanetInclination(), 0, -1, 0);
+	_glRotatef(-90, Vector3(1,0,0));
+	_glRotatef(_planet.getPlanetInclination(), Vector3(0, -1, 0));
 	gluDisk(m_ring, m_InnerRadius, m_OutterRadius, slices, loops);
 	glPopMatrix();
 	glEndList();

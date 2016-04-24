@@ -1,6 +1,7 @@
 ﻿#include "Comet.h"
 #include <Main/LoadBMP.h>
 #include <Misc/Lights/Lightning.h>
+#include <Main/FreeGlutWrap.h>
 
 Comet::Comet(const std::string& texturePath, const  std::string& name, 
 	const vec::Vector3& position, const float m_eccentricity, 
@@ -52,7 +53,7 @@ void Comet::load()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	for (int i = 0; i < orbitVerices.size(); i++) {
-		glVertex3f(orbitVerices[i].x, orbitVerices[i].y, orbitVerices[i].z);
+		_Vertex3(orbitVerices[i]);
 	}
 	glDisable(GL_BLEND);
 	glEnd();
@@ -78,10 +79,10 @@ void Comet::draw() const
 {
 	glEnable(GL_TEXTURE_2D);
 	glPushMatrix();
-	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
+	_glTranslate(m_Position);
 	//Rodar o planeta para a textura parecer legit XD
-	glRotatef(90, 1, 0, 0);
-	glScalef(m_size, m_size, m_size);
+	_glRotatef(90, Vector3(1,0,0));
+	_Scale(Vector3(m_size));
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

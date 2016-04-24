@@ -1,3 +1,6 @@
+#ifndef MOON_H_
+#define MOON_H_
+
 #pragma once
 #include <GL/freeglut.h>
 #include <Main/List.h>
@@ -39,3 +42,4 @@ private:
 	vec::Vector3 m_northPoleNormal;
 };
 
+#endif

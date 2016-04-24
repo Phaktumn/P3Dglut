@@ -186,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Main\Camera\FPScamera.h" />
+    <ClInclude Include="src\Main\FreeGlutWrap.h" />
     <ClInclude Include="src\Main\Globals.h" />
     <ClInclude Include="src\Main\Mouse\Mouse.h" />
     <ClInclude Include="src\Main\Space\Comet.h" />

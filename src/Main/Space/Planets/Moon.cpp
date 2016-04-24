@@ -1,6 +1,7 @@
 #include "Moon.h"
 #include <gl/freeglut.h>
 #include "SolarSystem.h"
+#include <Main/FreeGlutWrap.h>
 
 Moon::Moon(Planet& planet,float distanceToPLanet, float scale, float orbitAngle) 
 	: m_orbitList(0), planet_(planet)
@@ -31,8 +32,7 @@ void Moon::Load()
 	glDisable(GL_LIGHTING);
 	glBegin(GL_LINE_STRIP);
 	for (int i = 0; i < m_orbitVertexes.size(); i++) {
-		glVertex3f(m_orbitVertexes[i].x, 0, 
-			m_orbitVertexes[i].z);
+		_Vertex3(Vector3(m_orbitVertexes[i].x, 0, m_orbitVertexes[i].z));
 	}
 	glEnd();
 	glEnable(GL_LIGHTING);
@@ -55,9 +55,9 @@ void Moon::Update(float deltaTime)
 void Moon::Draw() const
 {
 	glPushMatrix();
-	glTranslatef(m_position.x, m_position.y, m_position.z);
-	glRotatef(m_rotation_angle, 0, 0, -1);
-	glScalef(m_planet_scale, m_planet_scale, m_planet_scale);
+	_glTranslate(m_position);
+	_glRotatef(m_rotation_angle, Vector3(0, 0, -1));
+	_Scale(Vector3(m_planet_scale));
 	glCallList(Planet::list);
 	glPopMatrix();
 }

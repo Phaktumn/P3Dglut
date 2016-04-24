@@ -3,6 +3,7 @@
 #include <Main/LoadBMP.h>
 #include <Vars/EulerAngle.h>
 #include <Main/Space/Rings.h>
+#include <Main/FreeGlutWrap.h>
 
 GLuint Planet::list;
 
@@ -13,12 +14,12 @@ m_rotation(0), m_orbit_Angle(0), m_Orbit_Duration(0), m_Rotation_Duration(0), pl
 
 Planet::Planet(const std::string& texturePath, const  std::string& name,
 	float orbitDuration, float rotatioDuration, float eccentricity, 
-	const vec::Vector3& position, float scale, float orbitInclination, float planetInclnation) :
+	const Vector3& position, float scale, float orbitInclination, float planetInclnation) :
 	m_OrbitList(0), ring(nullptr), m_idtexture(0), m_Aphelion(abs(position.z)),
 	m_rotation(0), m_orbit_Angle(45), planetInclination(planetInclnation), m_eccentricity(eccentricity)
 {
 	m_Name = name;
-	this->m_Position = vec::Vector3(0,0,0);
+	this->m_Position = Vector3(0,0,0);
 	this->m_Orbit_Duration = orbitDuration;
 	this->m_Rotation_Duration = rotatioDuration;
 	m_scale = scale;
@@ -54,7 +55,7 @@ void Planet::Load()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	Lightning::applyMaterial1();
 	//Rodar o planeta para a textura parecer legit XD
-	glRotatef(90, 1, 0, 0);
+	_glRotatef(90, Vector3(1,0,0));
 	gluSphere(sphere, 1, 35, 35);
 	glEndList();
 
@@ -62,7 +63,7 @@ void Planet::Load()
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		orbitVerices.push_back(
-			vec::Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(0.01f, m).x,
+			Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(0.01f, m).x,
 				calculateHeight(0.01f, m).y,
 				sin(m)* calculateKeplerOrbit(m) + calculateHeight(0.01f, m).z));
 	}
@@ -75,7 +76,7 @@ void Planet::Load()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	for (int i = 0; i < orbitVerices.size(); i++){
-		glVertex3f(orbitVerices[i].x, orbitVerices[i].y, orbitVerices[i].z);
+		_Vertex3(orbitVerices[i]);
 	}
 	glDisable(GL_BLEND);
 	glEnd();
@@ -92,14 +93,14 @@ float Planet::calculateKeplerOrbit(float radians)
 	return keplerOrbit;
 }
 
-vec::Vector3 Planet::calculateHeight(float deltaTime, float radians) const
+Vector3 Planet::calculateHeight(float deltaTime, float radians) const
 {
 	//Pitch max = orbit Inclination
 	/*= MathHelper::ToRadians(m_orbitInclination)*/
 	float maxHeigth = m_orbitInclination * m_Aphelion / 45.0f;
 	float radians_Pitch = MathHelper::ToRadians(m_orbitInclination);
 	EulerAngle inclination = EulerAngle(radians, radians_Pitch, 0.0f);
-	vec::Vector3 inc = inclination.toVector3();
+	Vector3 inc = inclination.toVector3();
 	inc.y *= maxHeigth;
 	return inc;
 }
@@ -149,10 +150,11 @@ void Planet::Draw()
 		glDisable(GL_LIGHTING);
 
 	glPushMatrix();
-	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
-	glRotatef(planetInclination, 0, 0, 1);
-	glRotatef(m_rotation, 0, -1, 0);
-	glScalef(m_scale, m_scale, m_scale);
+	_glTranslate(m_Position);
+	_glRotatef(planetInclination, Vector3(0, 0, 1));
+	_glRotatef(m_rotation, Vector3(0, -1, 0));
+	_glRotatef(90, Vector3(0, 1, 0));
+	_Scale(Vector3(m_scale));
 	glBindTexture(GL_TEXTURE_2D, m_idtexture);
 	glCallList(list);
     glPopMatrix();
@@ -213,7 +215,7 @@ void Planet::renderOrbit() const
 	if (m_moon_index == 0) return;
 	//esle push new matrix and draw moon's orbits
 	glPushMatrix();
-	glTranslatef(m_Position.x, m_Position.y, m_Position.z);
+	_glTranslate(m_Position);
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->renderOrbit();
 	}

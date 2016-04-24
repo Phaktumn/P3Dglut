@@ -1,3 +1,6 @@
+#ifndef  GLOBALS_H__
+#define GLOBALS_H__
+
 #pragma once
 /*
 astronomical unit(A.U.)	149, 597, 870.691 kilometers
@@ -41,3 +44,5 @@ static const long float Parsec_AU                   = _pow(3.08567802  * 10, 13)
 static const long float meanEarthRadius_KM          = 6371.3f;
  											        
 static const long float speed_of_light_MS              = 299792458;
+
+#endif

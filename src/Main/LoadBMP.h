@@ -1,3 +1,6 @@
+#ifndef  LOAD_BMP_H
+#define LOAD_BMP_H
+
 #pragma once
 #include <Misc/imageloader.h>
 #include <Misc/Debug/IO.h>
@@ -23,3 +26,6 @@ inline GLuint _loadBMP(const std::string& texturePath)
 	delete image;					//free memory from image data
 	return textureId;				//Returns the id of the texture
 }
+
+#endif
+

@@ -1,3 +1,6 @@
+#ifndef VECTOR_3_H_
+#define  VECTOR_3_H_
+
 #pragma once
 #include <string>
 #include "MathHelper.h"
@@ -320,3 +323,6 @@ namespace vec
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	}
 }
+
+#endif
+

@@ -1,3 +1,6 @@
+#ifndef  MATH_HELPER_H_
+#define MATH_HELPER_H_
+
 #pragma once
 
 class MathHelper
@@ -123,3 +126,6 @@ inline int MathHelper::normalizei(int value, int maxValue)
 {
 	return 0;
 }
+
+#endif
+
