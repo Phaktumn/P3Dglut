@@ -20,7 +20,7 @@ public:
 	bool m_simulate;
 	bool _getSimulateState() const
 	{ return m_simulate; }
-
+	GLUquadric* sphere = gluNewQuadric();
 	GLuint m_Universetexture;
 	GLuint m_list;
 	List<SolarSystem*> solarSystems;
@@ -51,22 +51,24 @@ public:
 		solarSystems.push_back(_Solar_System);
 	}  
 
-	void add_Comet_to_SolarSystem(const std::string& solaSystem_name, Comet* _comet)
+	void add_Comet_to_SolarSystem(const string& solaSystem_name, Comet* _comet)
 	{
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
 			if(solarSystems[i]->getName() == solaSystem_name) {
 				Comets.push_back(_comet);
+				Comets[i]->setSphere(sphere);
 				Comets[i]->load();
 			}
 		}
 	}
 
-	void addPlanet_to_SolarSystem(const std::string& _solarSistemName, Planet* _planetToAdd) const
+	void addPlanet_to_SolarSystem(const string& _solarSistemName, Planet* _planetToAdd) const
 	{
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
 			if(solarSystems[i]->getName() == _solarSistemName) {
+				_planetToAdd->setSphere(sphere);
 				solarSystems[i]->addPlanet(_planetToAdd);
 			}
 		}

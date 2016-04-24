@@ -9,7 +9,7 @@ extern "C" {
 #   include <EGL/egl.h>
 #   include <GLES/gl.h>
 #   include <GLES2/gl2.h>
-#    include <Vars/vec3f.h>
+#   include <Vars/vec3f.h>
 #else
 #   include <GL/gl.h>
 #   include <GL/glu.h>
@@ -18,23 +18,23 @@ extern "C" {
 
 	using namespace vec;
 
-	inline
-	void _glRotatef(double angle, const Vector3& _RotAxis){
+	inline void APIENTRY _gluLookAt(const Vector3& _Position, const Vector3& _lookAt, const Vector3& _upVec) {
+		gluLookAt(_Position.x, _Position.y, _Position.z, _lookAt.x, _lookAt.y, _lookAt.z, _upVec.x, _upVec.y, _upVec.z);
+	} 
+
+	inline void APIENTRY _glRotatef(double angle, const Vector3& _RotAxis){
 		glRotatef(angle, _RotAxis.x, _RotAxis.y, _RotAxis.z);
 	}
 
-	inline 
-	void _glTranslate(const Vector3& _Tranlate_Vec){
+	inline void APIENTRY _glTranslate(const Vector3& _Tranlate_Vec){
 		glTranslatef(_Tranlate_Vec.x, _Tranlate_Vec.y, _Tranlate_Vec.z);
 	}
 
-	inline
-	void _Scale(const Vector3& _scale_Vec){
+	inline void APIENTRY _Scale(const Vector3& _scale_Vec){
 		glScalef(_scale_Vec.x, _scale_Vec.y, _scale_Vec.z);
 	}
 
-	inline
-	void _Vertex3(const Vector3& _Vector){
+	inline void APIENTRY _Vertex3(const Vector3& _Vector){
 		glVertex3f(_Vector.x, _Vector.y, _Vector.z);
 	}
 

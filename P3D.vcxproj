@@ -160,6 +160,7 @@
     <ClCompile Include="src\ECS\Engine.cpp" />
     <ClCompile Include="src\ECS\EntityFactory.cpp" />
     <ClCompile Include="src\ECS\TypeMapper.cpp" />
+    <ClCompile Include="src\Main\Space\UniverseObject.cpp" />
     <ClCompile Include="src\Misc\imageloader.cpp" />
     <ClCompile Include="src\Misc\Physics\Mesh\Plane.cpp" />
     <ClCompile Include="src\Misc\Physics\BoundingSphere.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="src\ECS\TypeMapper.h" />
     <ClInclude Include="src\Main\Space\Planets\Universe.h" />
     <ClInclude Include="src\Main\Space\Rings.h" />
+    <ClInclude Include="src\Main\Space\UniverseObject.h" />
     <ClInclude Include="src\Misc\Debug\IO.h" />
     <ClInclude Include="src\Misc\imageloader.h" />
     <ClInclude Include="src\Misc\Physics\Mesh\Plane.h" />

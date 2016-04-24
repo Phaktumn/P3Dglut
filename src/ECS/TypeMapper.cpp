@@ -16,7 +16,7 @@ namespace p3d
 			return it->second;
 		}
 
-		masks[index] = std::pow(2, maskCount);
+		masks[index] = pow(2, maskCount);
 		maskCount++;
 
 		return masks[index];

@@ -72,7 +72,7 @@ public:
 	T operator [](int _Index) const
 	{
 		if (_Index >= _size || _Index < 0){
-			std::cout << ERROR << std::endl;
+			std::cout << "Error trying to return null PTR" << std::endl;
 			exit(1);
 		}
 		int _curr_Index = 0;

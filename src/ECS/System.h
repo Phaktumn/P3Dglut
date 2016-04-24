@@ -74,7 +74,7 @@ namespace p3d
 	inline void System::NotifyEntityRemoved(Entity* entity)
 	{
 		size_t size = entities.size();
-		entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+		entities.erase(remove(entities.begin(), entities.end(), entity), entities.end());
 		
 		if (entities.size() < size)
 			OnEntityRemoved(entity);

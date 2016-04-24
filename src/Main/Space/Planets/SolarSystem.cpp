@@ -1,14 +1,9 @@
 #include "SolarSystem.h"
 #include <Main/Keyboard/Keyboard.h>
 #include <Misc/Debug/IO.h>
-#include <Main/Globals.h>
 
 SolarSystem::SolarSystem(const std::string& _name)
 {
-	//Add Only a sun to each System created
-	m_Planets.push_back(new Planet("Textures/sun.bmp",
-		"Sun", NULL, NULL,NULL, vec::Vector3(0, 0, 0), 150000.0f * Universal_Size_Scale, 0.0f, 0.0f));
-
 	m_Name = _name;
 	m_print_Index = 3;
 	m_last_PrintIndex = 0;
@@ -27,7 +22,7 @@ SolarSystem::~SolarSystem()
 void SolarSystem::Load() const
 {
 	for (size_t i = 0; i < m_Planets.size(); i++) {
-		m_Planets[i]->Load();
+		m_Planets[i]->load();
 	}
 }
 
@@ -120,16 +115,16 @@ void SolarSystem::Simulate(float deltaTime)
 	}*/
 
 	for (size_t i = 0; i < m_Planets.size(); i++){
-		m_Planets[i]->Simulate(simulationDeltaTime);
+		m_Planets[i]->simulate(simulationDeltaTime);
 	}
 }
 
 void SolarSystem::Draw() const
 {
 	for (size_t i = 0; i < m_Planets.size(); i++) {
-		m_Planets[i]->Draw();
+		m_Planets[i]->draw();
 		if(i == m_print_Index){
-			m_planet_settings_text->drawText(m_Planets[i]->planetSettigs());
+			m_planet_settings_text->drawText(m_Planets[i]->objectSettigs());
 		}
 	}
 }
@@ -147,7 +142,7 @@ vec::Vector3 SolarSystem::getPlanetPostion(const int planetID) const
 	return m_Planets[_ID]->getPositionVec();
 }
 
-Planet& SolarSystem::findPlanetByName(const std::string& planetName) const
+Planet& SolarSystem::findPlanetByName(const string& planetName) const
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
 	{
@@ -167,8 +162,8 @@ void SolarSystem::addMoon() const
 	}
 }
 
-void SolarSystem::addPlanet(Planet* planet)
+void SolarSystem::addPlanet(UniverseObject* planet)
 {
-	m_Planets.push_back(planet);
-	findPlanetByName(planet->getName()).Load();
+	m_Planets.push_back((Planet*)planet);
+	findPlanetByName(planet->getName()).load();
 }

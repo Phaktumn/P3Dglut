@@ -5,41 +5,40 @@
 #include <GL/freeglut.h>
 #include <Main/List.h>
 #include <Vars/vec3f.h>
+#include <Main/Space/UniverseObject.h>
 
 class Planet;
 
-class Moon
+class Moon : public UniverseObject
 {
 public:
- 	explicit Moon(Planet& planet,
-		float distanceToPLanet, float scale, float orbitAngle);
+ 	explicit Moon(const string& texturePath, const  string& name,
+		float orbitDuration, float rotatioDuration, float eccentricity,
+		const Vector3& pos, float scale, float orbitInclination, float planetInclination, 
+		Planet& planet, float distanceToPLanet);
 	~Moon();
 
-	void Load();
-	void Update(float deltaTime);
-	void Draw() const;
+	void load() override;
+	void simulate(float deltaTime) override;
+	void draw() override;
+	void renderOrbit() const override;
 
-	vec::Vector3 m_position;
+	/* Get object Type*/
+	const string& getType() const
+	{ return TYPE; }
+
+	/* Get tha planet */
+	Planet& getPlanet() const
+	{ return planet_; }
+
 	float m_distance_to_planet;
 
-	void renderOrbit() const;
-
 private:
-	/* Store all orbit vertexes in this list*/
-	List<vec::Vector3> m_orbitVertexes;
-	/* Orbit draw list */
-	GLuint m_orbitList;
-
-	/*Orbit Angle*/
-	float m_orbit_angle = 0;
-	/*Rotation Arround the Planet*/
-	float m_rotation_angle = 0;
-	/*Planet Size*/
-	float m_planet_scale = 0;
-	/*Planet the moon´s are attached to*/
+	//Moon Specific Vars----------------------------
+	/* Planet that this moon is attached to */
 	Planet& planet_;
-	/*planet normal perpendicular to rotation axis*/
-	vec::Vector3 m_northPoleNormal;
+	string TYPE = "Moon";
+	//---------------------------------------------
 };
 
 #endif

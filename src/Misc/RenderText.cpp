@@ -4,10 +4,10 @@
 RenderText::RenderText(const vec::Vector3& position, float scale): string(nullptr)
 {
 	rgb = vec::Vector3(1, 1, 1);
-	m_text_list = glGenLists(1);
+	m_text_list = glGenLists(2);
 	m_Position = position;
 	m_scale = scale;
-	initList(position, scale);
+	initList(m_Position, m_scale);
 }
 
 GLvoid RenderText::drawText(const std::string& text)
@@ -24,10 +24,11 @@ GLvoid RenderText::drawText(const std::string& text)
 #endif
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
-	glLoadIdentity();
-	gluOrtho2D(0.0, glutGet(GLUT_WINDOW_WIDTH),
-		0.0, glutGet(GLUT_WINDOW_HEIGHT));
-	glMatrixMode(GL_MODELVIEW);
+	glCallList(m_text_list + 1);
+	//glLoadIdentity();
+	//gluOrtho2D(0.0, glutGet(GLUT_WINDOW_WIDTH),
+		//0.0, glutGet(GLUT_WINDOW_HEIGHT));
+	//glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
 	glLoadIdentity();
@@ -35,10 +36,7 @@ GLvoid RenderText::drawText(const std::string& text)
 	//espessura da linha
 	glLineWidth(2.0);
 
-	//glCallList(m_text_list);
-	glScalef(m_scale, m_scale, 1);
-	glColor3f(rgb.x, rgb.y, rgb.z);
-	glRasterPos2f(m_Position.x, m_Position.z);
+	glCallList(m_text_list);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, string);
 	glPopMatrix();
 
@@ -56,10 +54,15 @@ GLvoid RenderText::drawText(const std::string& text)
 void RenderText::initList(const vec::Vector3& position, float scale) const
 {
 	glNewList(m_text_list, GL_COMPILE);
-	
 	glScalef(scale, scale, 1);
 	glColor3f(rgb.x, rgb.y, rgb.z);
 	glRasterPos2f(position.x, position.z);
+	glEndList();
 
+	glNewList(m_text_list + 1, GL_COMPILE);
+	glLoadIdentity();
+	gluOrtho2D(0.0, glutGet(GLUT_WINDOW_WIDTH),
+		0.0, glutGet(GLUT_WINDOW_HEIGHT));
+	glMatrixMode(GL_MODELVIEW);
 	glEndList();
 }

@@ -5,7 +5,7 @@
 #include <string>
 #include "../Vars/vec3f.h"
 
-#define RICH_TEXT 0
+#define RICH_TEXT 1
 
 #pragma once
 

@@ -7,7 +7,6 @@
 #include "UniverseSimulator.h"
 #include "Camera/SimpleCamera.h"
 #include "Space/Planets/SolarSystem.h"
-#include <Main/FreeGlutWrap.h>
 
 #pragma once
 
@@ -57,10 +56,12 @@ private:
 
 	static void AddItems();
 
+	static GLUquadric* m_Object;
 	static Game* instance;
 	static RenderText* text;
 	static RenderText* m_text1;
-	static GameTime gameTime;
+	static GameTime* gameTime;
+	static GLuint EvenFlag;
 };
 
 #endif

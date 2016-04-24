@@ -15,8 +15,8 @@ public:
 	~Ring();
 
 	void load();
-	void draw(Planet& planet) const;
-	void attachToPlanet(Planet& planet) const;
+	void draw(UniverseObject& planet) const;
+	void attachToPlanet(UniverseObject& planet) const;
 
 private:
 
@@ -58,7 +58,7 @@ inline void Ring::load()
 	gluQuadricNormals(m_ring, GLU_SMOOTH);
 }
 
-inline void Ring::draw(Planet& planet) const
+inline void Ring::draw(UniverseObject& planet) const
 {
 	glPushMatrix();
 	_glTranslate(planet.getPositionVec());
@@ -68,7 +68,7 @@ inline void Ring::draw(Planet& planet) const
 	glPopMatrix();
 }
 
-inline void Ring::attachToPlanet(Planet& _planet) const
+inline void Ring::attachToPlanet(UniverseObject& _planet) const
 {
 	glNewList(listIndex, GL_COMPILE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -76,7 +76,7 @@ inline void Ring::attachToPlanet(Planet& _planet) const
 	Lightning::applyMaterial1();
 	glPushMatrix();
 	_glRotatef(-90, Vector3(1,0,0));
-	_glRotatef(_planet.getPlanetInclination(), Vector3(0, -1, 0));
+	_glRotatef(_planet.getInclination(), Vector3(0, -1, 0));
 	gluDisk(m_ring, m_InnerRadius, m_OutterRadius, slices, loops);
 	glPopMatrix();
 	glEndList();

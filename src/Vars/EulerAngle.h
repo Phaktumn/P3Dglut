@@ -9,10 +9,10 @@ class EulerAngle
 public:
 	EulerAngle();
 	EulerAngle(float ,float ,float);
-	explicit EulerAngle(vec::Vector3& yawPitchRoll);
+	explicit EulerAngle(Vector3& yawPitchRoll);
 	~EulerAngle();
 
-	vec::Vector3& toVector3() const;
+	Vector3& toVector3() const;
 
 private:
 	float Pitch;
@@ -32,9 +32,9 @@ inline EulerAngle::EulerAngle(float _Yaw,float _Pitch, float _Roll)
 	Roll = _Roll;
 }
 
-inline vec::Vector3& EulerAngle::toVector3() const
+inline Vector3& EulerAngle::toVector3() const
 {
-	vec::Vector3 vecEuler;
+	Vector3 vecEuler;
     //vecEuler.x = sin(Yaw);
 	//vecEuler.y = -(sin(Pitch)*cos(Yaw));
 	//vecEuler.z = -(cos(Pitch)*cos(Yaw));

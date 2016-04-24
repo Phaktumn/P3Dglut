@@ -5,9 +5,9 @@
 #include "../../Misc/Debug/IO.h"
 
 Player::Player() 
-	: collider(vec::Vector3(0, 0.5, 0), vec::Vector3(1, 1.5, 1))
+	: collider(Vector3(0, 0.5, 0), Vector3(1, 1.5, 1))
 {
-	Box = new PhysicsObject(vec::Vector3(0, 1, 0), collider);
+	Box = new PhysicsObject(Vector3(0, 1, 0), collider);
 	//player = new Object("../P3Dglut/Modelos3D/porsche.obj");
 	player->loadModel();
 	camera = new Camera(*this);
@@ -36,7 +36,7 @@ void Player::Update(float deltaTime)
 	if (Keyboard::keyPressed())
 	{
 		Box->getRigidBody().setFriction(0.99);
-		Box->getRigidBody().addForce(vec::Vector3(10000, 0, 10000));
+		Box->getRigidBody().addForce(Vector3(10000, 0, 10000));
 	}
 	camera->Update(deltaTime);
 }

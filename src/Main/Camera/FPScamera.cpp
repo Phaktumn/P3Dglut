@@ -56,14 +56,14 @@ void FPScamera::Update(float deltaTime)
 
 void FPScamera::Draw() const
 {
-	settings->drawText("Your Speed: " + std::to_string(this->speed) + " m/s\nThis speed is relative to this solar system scale");
 	Camera::Draw();
 }
 
 void FPScamera::computeMouse()
 {
+	viewPortCenter = Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2, glutGet(GLUT_WINDOW_HEIGHT) / 2, 0);
 	prevMousePos = currentMousePosition;
 	currentMousePosition = Mouse::getMousePos();
-	diff = vec::Vector3((currentMousePosition - prevMousePos).x,
+	diff = Vector3((currentMousePosition - prevMousePos).x,
 		(currentMousePosition - prevMousePos).y, 0.0);
 }
