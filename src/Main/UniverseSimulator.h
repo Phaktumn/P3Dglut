@@ -25,7 +25,7 @@ public:
 	GLuint m_list;
 	List<SolarSystem*> solarSystems;
 	List<Comet*> Comets;
-	List<vec::Vector3*> SolarPositions;
+	List<Vector3*> SolarPositions;
 
 	void load_Universe()
 	{
@@ -45,12 +45,14 @@ public:
 		glEndList();
 	}
 
-	void add_SolarSystem(SolarSystem* _Solar_System, vec::Vector3* position){
+	void add_SolarSystem(SolarSystem* _Solar_System, Vector3* position)
+	{
 		SolarPositions.push_back(position);
 		solarSystems.push_back(_Solar_System);
 	}  
 
-	void add_Comet_to_SolarSystem(const std::string& solaSystem_name, Comet* _comet){
+	void add_Comet_to_SolarSystem(const std::string& solaSystem_name, Comet* _comet)
+	{
 		for (size_t i = 0; i < solarSystems.size(); i++)
 		{
 			if(solarSystems[i]->getName() == solaSystem_name) {
@@ -101,7 +103,12 @@ public:
 
 	~UniverseSimulator()
 	{
-		
+		for (auto i = 0; i < solarSystems.size(); i++) 
+			delete SolarPositions[i];
+		for (auto i = 0; i < solarSystems.size(); i++)
+			delete solarSystems[i];
+		for (auto i = 0; i < Comets.size(); i++)
+			delete Comets[i];
 	}
 
 	void drawUniverse() const{
