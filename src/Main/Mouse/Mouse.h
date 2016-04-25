@@ -14,12 +14,10 @@ public:
 	static void mouseFunc(int, int, int, int);
 	static void passiveMouseFunc(int, int);
 private:
-	//static bool justWarped;
 	static Vector3* mousePos;
 };
 
 Vector3* Mouse::mousePos = new Vector3(300, 400, 0);
-//bool Mouse::justWarped = false;
 
 inline void Mouse::mouseFunc(int x, int y, int w, int r)
 {

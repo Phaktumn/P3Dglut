@@ -43,7 +43,6 @@ public:
 
 	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
-	static SolarSystem* solarSystem_1;
 	static Camera* m_camera;
 	static void init();
 private:

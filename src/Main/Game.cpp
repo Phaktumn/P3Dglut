@@ -17,7 +17,6 @@ RenderText* Game::m_text1;
 GameTime* Game::gameTime = new GameTime();
 Camera* Game::m_camera;
 SolarSystem* Game::solarSystem;
-SolarSystem* Game::solarSystem_1;
 Game::GameState Game::state = Menu;
 UniverseSimulator* Game::universe;
 GLuint Game::EvenFlag = 0;

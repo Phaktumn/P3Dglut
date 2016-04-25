@@ -38,6 +38,10 @@ extern "C" {
 		glVertex3f(_Vector.x, _Vector.y, _Vector.z);
 	}
 
+	inline void APIENTRY _BindTexture(const GLuint _Texture_ID){
+		glBindTexture(GL_TEXTURE_2D, _Texture_ID);
+	}
+
 #ifdef __cplusplus
 }
 #endif

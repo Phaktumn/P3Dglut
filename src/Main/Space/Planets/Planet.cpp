@@ -44,10 +44,7 @@ void Planet::draw()
 	if (m_moon_index == 0) UniverseObject::draw();
 	//Else draw this planet moons
 	for (size_t i = 0; i < moons.size(); i++) {
-		glPushMatrix();
-		_glTranslate(moons[i]->getPositionVec());
 		moons[i]->draw();
-		glPopMatrix();
 	}
 
 	UniverseObject::draw();
@@ -70,12 +67,9 @@ void Planet::renderOrbit() const
 	//No moons just return
 	if (m_moon_index == 0) UniverseObject::renderOrbit();
 	//else push new matrix and draw moon's orbits
-	glPushMatrix();
-	_glTranslate(m_Position);
 	for (size_t i = 0; i < moons.size(); i++){
 		moons[i]->renderOrbit();
 	}
-	glPopMatrix();
 	UniverseObject::renderOrbit();
 }
 

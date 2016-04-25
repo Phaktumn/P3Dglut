@@ -87,17 +87,15 @@ void UniverseObject::draw()
 	//Disable light if its sun time to get draw
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
 		glDisable(GL_LIGHTING);
-
 	glPushMatrix();
 	_glTranslate(m_Position);
 	_glRotatef(planetInclination, Vector3(0, 0, 1));
 	_glRotatef(m_rotation, Vector3(0, -1, 0));
 	_glRotatef(90, Vector3(0, 1, 0));
 	_Scale(Vector3(m_scale));
-	glBindTexture(GL_TEXTURE_2D, m_idtexture);
+	_BindTexture(m_idtexture);
 	glCallList(list);
 	glPopMatrix();
-
 	//Enable Light Again!
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)
 		glEnable(GL_LIGHTING);
@@ -105,11 +103,9 @@ void UniverseObject::draw()
 
 void UniverseObject::renderOrbit() const
 {
-	glDisable(GL_TEXTURE_2D);
-
 	//Draw Orbit List
+	glDisable(GL_TEXTURE_2D);
 	glCallList(m_OrbitList); 
-
 	glEnable(GL_TEXTURE_2D);
 }
 

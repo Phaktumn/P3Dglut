@@ -5,7 +5,8 @@
 
 FPScamera::~FPScamera()
 {
-	delete angle;
+	if(angle != nullptr)
+		delete angle;
 	delete settings;
 }
 

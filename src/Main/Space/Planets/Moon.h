@@ -2,7 +2,6 @@
 #define MOON_H_
 
 #pragma once
-#include <GL/freeglut.h>
 #include <Main/List.h>
 #include <Vars/vec3f.h>
 #include <Main/Space/UniverseObject.h>
@@ -31,13 +30,16 @@ public:
 	Planet& getPlanet() const
 	{ return planet_; }
 
-	float m_distance_to_planet;
+	/* Get distance to planet */
+	float getDistanceFromPlanet() const
+	{ return m_distance_to_planet; }
 
 private:
 	//Moon Specific Vars----------------------------
 	/* Planet that this moon is attached to */
 	Planet& planet_;
 	string TYPE = "Moon";
+	float m_distance_to_planet;
 	//---------------------------------------------
 };
 
