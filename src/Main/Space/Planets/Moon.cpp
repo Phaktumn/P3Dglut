@@ -20,6 +20,7 @@ void Moon::load()
 	m_Position.y = 0;
 	m_Position.z = planet_.getPositionVec().z 
 		+ m_distance_to_planet;
+	m_Aphelion = m_distance_to_planet;
 	UniverseObject::load();
 }
 
@@ -37,7 +38,7 @@ void Moon::draw()
 void Moon::renderOrbit() const
 {
 	glPushMatrix();
-	_glTranslate(Vector3(m_Position));
+	_glTranslate(Vector3(planet_.getPositionVec()));
 	UniverseObject::renderOrbit();
 	glPopMatrix();
 }
