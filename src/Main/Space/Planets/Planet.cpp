@@ -69,10 +69,8 @@ void Planet::renderOrbit() const
 	glDisable(GL_TEXTURE_2D);
 	//No moons just return
 	if (m_moon_index == 0) UniverseObject::renderOrbit();
-	//else push new matrix and draw moon's orbits
-	for (size_t i = 0; i < moons.size(); i++){
-		moons[i]->renderOrbit();
-	}
+	for (size_t i = 0; i < moons.size(); i++) { moons[i]->renderOrbit(); }
+	glEnable(GL_TEXTURE_2D);
 	UniverseObject::renderOrbit();
 }
 
