@@ -52,11 +52,14 @@ void Planet::draw()
 
 void Planet::addMoon(float distanceToPlantet, float radius)
 {
+	GLUquadric* aux_Sphere = gluNewQuadric();
+	gluQuadricNormals(aux_Sphere, GLU_SMOOTH);
+	gluQuadricDrawStyle(aux_Sphere, GLU_FILL);
+	gluQuadricTexture(aux_Sphere, GLU_TRUE);
 	if (distanceToPlantet < m_scale) distanceToPlantet = m_scale + 10;
-	moons.push_back(new Moon("Textures/moon.bmp", "Moon", 27.3f, 29.5f, 0.0549f, 
-		 Vector3(m_Position.x + distanceToPlantet, 0, m_Position.z + distanceToPlantet),
+	moons.push_back(new Moon("Textures/moon.bmp", "Moon", 27.3f, 29.5f, 0.0549f, m_Position,
 		radius, 32.0f, 6.687f, *this, distanceToPlantet));
-	moons[m_moon_index]->setSphere(gluNewQuadric());
+	moons[m_moon_index]->setSphere(aux_Sphere);
 	moons[m_moon_index]->load();
 	m_moon_index++;
 }

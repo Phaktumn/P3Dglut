@@ -15,7 +15,10 @@ Moon::~Moon()
 
 void Moon::load()
 {
-	m_Position = planet_.getPositionVec() 
+	m_Position.x = planet_.getPositionVec().x 
+		+ m_distance_to_planet;
+	m_Position.y = 0;
+	m_Position.z = planet_.getPositionVec().z 
 		+ m_distance_to_planet;
 	UniverseObject::load();
 }
@@ -28,10 +31,7 @@ void Moon::simulate(float deltaTime)
 void Moon::draw()
 {
 	//Translate Moon To Position
-	glPushMatrix();
-	_glTranslate(m_Position);
 	UniverseObject::draw();
-	glPopMatrix();
 }
 
 void Moon::renderOrbit() const
