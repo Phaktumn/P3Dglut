@@ -13,6 +13,9 @@ public:
 	~EulerAngle();
 
 	Vector3& toVector3() const;
+	Vector3& toVector3Inv() const;
+	//const Vector3& yawToVec(const float angle_X) const;
+	//const Vector3& pitchToVec(const float angle_Y) const;
 
 private:
 	float Pitch;
@@ -35,13 +38,20 @@ inline EulerAngle::EulerAngle(float _Yaw,float _Pitch, float _Roll)
 inline Vector3& EulerAngle::toVector3() const
 {
 	Vector3 vecEuler;
-    //vecEuler.x = sin(Yaw);
-	//vecEuler.y = -(sin(Pitch)*cos(Yaw));
-	//vecEuler.z = -(cos(Pitch)*cos(Yaw));
 	vecEuler.x = cos(MathHelper::ToRadians(Yaw)) * cos(MathHelper::ToRadians(Pitch));
 	vecEuler.y = sin(MathHelper::ToRadians(Pitch));
 	vecEuler.z = sin(MathHelper::ToRadians(Yaw)) * cos(MathHelper::ToRadians(Pitch));
 	return vecEuler;
 }
+
+inline Vector3& EulerAngle::toVector3Inv() const
+{
+	Vector3 vecEuler;
+	vecEuler.x = sinf(Pitch);
+	vecEuler.y = sinf(Pitch) * cosf(Yaw);
+	vecEuler.z = cosf(Pitch) * cosf(Yaw);
+	return vecEuler;
+}
+
 
 #endif

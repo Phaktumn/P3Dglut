@@ -44,9 +44,9 @@ void UniverseObject::load()
 	for (float i = 0.0f; i <= 360.0f; i += 1) {
 		float m = MathHelper::ToRadians(i);
 		m_orbitVertexes.push_back(
-			Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(0.01f, m).x, 
-				calculateHeight(0.01f, m).y, 
-				sin(m)* calculateKeplerOrbit(m) + calculateHeight(0.01f, m).z));
+			Vector3(cos(m) * calculateKeplerOrbit(m) + calculateHeight(m).x, 
+				calculateHeight(m).y, 
+				sin(m)* calculateKeplerOrbit(m) + calculateHeight(m).z));
 	}
 
 	/* This List will render the orbits */
@@ -77,9 +77,9 @@ void UniverseObject::simulate(float deltaTime)
 	m_orbit_Angle += deltaTime * orbitDeltaStep;
 	if (m_orbit_Angle > 360) m_orbit_Angle -= 360;
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
-	m_Position.x = cos(radians) * calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).x;
-	m_Position.y = calculateHeight(deltaTime, radians).y;
-	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) + calculateHeight(deltaTime, radians).z;
+	m_Position.x = cos(radians) * calculateKeplerOrbit(radians) + calculateHeight(radians).x;
+	m_Position.y = calculateHeight(radians).y;
+	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) + calculateHeight(radians).z;
 }
 
 void UniverseObject::draw()
@@ -123,14 +123,11 @@ float UniverseObject::calculateKeplerOrbit(float radians)
 	return keplerOrbit;
 }
 
-Vector3& UniverseObject::calculateHeight(float deltaTime, float angle_x) const
+Vector3& UniverseObject::calculateHeight(float angle_x)
 {
-	//Pitch max = orbit Inclination
-	/*= MathHelper::ToRadians(m_orbitInclination)*/
-	float maxHeigth = m_orbitInclination * m_Aphelion / 45.0f;
 	float radians_Pitch = MathHelper::ToRadians(m_orbitInclination);
 	EulerAngle inclination = EulerAngle(angle_x, radians_Pitch, 0.0f);
-	Vector3 inc = inclination.toVector3();
-	inc.y *= maxHeigth;
+	Vector3 inc = Vector3(0, 
+		calculateKeplerOrbit(angle_x) * inclination.toVector3Inv().y, 0);
 	return inc;
 }

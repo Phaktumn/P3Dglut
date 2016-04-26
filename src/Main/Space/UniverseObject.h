@@ -107,7 +107,7 @@ protected:
 
 	/* Calculates the distance to sun given an angle in radians */
 	virtual float calculateKeplerOrbit(float radians);
-	virtual Vector3& calculateHeight(float deltaTime, float angle_x) const;
+	virtual Vector3& calculateHeight(float angle_x);
 
 	/* Float Value used to calculate Kepler Orbit */
 	float m_eccentricity;
