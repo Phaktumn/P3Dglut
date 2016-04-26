@@ -25,6 +25,9 @@ public:
 	vec::Vector3 get_loook_at_vector3() const
 	{ return this->m_lookAt; }
 
+	virtual void setLookAt(const vec::Vector3& vec)
+	{ this->m_lookAt = vec; }
+
 	vec::Vector3 get_pos_vector3() const
 	{ return this->eye; }
 

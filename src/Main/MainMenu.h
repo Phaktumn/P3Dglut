@@ -1,5 +1,6 @@
 #pragma once
 #include <Misc/RenderText.h>
+#include "Camera/Camera.h"
 
 
 class MainMenu
@@ -8,11 +9,13 @@ public:
 	MainMenu();
 	~MainMenu();
 
-	void start();
-	void Update() const;
-	void Draw() const;
+	static void start();
+	static void Update();
+	static void Draw();
 
 private:
-	RenderText* text;
+	static int createMenu;
+	static Camera* mainCamera;
+	static void menuCallback(int);
 };
 

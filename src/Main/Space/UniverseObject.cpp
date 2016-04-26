@@ -127,7 +127,6 @@ Vector3& UniverseObject::calculateHeight(float angle_x)
 {
 	float radians_Pitch = MathHelper::ToRadians(m_orbitInclination);
 	EulerAngle inclination = EulerAngle(angle_x, radians_Pitch, 0.0f);
-	Vector3 inc = Vector3(0, 
-		calculateKeplerOrbit(angle_x) * inclination.toVector3Inv().y, 0);
+	Vector3 inc = Vector3(0, calculateKeplerOrbit(angle_x) * inclination.toVector3Inv().y, 0);
 	return inc;
 }

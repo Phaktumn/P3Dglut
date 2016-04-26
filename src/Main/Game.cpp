@@ -21,6 +21,7 @@ Game::GameState Game::state = Menu;
 UniverseSimulator* Game::universe;
 GLuint Game::EvenFlag = 0;
 GLUquadric* Game::m_Object = gluNewQuadric();
+MainMenu* Game::menu = new MainMenu();
 
 GLuint GLUT_WINDOW0_ID = 0;
 GLuint GLUT_WINDOW1_ID = 0;
@@ -139,17 +140,18 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    //glutGameModeString(_1366_BY_768);
+		    glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-			    //glutEnterGameMode();						//Enter Full Screen Game Mode
-				//glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
+				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+			    glutEnterGameMode();						//Enter Full Screen Game Mode
+				glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
 				//m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
 				m_camera = new FPScamera(Vector3(0, 50, 0));
 				universe = new UniverseSimulator();
 				AddItems();									 //Get The universe Together
 				init();							             //Initialize all glut Properties
+				menu->start();
 			}
 			else {
 				IO::printError("The selected Mode is not Available\n");

@@ -26,6 +26,10 @@ public:
 	string& getType()
 	{ return TYPE; }
 
+	void setPrintIndex(const GLuint _index)
+	{
+		this->m_print_Index = _index;
+	}
 
 	void Load() const;
 	void Simulate(float deltaTime);

@@ -32,6 +32,10 @@ public:
 	~FPScamera() override;
 	void Update(float deltaTime) override;
 	void Draw() const override;
+	void setForward(Vector3& front){
+		this->forwardVec = front;
+	}
+
 private:
 	EulerAngle* angle;
 	RenderText* settings = new RenderText(
