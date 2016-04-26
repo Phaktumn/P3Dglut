@@ -44,7 +44,10 @@ void Planet::draw()
 	if (m_moon_index == 0) UniverseObject::draw();
 	//Else draw this planet moons
 	for (size_t i = 0; i < moons.size(); i++) {
+		glPushMatrix();
+		_glTranslate(m_Position);
 		moons[i]->draw();
+		glPopMatrix();
 	}
 
 	UniverseObject::draw();

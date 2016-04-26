@@ -15,23 +15,20 @@ Moon::~Moon()
 
 void Moon::load()
 {
-	m_Position.x = planet_.getPositionVec().x 
-		+ m_distance_to_planet;
-	m_Position.y = 0;
-	m_Position.z = planet_.getPositionVec().z 
-		+ m_distance_to_planet;
+	m_Position = m_Position + m_distance_to_planet;
 	m_Aphelion = m_distance_to_planet;
 	UniverseObject::load();
 }
 
 void Moon::simulate(float deltaTime)
 {
+	m_Position.x = planet_.getPositionVec().x;
+	m_Position.z = planet_.getPositionVec().z;
 	UniverseObject::simulate(deltaTime);
 }
 
 void Moon::draw()
 {
-	//Translate Moon To Position
 	UniverseObject::draw();
 }
 
