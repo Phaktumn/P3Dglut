@@ -40,6 +40,8 @@ void MainMenu::start(){
 	createMenu = glutCreateMenu(menuCallback);
 	glutAddSubMenu("Planets", PlanetsMenu);
 	glutAddSubMenu("Camera Options", CameraOptions);
+	glutAddMenuEntry("Show Orbits", 0);
+	glutAddMenuEntry("Hide Orbits", 1);
 	glutAddMenuEntry("Exit", 10);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
@@ -49,19 +51,22 @@ void MainMenu::start(){
 
 void MainMenu::update()
 {
-	if(Keyboard::getKeyPressed(KEY_F1)) {
-		if(!menuFlag) {
-			
-		}
-	}
+	//Nothing Here
 }
 
 void MainMenu::menuCallback(int _callBack)
 {
+	//Call back do menu principal!
 	if (Game::solarSystem != nullptr)
 	{
 		switch (_callBack)
 		{
+		case 0:
+			//Ligar orbitas
+			break;
+		case 1:
+			//Desligar Orbitas
+			break;
 		case 10:
 			glutExit();
 			break;
@@ -71,15 +76,20 @@ void MainMenu::menuCallback(int _callBack)
 	}
 }
 
+//Call back do menu dos planets
 void MainMenu::menuPlanets(int _planetCallBack)
 {
+	//Diz para apresentar no ecran as informaçoes do planeta
 	Game::solarSystem->setSelectedObject(_planetCallBack);
 }
 
 void MainMenu::menuCamera(int)
 {
-
+	//Codigo para escrever cenas da camara no ecran
+	//Por na camara metodo para desenhar
 }
+
+//Acrescentar menu para ligar e desligar as orbitas!!!
 
 void MainMenu::processStatus(int status, int, int)
 {
