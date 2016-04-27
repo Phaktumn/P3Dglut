@@ -1,5 +1,4 @@
 #pragma once
-#include <Misc/RenderText.h>
 #include "Camera/Camera.h"
 
 
@@ -10,12 +9,18 @@ public:
 	~MainMenu();
 
 	static void start();
-	static void Update();
-	static void Draw();
+	static void update();
 
 private:
-	static int createMenu;
-	static Camera* mainCamera;
+	static GLuint createMenu;
+	static GLuint PlanetsMenu;
+	static GLuint CameraOptions;
 	static void menuCallback(int);
+	static void menuPlanets(int);
+	static void menuCamera(int);
+	static void processStatus(int, int, int);
+	static int menuFlag;
+	static GLuint m_lastPrintIndex;
+	static GLuint m_currPrintIndex;
 };
 

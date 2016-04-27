@@ -1,6 +1,3 @@
-#ifndef MOON_H_
-#define MOON_H_
-
 #pragma once
 #include <Main/List.h>
 #include <Vars/vec3f.h>
@@ -42,5 +39,3 @@ private:
 	float m_distance_to_planet;
 	//---------------------------------------------
 };
-
-#endif

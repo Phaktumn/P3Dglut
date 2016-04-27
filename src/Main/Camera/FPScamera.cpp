@@ -24,34 +24,36 @@ void FPScamera::Update(float deltaTime)
 		forwardVec = angle->toVector3();
 		forwardVec.Normalized();
 
-		rightVector = vec::Vector3::Cross(vec::Vector3::up(), forwardVec);
+		rightVector = Vector3::Cross(Vector3::up(), forwardVec);
 		rightVector.Normalized();
 
-		upVec = forwardVec - vec::Vector3(0,sin(180),0);
+		upVec = forwardVec - Vector3(0,sin(180),0);
 		//upVec = vec::Vector3::Cross(forwardVec, rightVector);
 		upVec.Normalized();
 
 		delete angle;
 	}
 
-	if(Keyboard::getKeyPressed(KEY_W)) {
+	if(Keyboard::getKeyPressed(KEY_W)) 
+	{
 		m_Position += forwardVec * deltaTime * speed;
 	}
-	if (Keyboard::getKeyPressed(KEY_S)) {
+	if (Keyboard::getKeyPressed(KEY_S)) 
+	{
 		m_Position -= forwardVec * deltaTime * speed;
 	}
-	if (Keyboard::getKeyPressed(KEY_D)) {
+	if (Keyboard::getKeyPressed(KEY_D)) 
+	{
 		m_Position -= rightVector * deltaTime * speed;
-		//Not Implemented
 	}
-	if (Keyboard::getKeyPressed(KEY_A)) {
+	if (Keyboard::getKeyPressed(KEY_A)) 
+	{
 		m_Position += rightVector * deltaTime * speed;
-		//Not Implemented
 	}
 
 	eye = m_Position;
 	m_lookAt = m_Position + forwardVec;
-	Camera::upVec = this->upVec;
+	//upVec = upVec;
 	Camera::Update(deltaTime);
 }
 

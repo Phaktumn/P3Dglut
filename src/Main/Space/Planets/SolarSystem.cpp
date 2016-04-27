@@ -5,8 +5,6 @@
 SolarSystem::SolarSystem(const std::string& _name)
 {
 	m_Name = _name;
-	m_print_Index = 3;
-	m_last_PrintIndex = 0;
 	m_elapsedTime = 0;
 	simulationDeltaTime = 0.03f;
 }
@@ -123,10 +121,8 @@ void SolarSystem::Draw() const
 {
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->draw();
-		if(i == m_print_Index){
-			m_planet_settings_text->drawText(m_Planets[i]->objectSettigs());
-		}
 	}
+	m_planet_settings_text->drawText(m_Planets[m_SelectedIndex]->objectSettigs());
 }
 
 void SolarSystem::renderOrbits() const
@@ -155,11 +151,7 @@ Planet& SolarSystem::findPlanetByName(const string& planetName) const
 
 void SolarSystem::addMoon() const
 {
-	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)
-	{
-		if(m_Planets[planet_t]->IsSelected() == true)
-			m_Planets[planet_t]->addMoon(rand() % 100 + 10, rand() % 1 - 0.5f + 5);
-	}
+	m_Planets[m_SelectedIndex]->addMoon(rand() % 100 + 10, rand() % 1 - 0.5f + 5);
 }
 
 void SolarSystem::addPlanet(UniverseObject* planet)

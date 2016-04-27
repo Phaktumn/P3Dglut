@@ -1,6 +1,3 @@
-#define SOLAR_SYSTEM_H
-#ifdef SOLAR_SYSTEM_H
-
 #pragma once
 #include <vector>
 #include "Planet.h"
@@ -26,11 +23,6 @@ public:
 	string& getType()
 	{ return TYPE; }
 
-	void setPrintIndex(const GLuint _index)
-	{
-		this->m_print_Index = _index;
-	}
-
 	void Load() const;
 	void Simulate(float deltaTime);
 	//void preCameraTranslateDraw() const;
@@ -52,8 +44,19 @@ public:
 
 	/* Returns this Solar Sistem Name */
 	string& getName() { return m_Name; }
-private:
 
+	void setSelectedObject(const int Index)
+	{
+		if (m_SelectedIndex >= m_Planets.size()) return;
+		m_SelectedIndex = Index;
+	}
+
+	int getSelected() const
+	{
+		return m_SelectedIndex;
+	}
+private:
+	int m_SelectedIndex = 0;
 	string TYPE = "Solar System";
 
 	List<Planet*> m_Planets;
@@ -62,10 +65,6 @@ private:
 	float simulationDeltaTime = 0.1f;
 
 	string m_Name;
-	int m_last_PrintIndex;
-	int m_print_Index;
 	float m_elapsedTime;
 };
-
-#endif
 

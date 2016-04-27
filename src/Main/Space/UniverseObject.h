@@ -47,16 +47,6 @@ public:
 	{
 		return this->m_scale;
 	}
-	/* Get if Planet is the selected ONE */
-	bool IsSelected() const
-	{
-		return m_isSelected;
-	}
-	/* Set's the planet selected state */
-	void setSelected(bool state) {
-		if (m_isSelected == state) return;
-		m_isSelected = state;
-	}
 
 	void setSphere(GLUquadric* sphere){
 		this->sphere = sphere;

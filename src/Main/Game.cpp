@@ -140,12 +140,12 @@ void Game::Update()
 	switch (state) {
 	case Menu: {
 		if (Keyboard::getKeyPressed(KEY_S)) {
-		    glutGameModeString(_1366_BY_768);
+		    //glutGameModeString(_1366_BY_768);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-			    glutEnterGameMode();						//Enter Full Screen Game Mode
-				glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
+				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+			    //glutEnterGameMode();						//Enter Full Screen Game Mode
+				//glutSetCursor(GLUT_CURSOR_NONE);             //Cursor will be invisible
 				//m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
 				m_camera = new FPScamera(Vector3(0, 50, 0));
 				universe = new UniverseSimulator();
@@ -159,6 +159,7 @@ void Game::Update()
 		}
 	} break;
 	case InGame: {	
+		menu->update();
 		m_camera->Update(gameTime->getDeltaTime());
 		universe->simulate(gameTime->getDeltaTime());
 	}break;

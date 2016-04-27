@@ -1,10 +1,6 @@
-#ifndef PLANET_H_
-#define PLANET_H_
-
 #pragma once
 #include <Main/List.h>
 #include <Vars/vec3f.h>
-#include "Moon.h"
 #include <Main/Space/UniverseObject.h>
 
 using namespace vec;
@@ -92,6 +88,5 @@ private:
 	/* Float Value used to calculate Kepler Orbit */
 	//float m_eccentricity; 
 };
-#endif
 
 
