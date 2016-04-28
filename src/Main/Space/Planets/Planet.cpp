@@ -1,7 +1,6 @@
 #include "Planet.h"
 #include <Main/Space/Rings.h>
 #include <Main/FreeGlutWrap.h>
-#include <Main/Globals.h>
 #include "Moon.h"
 
 Planet::Planet(const string& texturePath, const  string& name,

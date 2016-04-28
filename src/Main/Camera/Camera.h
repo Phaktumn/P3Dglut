@@ -4,7 +4,9 @@
 #pragma once
 #include "../../Vars/vec3f.h"
 #include "../Player/Player.h"
- 
+#include <Main/Globals.h>
+#include <Misc/RenderText.h>
+
 class Player;
  
 class Camera
@@ -37,7 +39,29 @@ public:
 	float get_rotationangle_() const 
 	{ return rotationAngle; }
 
+
+	bool getInfoState() const
+	{ return m_showInfo; }
+	void setInfoState(const bool state_)
+	{
+		if (m_showInfo == state_) return;
+		m_showInfo = state_;
+	}
+	void drawInfo() const
+	{
+		if (m_showInfo) {
+			m_infoText->drawText(m_info);
+		}
+	}
+
 protected:
+
+	RenderText* m_infoText;
+
+	float speed = speed_of_light_MS * Universal_Metric_Scale;
+	std::string m_info;
+	bool m_showInfo = false;
+
 	vec::Vector3 m_lookAt;
 	vec::Vector3 eye;
 	vec::Vector3 upVec;

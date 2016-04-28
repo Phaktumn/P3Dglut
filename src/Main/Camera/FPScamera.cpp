@@ -7,7 +7,6 @@ FPScamera::~FPScamera()
 {
 	if(angle != nullptr)
 		delete angle;
-	delete settings;
 }
 
 void FPScamera::Update(float deltaTime)

@@ -10,6 +10,7 @@ public:
 
 	static void start();
 	static void update();
+	static void draw();
 
 private:
 	static GLuint createMenu;

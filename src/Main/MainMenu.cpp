@@ -1,7 +1,6 @@
 #include "MainMenu.h"
 #include "Space/Planets/SolarSystem.h"
 #include "Game.h"
-#include "Keyboard/Keyboard.h"
 
 GLuint MainMenu::createMenu;
 GLuint MainMenu::PlanetsMenu;
@@ -45,13 +44,17 @@ void MainMenu::start(){
 	glutAddMenuEntry("Exit", 10);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
-	glutMenuStatusFunc(processStatus);
 	glutSetMenu(createMenu);
 }
 
 void MainMenu::update()
 {
 	//Nothing Here
+}
+
+void MainMenu::draw()
+{
+	Game::m_camera->drawInfo();
 }
 
 void MainMenu::menuCallback(int _callBack)
@@ -83,20 +86,17 @@ void MainMenu::menuPlanets(int _planetCallBack)
 	Game::solarSystem->setSelectedObject(_planetCallBack);
 }
 
-void MainMenu::menuCamera(int)
+void MainMenu::menuCamera(int _cameraCall)
 {
 	//Codigo para escrever cenas da camara no ecran
 	//Por na camara metodo para desenhar
-}
-
-//Acrescentar menu para ligar e desligar as orbitas!!!
-
-void MainMenu::processStatus(int status, int, int)
-{
-	if (status == GLUT_MENU_IN_USE) {
-		menuFlag = 1;
-	}
-	else{
-		menuFlag = 0;
+	switch (_cameraCall)
+	{
+	case 0: Game::m_camera->setInfoState(true);
+		break;
+	case 1: Game::m_camera->setInfoState(false);
+		break;
+	default:
+		break;
 	}
 }

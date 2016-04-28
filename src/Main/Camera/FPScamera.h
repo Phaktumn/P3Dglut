@@ -35,10 +35,6 @@ public:
 
 private:
 	EulerAngle* angle;
-	RenderText* settings = new RenderText(
-		Vector3(25, glutGet(GLUT_WINDOW_HEIGHT)-25), 1.0f);
-
-	float speed = speed_of_light_MS * Universal_Metric_Scale;
 
 	Vector3 viewPortCenter;
 

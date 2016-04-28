@@ -104,9 +104,7 @@ void UniverseObject::draw()
 void UniverseObject::renderOrbit() const
 {
 	//Draw Orbit List
-	glDisable(GL_TEXTURE_2D);
 	glCallList(m_OrbitList); 
-	glEnable(GL_TEXTURE_2D);
 }
 
 void UniverseObject::loadTexture()

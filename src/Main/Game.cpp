@@ -192,9 +192,10 @@ GLvoid Game::render()
 	}break;
 	case InGame: {
 		glLoadIdentity();
-		m_camera->Draw();
 		Lightning::applyLights();
+		m_camera->Draw();
 		universe->draw();
+		menu->draw();
 	}break;
 	default: break;
 	}

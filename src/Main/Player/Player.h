@@ -1,5 +1,4 @@
 #pragma once
-#include "../Camera/Camera.h"
 #include "../../Vars/Object.h"
 #include "../../Misc/Physics/PhysicsObject.h"
 #include "../../Misc/Physics/Mesh/AABB.h"

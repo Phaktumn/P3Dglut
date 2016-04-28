@@ -12,9 +12,7 @@ RenderText::RenderText(const vec::Vector3& position, float scale): string(nullpt
 
 GLvoid RenderText::drawText(const std::string& text)
 {
-	glDisable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_TEXTURE);
+	if (text == "") return;
 	string = reinterpret_cast<const unsigned char*>(text.c_str());
 	////Suavizar a font!
 #if RICH_TEXT 1
@@ -36,8 +34,14 @@ GLvoid RenderText::drawText(const std::string& text)
 	//espessura da linha
 	glLineWidth(2.0);
 
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE);
 	glCallList(m_text_list);
 	glutBitmapString(GLUT_BITMAP_9_BY_15, string);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE);
 	glPopMatrix();
 
 	glMatrixMode(GL_PROJECTION);
@@ -45,9 +49,6 @@ GLvoid RenderText::drawText(const std::string& text)
 
 	glMatrixMode(GL_MODELVIEW);
 
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE);
 	glLineWidth(1.0);
 }
 
