@@ -59,6 +59,7 @@ protected:
 	RenderText* m_infoText;
 
 	float speed = speed_of_light_MS * Universal_Metric_Scale;
+
 	std::string m_info;
 	bool m_showInfo = false;
 

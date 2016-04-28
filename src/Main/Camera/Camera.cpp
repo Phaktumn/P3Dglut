@@ -1,7 +1,8 @@
 #include "Camera.h"
 #include <Main/FreeGlutWrap.h>
 
-Camera::Camera(Player& player): rotationAngle(0)
+Camera::Camera(Player& player)
+	: m_infoText(nullptr), rotationAngle(0)
 {
 	this->player = &player;
 	this->m_lookAt = Vector3::zero();
@@ -15,13 +16,13 @@ Camera::Camera(const Vector3& position)
 	: player(nullptr), rotationAngle(0)
 {
 
-	m_infoText = new RenderText(vec::Vector3(5, 250), 1.2f);
+	m_infoText = new RenderText(Vector3(5, 250), 1.2f);
 }
 
 Camera::Camera(): 
 	player(nullptr), rotationAngle(0)
 {
-	m_infoText = new RenderText(vec::Vector3(5, 250), 1.2f);
+	m_infoText = new RenderText(Vector3(5, 250), 1.2f);
 }
 
 Camera::~Camera()
@@ -30,7 +31,7 @@ Camera::~Camera()
 void Camera::Update(float deltaTime)
 {
 	if (m_showInfo){
-		m_info = "Camera Position: " + m_Position.debugString() + "\nVelocity: " + std::to_string(speed) + "Km/s";
+		m_info = "Camera Position: " + m_Position.debugString() + "\nVelocity: " + std::to_string(speed/Universal_Metric_Scale * 0.001) + "Km/s";
 	}
 }
 

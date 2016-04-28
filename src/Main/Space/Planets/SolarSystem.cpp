@@ -49,7 +49,6 @@ void SolarSystem::Draw() const
 		m_Planets[i]->draw();
 	}
 	m_planet_settings_text->drawText(m_Planets[m_SelectedIndex]->objectSettigs());
-	//Game::m_camera->
 }
 
 void SolarSystem::renderOrbits() const

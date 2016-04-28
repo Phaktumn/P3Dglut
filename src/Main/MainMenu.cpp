@@ -54,6 +54,7 @@ void MainMenu::update()
 
 void MainMenu::draw()
 {
+	//Obriga o Menu Desenhar as informaçoes da camara
 	Game::m_camera->drawInfo();
 }
 

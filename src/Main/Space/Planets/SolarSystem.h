@@ -25,7 +25,6 @@ public:
 
 	void Load() const;
 	void Simulate(float deltaTime);
-	//void preCameraTranslateDraw() const;
 	void Draw() const;
 
 	void renderOrbits() const;

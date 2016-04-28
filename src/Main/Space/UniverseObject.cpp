@@ -77,9 +77,9 @@ void UniverseObject::simulate(float deltaTime)
 	m_orbit_Angle += deltaTime * orbitDeltaStep;
 	if (m_orbit_Angle > 360) m_orbit_Angle -= 360;
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
-	m_Position.x = cos(radians) * calculateKeplerOrbit(radians) + calculateHeight(radians).x;
+	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
 	m_Position.y = calculateHeight(radians).y;
-	m_Position.z = sin(radians) * calculateKeplerOrbit(radians) + calculateHeight(radians).z;
+	m_Position.z = sin(radians) * calculateKeplerOrbit(radians);
 }
 
 void UniverseObject::draw()
@@ -89,6 +89,7 @@ void UniverseObject::draw()
 		glDisable(GL_LIGHTING);
 	glPushMatrix();
 	_glTranslate(m_Position);
+	//Planet Tilt
 	_glRotatef(planetInclination, Vector3(0, 0, 1));
 	_glRotatef(m_rotation, Vector3(0, -1, 0));
 	_glRotatef(90, Vector3(0, 1, 0));
@@ -114,7 +115,7 @@ void UniverseObject::loadTexture()
 
 float UniverseObject::calculateKeplerOrbit(float radians)
 {
-	float semiLatus = m_Aphelion * (1 - m_eccentricity);
+	float semiLatus = m_Aphelion * (1 - pow(m_eccentricity, 2));
 	float keplerOrbit = semiLatus / (1 + m_eccentricity * cos(radians));
 	//just filter and set class variable m_... to keplerOrbit
 	m_KeplerOrbitDistance = keplerOrbit;

@@ -195,7 +195,7 @@ GLvoid Game::render()
 		Lightning::applyLights();
 		m_camera->Draw();
 		universe->draw();
-		menu->draw();
+		m_camera->drawInfo();
 	}break;
 	default: break;
 	}
