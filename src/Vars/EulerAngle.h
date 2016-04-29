@@ -1,6 +1,3 @@
-#ifndef EULER_H_
-#define EULER_H_
-
 #pragma once
 #include "vec3f.h"
 
@@ -54,6 +51,3 @@ inline Vector3& EulerAngle::toVector3Inv() const
 	vecEuler.z = cosf(Pitch) * cosf(Yaw);
 	return vecEuler;
 }
-
-
-#endif

@@ -16,6 +16,7 @@ Camera::Camera(const vec::Vector3& position, const bool _orbit)
 	: player(nullptr), rotationAngle(0){
 	m_infoText = new RenderText(Vector3(5, 250), 1.2f);
 	isOrbiting = _orbit;
+	m_Position = position;
 }
 
 Camera::Camera(): 

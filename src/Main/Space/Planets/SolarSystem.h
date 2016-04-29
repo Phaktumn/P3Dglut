@@ -14,6 +14,7 @@
 #define EC_NEPTUNE    0.0097
 #define EC_PLUTO      0.0103
 
+
 class SolarSystem
 {
 public:
@@ -41,7 +42,7 @@ public:
 	/* Adds a planet to this* Solar system  */
 	void addPlanet(UniverseObject* planet);
 
-	/* Returns this Solar Sistem Name */
+	/* Returns this Solar System Name */
 	string& getName() { return m_Name; }
 
 	void setSelectedObject(const int Index)
@@ -54,7 +55,22 @@ public:
 	{
 		return m_SelectedIndex;
 	}
+
+	Planet* getPlanet(int _i) const
+	{
+		return m_Planets[_i];
+	}
+
+	void setOrbitRenderState(const short int _state)
+	{
+		if (_state == m_renderOrbitState) return;
+		m_renderOrbitState = _state;
+		MathHelper::Clampi(m_renderOrbitState, 0, 1);
+	}
 private:
+
+	short int m_renderOrbitState = 1;
+
 	int m_SelectedIndex = 0;
 	string TYPE = "Solar System";
 

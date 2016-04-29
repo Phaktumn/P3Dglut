@@ -1,6 +1,7 @@
 #pragma once
 #include "Camera.h"
 #include <Vars/EulerAngle.h>
+#include <Main/Space/Planets/Planet.h>
 
 class SimpleCamera :
 	public Camera
@@ -20,10 +21,17 @@ public:
 		m_lookAt = lookAt;
 	}
 
+	void setFocus(Planet* _focus_planet){
+		this->m_focus = _focus_planet;
+	}
+
 private:
+
+	Planet* m_focus;
+
 	EulerAngle angle;
 	float rotateUp = 0;
-	float distance = 500;
+	float distance = 25;
 	float m_speed;
 };
 

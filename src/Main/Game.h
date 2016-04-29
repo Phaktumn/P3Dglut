@@ -1,5 +1,4 @@
-#ifndef GAME_H_
-#define GAME_H_
+#pragma once
 
 #include <string>
 #include "../Misc/RenderText.h"
@@ -8,8 +7,6 @@
 #include "Camera/SimpleCamera.h"
 #include "Space/Planets/SolarSystem.h"
 #include "MainMenu.h"
-
-#pragma once
 
 #define _640_BY_480_RR_60   "640x480:32@60"
 #define _640_BY_480_	    "640x480:32"
@@ -73,7 +70,5 @@ private:
 
 	static int cameraIndex;
 };
-
-#endif
 
 

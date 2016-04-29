@@ -1,7 +1,6 @@
 #pragma once
 #include "Camera/Camera.h"
 
-
 class MainMenu
 {
 public:
@@ -17,6 +16,7 @@ private:
 	static GLuint PlanetsMenu;
 	static GLuint CameraOptions;
 	static void menuCallback(int);
+
 	static void menuPlanets(int);
 	static void menuCamera(int);
 	static void processStatus(int, int, int);

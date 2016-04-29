@@ -114,7 +114,7 @@ void Game::AddItems()
 	//                                   Solar System                      texture path        Planet Name   in earth days	       in earth days       Value	      Position(Z = dist sun)            earth equals to 1.0f     inc     tilt
 	//Add Only a sun to each System created
 	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/sun.bmp",     "Sun",        NULL,                     NULL,                        NULL,       Vector3(0, 0, 0),                                  150000.0f * Universal_Size_Scale, 0.0f,   0.0f    ));
-	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercurio",   88.0f    * Time_scale,	   58.0        * Time_scale,	EC_MERCURY, Vector3(0, 0, 57910000   * Universal_Metric_Scale),  4878.0f * Universal_Size_Scale, 12.0f,  0.0f	 ));
+	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/mercury.bmp", "Mercury",    88.0f    * Time_scale,	   58.0        * Time_scale,	EC_MERCURY, Vector3(0, 0, 57910000   * Universal_Metric_Scale),  4878.0f * Universal_Size_Scale, 12.0f,  0.0f	 ));
 	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/venus.bmp",   "Venus",      225.0f   * Time_scale,    241.0f      * Time_scale,	EC_VENUS,   Vector3(0, 0, 108200000  * Universal_Metric_Scale), 12104.0f * Universal_Size_Scale, 3.4f ,  177.36f ));
 	universe->addPlanet_to_SolarSystem("Solar System",		new Planet("Textures/earth.bmp"  , "Earth",      365.0f   * Time_scale,	   1.0f        * Time_scale,    EC_EARTH,   Vector3(0, 0, 149600000  * Universal_Metric_Scale), 12756.0f * Universal_Size_Scale, 0.0f ,  23.45f  ));
 	universe->addPlanet_to_SolarSystem("Solar System",      new Planet("Textures/mars.bmp",    "Mars",       687.0f   * Time_scale,    1.01f       * Time_scale,	EC_MARS,    Vector3(0, 0, 227940000  * Universal_Metric_Scale),  6787.9f * Universal_Size_Scale, 1.85f,  25.19f  ));
@@ -141,12 +141,12 @@ void Game::Update()
 		state = Exiting;
 	switch (state) {
 	case Menu: {
-		if (Keyboard::getKeyPressed(KEY_S)) {
-		    glutGameModeString(_1366_BY_768);
+		if (Keyboard::getKeyPressed(NUM_1)) {
+		    //glutGameModeString(_1920_BY_1080);
 			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
 				state = InGame;
-				glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				GLUT_WINDOW0_ID = glutEnterGameMode();		//Enter Full Screen Game Mode
+				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
+				//GLUT_WINDOW0_ID = glutEnterGameMode();		//Enter Full Screen Game Mode
 				//glutSetCursor(GLUT_CURSOR_NONE);          //Cursor will be invisible
 				//m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
 				orbitCamera = new SimpleCamera(Vector3(100, 0, 100), 0.0f, true);
@@ -165,7 +165,7 @@ void Game::Update()
 	case InGame: {	
 		menu->update();
 		if(cameraIndex == 0) m_camera->Update(gameTime->getDeltaTime());
-		if (cameraIndex == 1) orbitCamera->Update(gameTime->getDeltaTime());
+		if(cameraIndex == 1) orbitCamera->Update(gameTime->getDeltaTime());
 		universe->simulate(gameTime->getDeltaTime());
 	}break;
 	default: break;
@@ -198,11 +198,11 @@ GLvoid Game::render()
 	case InGame: {
 		glLoadIdentity();
 		if(cameraIndex == 0) m_camera->Draw();
-		if (cameraIndex == 1) orbitCamera->Draw();
+		if(cameraIndex == 1) orbitCamera->Draw();
 		Lightning::applyLights();
 		universe->draw();
 		if(cameraIndex == 0) m_camera->drawInfo();
-		if (cameraIndex == 1) orbitCamera->drawInfo();
+		if(cameraIndex == 1) orbitCamera->drawInfo();
 	}break;
 	default: break;
 	}

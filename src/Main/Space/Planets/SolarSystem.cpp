@@ -1,9 +1,14 @@
 #include "SolarSystem.h"
 #include <Main/Keyboard/Keyboard.h>
 #include <Misc/Debug/IO.h>
-#include <Main/Game.h>
 
-SolarSystem::SolarSystem(const std::string& _name)
+//************************************
+// Method:    SolarSystem
+// FullName:  SolarSystem::SolarSystem
+// Access:    public 
+// Parameter: const string & _name
+//************************************
+SolarSystem::SolarSystem(const string& _name)
 {
 	m_Name = _name;
 	m_elapsedTime = 0;
@@ -28,12 +33,12 @@ void SolarSystem::Load() const
 void SolarSystem::Simulate(float deltaTime)
 {
 	if (Keyboard::getKeyPressed(KEY_Z)) {
-		simulationDeltaTime -= 0.01f;
-		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.001f, 0.01f);
+		simulationDeltaTime -= 0.001f;
+		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.001f, 0.05f);
 	}
 	if (Keyboard::getKeyPressed(KEY_X)) {
-		simulationDeltaTime += 0.01f;
-		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.001f, 0.01f);
+		simulationDeltaTime += 0.001f;
+		simulationDeltaTime = MathHelper::Clampf(simulationDeltaTime, 0.001f, 0.05f);
 	}
 	if (Keyboard::getKeyPressed(KEY_J)) {
 		addMoon();
@@ -53,6 +58,7 @@ void SolarSystem::Draw() const
 
 void SolarSystem::renderOrbits() const
 {
+	if (m_renderOrbitState == 0) return;
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->renderOrbit();
 	}
@@ -64,6 +70,7 @@ vec::Vector3 SolarSystem::getPlanetPostion(const int planetID) const
 	return m_Planets[_ID]->getPositionVec();
 }
 
+// ReSharper disable once CppNotAllPathsReturnValue
 Planet& SolarSystem::findPlanetByName(const string& planetName) const
 {
 	for (size_t planet_t = 0; planet_t < m_Planets.size(); planet_t++)

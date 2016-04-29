@@ -3,8 +3,6 @@
 
 #pragma once
 #include "Camera.h"
-#include <Main/Globals.h>
-#include <Misc/RenderText.h>
 
 using namespace vec;
  
@@ -20,13 +18,13 @@ public:
 	explicit FPScamera(const Vector3& pos, const bool _orbit)
 		: Camera(pos, _orbit), angle(nullptr)
 	{
-		currentMousePosition = Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2,
-			glutGet(GLUT_WINDOW_HEIGHT) / 2,
-			0);
+		currentMousePosition = Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2, 
+			glutGet(GLUT_WINDOW_HEIGHT) / 2, 0);
 		viewPortCenter = currentMousePosition;
 		rightVector = Vector3::right();
 		upVec = Vector3::up();
 		forwardVec = Vector3(0, 0, 1);
+		diff = Vector3::zero();
 	}
 
 	~FPScamera() override;

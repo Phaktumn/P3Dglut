@@ -9,6 +9,13 @@ GLuint MainMenu::m_lastPrintIndex = 0;
 GLuint MainMenu::m_currPrintIndex = 0;
 int MainMenu::menuFlag;
 
+//************************************
+// Method:    MainMenu
+// FullName:  MainMenu::MainMenu
+// Access:    public 
+// Returns:   
+// Qualifier:
+//************************************
 MainMenu::MainMenu()
 {
 }
@@ -27,7 +34,7 @@ void MainMenu::start(){
 	glutAddMenuEntry("Mars",    4);
 	glutAddMenuEntry("Jupiter", 5);
 	glutAddMenuEntry("Saturn",  6);
-	glutAddMenuEntry("Urannus", 7);
+	glutAddMenuEntry("Uranus", 7);
 	glutAddMenuEntry("Neptune", 8);
 	glutAddMenuEntry("Pluto",   9);
 
@@ -68,10 +75,10 @@ void MainMenu::menuCallback(int _callBack)
 		switch (_callBack)
 		{
 		case 0:
-			//Ligar orbitas
+			Game::solarSystem->setOrbitRenderState(1);
 			break;
 		case 1:
-			//Desligar Orbitas
+			Game::solarSystem->setOrbitRenderState(0);
 			break;
 		case 10:
 			glutExit();
@@ -87,6 +94,7 @@ void MainMenu::menuPlanets(int _planetCallBack)
 {
 	//Diz para apresentar no ecran as informaçoes do planeta
 	Game::solarSystem->setSelectedObject(_planetCallBack);
+	static_cast<SimpleCamera*>(Game::orbitCamera)->setFocus(Game::solarSystem->getPlanet(_planetCallBack));
 }
 
 void MainMenu::menuCamera(int _cameraCall)

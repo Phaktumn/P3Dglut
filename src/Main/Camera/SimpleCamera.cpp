@@ -2,12 +2,12 @@
 #include "SimpleCamera.h"
 
 SimpleCamera::SimpleCamera(const Vector3& position, float,const bool _orbit):
-	Camera(position,_orbit)
+	Camera(position,_orbit), m_focus(nullptr)
 {
 	m_lookAt = Vector3::zero();
 	eye = position;
 	upVec = Vector3::up();
-	rotationAngle = 0.1;
+	rotationAngle = 0.0f;
 	m_Position = position;
 	m_speed = 50;
 }
@@ -31,10 +31,24 @@ void SimpleCamera::Update(float deltaTime)
 	if (Keyboard::getKeyPressed(KEY_A)) {
 		rotate(-m_speed * deltaTime);
 	}
-	forwardVec = EulerAngle(rotationAngle, rotateUp, 0).toVector3();
-	m_lookAt = Vector3::zero() - forwardVec;
-	eye = m_lookAt * distance;
-	upVec = Vector3::Normalize(forwardVec - Vector3(0, sin(180), 0));
+
+
+	if(m_focus!=nullptr){
+		//m_lookAt = Vector3::zero() - m_focus->getPositionVec();
+		Vector3 focusPos = m_focus->getPositionVec();
+		Vector3 eulerRotVec = EulerAngle(rotationAngle, rotateUp, 0).toVector3();
+		forwardVec = eulerRotVec;
+		m_lookAt = focusPos;
+		eye = m_lookAt + distance;
+		upVec = Vector3::up();
+	}
+	else
+	{
+		forwardVec = EulerAngle(rotationAngle, rotateUp, 0).toVector3();
+		m_lookAt = Vector3::zero() - forwardVec;
+		eye = m_lookAt * distance;
+		upVec = Vector3::Normalize(forwardVec - Vector3(0, sin(180), 0));
+	}
 	Camera::Update(deltaTime);
 }
 
