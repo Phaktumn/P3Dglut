@@ -58,7 +58,6 @@ void SolarSystem::Draw() const
 
 void SolarSystem::renderOrbits() const
 {
-	if (m_renderOrbitState == 0) return;
 	for (size_t i = 0; i < m_Planets.size(); i++) {
 		m_Planets[i]->renderOrbit();
 	}
@@ -89,6 +88,6 @@ void SolarSystem::addMoon() const
 
 void SolarSystem::addPlanet(UniverseObject* planet)
 {
-	m_Planets.push_back((Planet*)planet);
+	m_Planets.push_back(static_cast<Planet*>(planet));
 	findPlanetByName(planet->getName()).load();
 }

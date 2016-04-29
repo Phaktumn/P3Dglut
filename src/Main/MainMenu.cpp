@@ -75,10 +75,10 @@ void MainMenu::menuCallback(int _callBack)
 		switch (_callBack)
 		{
 		case 0:
-			Game::solarSystem->setOrbitRenderState(1);
+			Game::universe->setOrbitRenderState(1);
 			break;
 		case 1:
-			Game::solarSystem->setOrbitRenderState(0);
+			Game::universe->setOrbitRenderState(0);
 			break;
 		case 10:
 			glutExit();

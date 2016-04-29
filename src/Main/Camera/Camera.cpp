@@ -22,7 +22,7 @@ Camera::Camera(const vec::Vector3& position, const bool _orbit)
 Camera::Camera(): 
 	player(nullptr), rotationAngle(0)
 {
-	m_infoText = new RenderText(Vector3(5, 250), 1.2f);
+	m_infoText = new RenderText(Vector3(10, 10), 1.2f);
 }
 
 Camera::~Camera()

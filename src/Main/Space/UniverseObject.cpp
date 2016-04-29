@@ -34,7 +34,7 @@ void UniverseObject::load()
 	glNewList(list, GL_COMPILE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	Lightning::applyMaterial1();
+	Lightning::applyMaterial2();
 	//Rodar o planeta para a textura parecer legit XD
 	_glRotatef(90, Vector3(1, 0, 0));
 	gluSphere(sphere, 1, 35, 35);
@@ -71,9 +71,9 @@ void UniverseObject::simulate(float deltaTime)
 	//rotation Duration and orbit Duration == 0
 	if (m_Rotation_Duration == 0 && m_Orbit_Duration == 0)  return;
 	//ELSE ->
-	m_rotation += deltaTime * 360.0f / m_Rotation_Duration;
+	m_rotation += deltaTime * 24.0f / m_Rotation_Duration;
 	if (m_rotation >= 360.0f) m_rotation -= 360;
-	float orbitDeltaStep = 360 / m_Orbit_Duration;
+	float orbitDeltaStep = 365 / m_Orbit_Duration;
 	m_orbit_Angle += deltaTime * orbitDeltaStep;
 	if (m_orbit_Angle > 360) m_orbit_Angle -= 360;
 	float radians = MathHelper::ToRadians(m_orbit_Angle);

@@ -8,8 +8,7 @@ Planet::Planet(const string& texturePath, const  string& name,
 	const Vector3& position, float scale, float orbitInclination, float planetInclnation) : 
 	UniverseObject(texturePath, name, orbitDuration, rotatioDuration, eccentricity 
 		,position, scale, orbitInclination, planetInclnation),  ring(nullptr)
-{
-}
+{ }
 
 Planet::~Planet()
 {
@@ -49,7 +48,6 @@ void Planet::draw()
 		moons[i]->draw();
 		glPopMatrix();
 	}
-
 	UniverseObject::draw();
 }
 
@@ -87,8 +85,6 @@ string& Planet::objectSettigs()
 	m_planetSettings                                += "\n Orbit Duration: "    + to_string(int(m_Orbit_Duration))              + " Earth Days";
 	if(m_Rotation_Duration < 1.0f) m_planetSettings += "\n Day Duration: "      + to_string(double(m_Rotation_Duration * 24))   + " Earth Hours";
 	else m_planetSettings                           += "\n Day Duration: "      + to_string(int(m_Rotation_Duration))           + " Earth Days";
-	//m_planetSettings += "\n Days Elapsed on "    + m_Name + ": " + to_string(m_days_elapsed)     + " Days";
-	//m_planetSettings += "\n Years Elapsed on "   + m_Name + ": " + to_string(m_years_elapsed)    + " Years";
 	return {m_planetSettings};
 }
 

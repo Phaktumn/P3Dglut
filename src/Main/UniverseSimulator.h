@@ -26,6 +26,7 @@ public:
 	List<SolarSystem*> solarSystems;
 	List<Comet*> Comets;
 	List<Vector3*> SolarPositions;
+	short int m_renderOrbitState = 1;
 
 	void load_Universe()
 	{
@@ -90,17 +91,24 @@ public:
 		for (size_t i = 0; i < solarSystems.size(); i++){
 			_glTranslate(*SolarPositions[i]);
 			solarSystems[i]->Draw();
-			solarSystems[i]->renderOrbits();
+			if (m_renderOrbitState == 1) solarSystems[i]->renderOrbits();
 		}
 		for (size_t i = 0; i < Comets.size(); i++){
 			Comets[i]->draw();
-			Comets[i]->renderOrbit();
+			if (m_renderOrbitState == 1) Comets[i]->renderOrbit();
 		}
 	}
 
 	explicit UniverseSimulator()
 		: m_simulate(false){
 		load_Universe();
+	}
+
+	void setOrbitRenderState(const short int _state)
+	{
+		if (_state == m_renderOrbitState) return;
+		m_renderOrbitState = _state;
+		MathHelper::Clampi(m_renderOrbitState, 0, 1);
 	}
 
 	~UniverseSimulator()

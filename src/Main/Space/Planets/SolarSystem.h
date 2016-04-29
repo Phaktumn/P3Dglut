@@ -60,16 +60,7 @@ public:
 	{
 		return m_Planets[_i];
 	}
-
-	void setOrbitRenderState(const short int _state)
-	{
-		if (_state == m_renderOrbitState) return;
-		m_renderOrbitState = _state;
-		MathHelper::Clampi(m_renderOrbitState, 0, 1);
-	}
 private:
-
-	short int m_renderOrbitState = 1;
 
 	int m_SelectedIndex = 0;
 	string TYPE = "Solar System";
