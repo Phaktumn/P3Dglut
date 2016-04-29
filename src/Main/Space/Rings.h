@@ -62,7 +62,7 @@ inline void Ring::draw(UniverseObject& planet) const
 {
 	glPushMatrix();
 	_glTranslate(planet.getPositionVec());
-	_Scale(Vector3(planet.getScale()));
+	_Scale(Vector3(planet.getScale()) * 115.0f);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glCallList(listIndex);
 	glPopMatrix();

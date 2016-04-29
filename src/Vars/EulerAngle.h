@@ -4,6 +4,8 @@
 #pragma once
 #include "vec3f.h"
 
+using namespace vec;
+
 class EulerAngle
 {
 public:

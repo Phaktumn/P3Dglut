@@ -17,8 +17,8 @@ public:
 	FPScamera(): angle(nullptr)
 	{ }
 	
-	explicit FPScamera(const Vector3& pos)
-		: Camera(pos), angle(nullptr)
+	explicit FPScamera(const Vector3& pos, const bool _orbit)
+		: Camera(pos, _orbit), angle(nullptr)
 	{
 		currentMousePosition = Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2,
 			glutGet(GLUT_WINDOW_HEIGHT) / 2,

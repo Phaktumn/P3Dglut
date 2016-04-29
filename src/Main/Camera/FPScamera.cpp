@@ -12,7 +12,7 @@ FPScamera::~FPScamera()
 void FPScamera::Update(float deltaTime)
 {
 	computeMouse();
-	if (diff.x != 0.0f || diff.y != 0.0f)
+	if (diff.x != 0.0f || diff.y != 0.0f && !isOrbiting)
 	{
 		yaw += (currentMousePosition.x - viewPortCenter.x) * sensitivity;
 		pitch -= (currentMousePosition.y - viewPortCenter.y) * sensitivity;
@@ -51,7 +51,7 @@ void FPScamera::Update(float deltaTime)
 	}
 
 	eye = m_Position;
-	m_lookAt = m_Position + forwardVec;
+	if(!isOrbiting) m_lookAt = m_Position + forwardVec;
 	//upVec = upVec;
 	Camera::Update(deltaTime);
 }

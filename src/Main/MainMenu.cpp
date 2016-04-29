@@ -32,8 +32,10 @@ void MainMenu::start(){
 	glutAddMenuEntry("Pluto",   9);
 
 	CameraOptions = glutCreateMenu(menuCamera);
-	glutAddMenuEntry("Show Settings", 0);
-	glutAddMenuEntry("Hide Settings", 1);
+	glutAddMenuEntry("Show Settings",  0);
+	glutAddMenuEntry("Hide Settings",  1);
+	glutAddMenuEntry("FPScamera",      2);
+	glutAddMenuEntry("Orbital Camera", 3);
 
 
 	createMenu = glutCreateMenu(menuCallback);
@@ -96,6 +98,10 @@ void MainMenu::menuCamera(int _cameraCall)
 	case 0: Game::m_camera->setInfoState(true);
 		break;
 	case 1: Game::m_camera->setInfoState(false);
+		break;
+	case 2: Game::setActiveCamera(0);
+		break;
+	case 3: Game::setActiveCamera(1);
 		break;
 	default:
 		break;

@@ -15,9 +15,9 @@ void Lightning::enableLight()
 	GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.06);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
 
 	// Configurar cor da fonte de luz
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);

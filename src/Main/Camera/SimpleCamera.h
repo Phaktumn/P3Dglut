@@ -1,11 +1,12 @@
 #pragma once
 #include "Camera.h"
+#include <Vars/EulerAngle.h>
 
 class SimpleCamera :
 	public Camera
 {
 public:
-	SimpleCamera(const vec::Vector3& position, float rotationAngle);
+	SimpleCamera(const vec::Vector3& position, float rotationAngle, const bool _orbit);
 	~SimpleCamera();
 
 	vec::Vector3 m_Orientation;
@@ -20,6 +21,9 @@ public:
 	}
 
 private:
+	EulerAngle angle;
+	float rotateUp = 0;
+	float distance = 500;
 	float m_speed;
 };
 

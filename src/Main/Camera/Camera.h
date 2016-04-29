@@ -14,7 +14,7 @@ class Camera
 public:
 	//gluLookAt()
 	explicit Camera(Player& player);
-	explicit Camera(const vec::Vector3& position);
+	explicit Camera(const vec::Vector3& position, const bool _orbit);
 	explicit Camera();
 	virtual ~Camera();
 
@@ -38,7 +38,6 @@ public:
 
 	float get_rotationangle_() const 
 	{ return rotationAngle; }
-
 
 	bool getInfoState() const
 	{ return m_showInfo; }
@@ -75,6 +74,7 @@ protected:
 
 	//Player angle rotation in Degrees
 	float rotationAngle;
+	bool isOrbiting = 0;
 };
 
 #endif

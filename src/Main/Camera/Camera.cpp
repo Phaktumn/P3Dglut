@@ -12,11 +12,10 @@ Camera::Camera(Player& player)
 
 }
 
-Camera::Camera(const Vector3& position)
-	: player(nullptr), rotationAngle(0)
-{
-
+Camera::Camera(const vec::Vector3& position, const bool _orbit)
+	: player(nullptr), rotationAngle(0){
 	m_infoText = new RenderText(Vector3(5, 250), 1.2f);
+	isOrbiting = _orbit;
 }
 
 Camera::Camera(): 

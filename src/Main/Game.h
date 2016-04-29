@@ -45,8 +45,15 @@ public:
 	static UniverseSimulator* universe;
 	static SolarSystem* solarSystem;
 	static Camera* m_camera;
+	static Camera* orbitCamera;
 	static MainMenu* menu;
 	static void init();
+
+	static void setActiveCamera(const int _index){
+		cameraIndex = _index;
+		cameraIndex = MathHelper::Clampf(cameraIndex, 0, 1);
+	}
+
 private:
 	Game(int argc, char **argv);
 	~Game();
@@ -63,6 +70,8 @@ private:
 	static RenderText* m_text1;
 	static GameTime* gameTime;
 	static GLuint EvenFlag;
+
+	static int cameraIndex;
 };
 
 #endif
