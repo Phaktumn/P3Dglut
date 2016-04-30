@@ -31,7 +31,7 @@ Camera::~Camera()
 void Camera::Update(float deltaTime)
 {
 	if (m_showInfo){
-		m_info = "Camera Position: " + m_Position.debugString() + "\nVelocity: " + std::to_string(speed/Universal_Metric_Scale * 0.001) + "Km/s";
+		m_info = "Camera Position: " + m_Position.debugString() + "\nSimulated Velocity: " + std::to_string(speed) + "Km/s";
 	}
 }
 

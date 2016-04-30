@@ -3,7 +3,6 @@
 #include "../Misc/RenderText.h"
 #include "Keyboard/Keyboard.h"
 #include <Misc/Lights/Lightning.h>
-#include <Misc/Debug/IO.h>
 #include "Space/Planets/SolarSystem.h"
 #include "Mouse/Mouse.h"
 #include "Camera/FPScamera.h"
@@ -13,7 +12,6 @@
 
 Game* Game::instance = nullptr;
 RenderText* Game::text;
-RenderText* Game::m_text1;
 GameTime* Game::gameTime = new GameTime();
 Camera* Game::m_camera;
 Camera* Game::orbitCamera;
@@ -25,6 +23,7 @@ GLuint Game::EvenFlag = 0;
 GLUquadric* Game::m_Object = gluNewQuadric();
 MainMenu* Game::menu = new MainMenu();
 MiniMap* Game::m_miniMap = new MiniMap(short int(256), short int(256));
+GLuint Game::entryMenuTexture = 0;
 
 GLuint GLUT_WINDOW0_ID = 0;
 GLuint GLUT_WINDOW1_ID = 0;
@@ -39,7 +38,6 @@ Game::~Game()
 {
 	delete universe;
 	delete text;
-	delete m_text1;
 	delete gameTime;
 	cout << "\nClosed";
 }
@@ -79,9 +77,9 @@ void Game::init()
 
 	Lightning::enableLight();		//enables all lights properties positional light
 	
-	text = new RenderText(Vector3(20, 20, 0), 0.1);
-	m_text1 = new RenderText(Vector3(glutGet(GLUT_WINDOW_WIDTH) / 2 - 50,
-		glutGet(GLUT_WINDOW_HEIGHT) / 2), 1.0f);
+	text = new RenderText(Vector3(20.0f, 20.0f, 0.0f), 0.1);
+
+	entryMenuTexture = _loadBMP("Textures/entryMenuTexture.bmp");
 }
 
 void Game::resize(int width, int height)
@@ -140,43 +138,40 @@ void Game::Update()
 	gameTime->start(glutGet(GLUT_ELAPSED_TIME) * 0.001);
 	if (Keyboard::getKeyPressed(KEY_P))
 		state = Exiting;
-	switch (state) {
+	switch (state) 
+	{
 	case Menu: {
-		if (Keyboard::getKeyPressed(NUM_1)) {
-		    //glutGameModeString(_1920_BY_1080);
-			if (glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)) {
-				state = InGame;
-				//glutDestroyWindow(GLUT_WINDOW0_ID);         //Destroy Window by ID
-				//GLUT_WINDOW0_ID = glutEnterGameMode();		//Enter Full Screen Game Mode
-				//glutSetCursor(GLUT_CURSOR_NONE);          //Cursor will be invisible
-				//m_camera = new SimpleCamera(vec::Vector3(0, 0, 0), 0.0f);
-				orbitCamera = new SimpleCamera(Vector3(100, 0, 100), 0.0f, true);
-				orbitCamera->setLookAt(Vector3(0, 0, 0));
-				m_camera = new FPScamera(Vector3(0, 50, 0), false);
-				universe = new UniverseSimulator();
-				AddItems();									 //Get The universe Together
-				init();							             //Initialize all glut Properties
-				//Load Menus and minimaps
-				//so they are able to use Planets Informations
-				m_miniMap->load();
-				menu->start();
-			}
-			else {
-				IO::printError("The selected Mode is not Available\n");
-			}
+		if (Keyboard::getKeyPressed(NUM_1)) 
+		{
+			state = InGame;
+			glutFullScreen();
+			glutFullScreenToggle();
+			orbitCamera = new SimpleCamera(Vector3(100, 0, 100), 0.0f, true);
+			orbitCamera->setLookAt(Vector3(0, 0, 0));
+			m_camera = new FPScamera(Vector3(0, 50, 0), false);
+			universe = new UniverseSimulator();
+			AddItems();									 //Get The universe Together
+			init();							             //Initialize all glut Properties
+			//Load Menus and minimaps
+			//so they are able to use Planets Informations
+			m_miniMap->load();
+			menu->start();
 		}
 	} break;
 		//Update everything that is included after the user started simulation
 		//In game is called when simulation is started
-	case InGame: {	
+	case InGame: 
+	{	
 		menu->update();
 		if(cameraIndex == 0) m_camera->Update(gameTime->getDeltaTime());
 		if(cameraIndex == 1) orbitCamera->Update(gameTime->getDeltaTime());
 		universe->simulate(gameTime->getDeltaTime());
 		m_miniMap->update();
-	}break;
+	}
+	break;
 	default: break;
-	case Exiting: {
+	case Exiting: 
+	{
 		glutExit();
 	}break;
 	}
@@ -198,14 +193,40 @@ GLvoid Game::render()
 	/* Then Draw Scene */
 	switch (state) {
 	case Menu: {
-		glLoadIdentity();
-		//Draw a Simple text just to help player on how to start the Game
-		m_text1->drawText("Press 'S' to Start");
+		glMatrixMode(GL_PROJECTION);
+		{
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, -1, 1);
+			glMatrixMode(GL_MODELVIEW);
+			{
+				glPushMatrix();
+				glLoadIdentity();
+				{
+					glCullFace(GL_CCW);
+					glFrontFace(GL_FRONT);
+					glDisable(GL_LIGHTING);
+					glBindTexture(GL_TEXTURE_2D, entryMenuTexture);
+					glBegin(GL_QUADS);
+					glTexCoord3f(0, 0, 0);  glVertex3f(0, 0, 0.1f);
+					glTexCoord3f(0, 1, 0);  glVertex3f(0, glutGet(GLUT_WINDOW_HEIGHT), 0.1f);
+					glTexCoord3f(-1, 1, 0); glVertex3f(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.1f);
+					glTexCoord3f(-1, 0, 0); glVertex3f(glutGet(GLUT_WINDOW_WIDTH), 0, 0.1f);
+					glEnd();
+					glEnable(GL_LIGHTING);
+				}
+				glPopMatrix();
+				glMatrixMode(GL_PROJECTION);
+			}
+		}
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
 	}break;
 		//All rendering and postUpdate stuff
 		//included in In game
 		//In game is called when simulation is started
-	case InGame: {
+	case InGame: 
+	{
 		glLoadIdentity();
 		if(cameraIndex == 0) m_camera->Draw();
 		if(cameraIndex == 1) orbitCamera->Draw();

@@ -62,11 +62,12 @@ private:
 
 	static void AddItems();
 
+	static GLuint entryMenuTexture;
+
 	static MiniMap* m_miniMap;
 	static GLUquadric* m_Object;
 	static Game* instance;
 	static RenderText* text;
-	static RenderText* m_text1;
 	static GameTime* gameTime;
 	static GLuint EvenFlag;
 };

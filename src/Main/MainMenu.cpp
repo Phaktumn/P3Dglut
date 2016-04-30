@@ -5,8 +5,10 @@
 GLuint MainMenu::createMenu;
 GLuint MainMenu::PlanetsMenu;
 GLuint MainMenu::CameraOptions;
+GLuint MainMenu::MoonsMenu;
 GLuint MainMenu::m_lastPrintIndex = 0;
 GLuint MainMenu::m_currPrintIndex = 0;
+int MainMenu::moonCount;
 int MainMenu::menuFlag;
 
 //************************************
@@ -44,10 +46,13 @@ void MainMenu::start(){
 	glutAddMenuEntry("FPScamera",      2);
 	glutAddMenuEntry("Orbital Camera", 3);
 
+	MoonsMenu = glutCreateMenu(menuMoon);
+	glutAddMenuEntry("Earth Moon", 0);
 
 	createMenu = glutCreateMenu(menuCallback);
 	glutAddSubMenu("Planets", PlanetsMenu);
 	glutAddSubMenu("Camera Options", CameraOptions);
+	glutAddSubMenu("Moons", MoonsMenu);
 	glutAddMenuEntry("Show Orbits", 0);
 	glutAddMenuEntry("Hide Orbits", 1);
 	glutAddMenuEntry("Exit", 10);
@@ -58,7 +63,7 @@ void MainMenu::start(){
 
 void MainMenu::update()
 {
-	//Nothing Here
+
 }
 
 void MainMenu::draw()
@@ -113,5 +118,13 @@ void MainMenu::menuCamera(int _cameraCall)
 		break;
 	default:
 		break;
+	}
+}
+
+void MainMenu::menuMoon(int _MoonCall)
+{
+	if(_MoonCall == 0)
+	{
+
 	}
 }

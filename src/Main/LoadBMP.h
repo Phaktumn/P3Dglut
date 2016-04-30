@@ -1,6 +1,3 @@
-#ifndef  LOAD_BMP_H
-#define LOAD_BMP_H
-
 #pragma once
 #include <Misc/imageloader.h>
 #include <Misc/Debug/IO.h>
@@ -23,12 +20,15 @@ inline GLuint _loadBMP(const std::string& texturePath)
 									  //as unsigned numbers
 		image->pixels);				//The actual pixel data    
 	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, image->width, image->height, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
 	delete image;					//free memory from image data
 	return textureId;				//Returns the id of the texture
 }
-
-#endif
 

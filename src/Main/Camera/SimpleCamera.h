@@ -11,7 +11,6 @@ public:
 	~SimpleCamera();
 
 	Vector3 m_Orientation;
-
 	void Update(float deltaTime) override;
 	void Draw() const override;
 
@@ -31,6 +30,7 @@ private:
 
 	EulerAngle angle;
 	float rotateUp = 0;
+	float distanceSun = 150;
 	float distance = 25;
 	float m_speed;
 };

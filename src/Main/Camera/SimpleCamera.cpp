@@ -20,33 +20,42 @@ SimpleCamera::~SimpleCamera()
 void SimpleCamera::Update(float deltaTime)
 {
 	if(Keyboard::getKeyPressed(KEY_D)) {
-		rotate(m_speed * deltaTime);
+		rotate(-m_speed * deltaTime);
 	}
 	if (Keyboard::getKeyPressed(KEY_W)) {
-		rotateUp += m_speed * deltaTime;
-	}
-	if (Keyboard::getKeyPressed(KEY_S)) {
 		rotateUp -= m_speed * deltaTime;
 	}
+	if (Keyboard::getKeyPressed(KEY_S)) {
+		rotateUp += m_speed * deltaTime;
+	}
 	if (Keyboard::getKeyPressed(KEY_A)) {
-		rotate(-m_speed * deltaTime);
+		rotate(m_speed * deltaTime);
+	}
+
+	if(Keyboard::getKeyPressed(KEY_Q))
+	{
+		distance -= m_speed * deltaTime;
+	}
+	if (Keyboard::getKeyPressed(KEY_E))
+	{
+		distance += m_speed * deltaTime;
 	}
 
 
 	if(m_focus!=nullptr){
-		//m_lookAt = Vector3::zero() - m_focus->getPositionVec();
 		Vector3 focusPos = m_focus->getPositionVec();
 		Vector3 eulerRotVec = EulerAngle(rotationAngle, rotateUp, 0).toVector3();
-		forwardVec = eulerRotVec;
+		forwardVec = Vector3::Normalize(focusPos + eulerRotVec);
+		eye = focusPos;
+		eye += eulerRotVec * distance;
 		m_lookAt = focusPos;
-		eye = m_lookAt + distance;
 		upVec = Vector3::up();
 	}
 	else
 	{
 		forwardVec = EulerAngle(rotationAngle, rotateUp, 0).toVector3();
 		m_lookAt = Vector3::zero() - forwardVec;
-		eye = m_lookAt * distance;
+		eye = m_lookAt * distanceSun;
 		upVec = Vector3::Normalize(forwardVec - Vector3(0, sin(180), 0));
 	}
 	Camera::Update(deltaTime);

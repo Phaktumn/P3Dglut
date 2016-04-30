@@ -74,7 +74,7 @@ void UniverseObject::simulate(float deltaTime)
 	m_rotation += deltaTime * 24.0f / m_Rotation_Duration;
 	if (m_rotation >= 360.0f) m_rotation -= 360;
 	float orbitDeltaStep = 365 / m_Orbit_Duration;
-	m_orbit_Angle += deltaTime * orbitDeltaStep;
+	m_orbit_Angle += orbitDeltaStep * deltaTime;
 	if (m_orbit_Angle > 360) m_orbit_Angle -= 360;
 	float radians = MathHelper::ToRadians(m_orbit_Angle);
 	m_Position.x = cos(radians) * calculateKeplerOrbit(radians);
