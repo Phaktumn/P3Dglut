@@ -4,7 +4,6 @@
 #pragma once
 #include <Misc/imageloader.h>
 #include <Misc/Debug/IO.h>
-#include <GL/freeglut.h>
 
 inline GLuint _loadBMP(const std::string& texturePath)
 {
@@ -13,7 +12,7 @@ inline GLuint _loadBMP(const std::string& texturePath)
 	IO::printMessage("Image: {"+ texturePath + "} Loaded with Success ");
 	glGenTextures(1, &textureId);			 //Make room for our texture
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
-										 //Map the image to the texture
+    //Map the image to the texture
 	glTexImage2D(GL_TEXTURE_2D,       //Always GL_TEXTURE_2D
 		0,                            //0 for now
 		GL_RGB,                       //Format OpenGL uses for image
@@ -22,7 +21,11 @@ inline GLuint _loadBMP(const std::string& texturePath)
 		GL_RGB,					      //GL_RGB, because pixels are stored in RGB format
 		GL_UNSIGNED_BYTE,			  //GL_UNSIGNED_BYTE, because pixels are stored
 									  //as unsigned numbers
-		image->pixels);				//The actual pixel data          
+		image->pixels);				//The actual pixel data    
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
 	delete image;					//free memory from image data
 	return textureId;				//Returns the id of the texture
 }

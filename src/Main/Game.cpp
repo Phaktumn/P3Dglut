@@ -24,6 +24,7 @@ UniverseSimulator* Game::universe;
 GLuint Game::EvenFlag = 0;
 GLUquadric* Game::m_Object = gluNewQuadric();
 MainMenu* Game::menu = new MainMenu();
+MiniMap* Game::m_miniMap = new MiniMap(short int(256), short int(256));
 
 GLuint GLUT_WINDOW0_ID = 0;
 GLuint GLUT_WINDOW1_ID = 0;
@@ -155,6 +156,9 @@ void Game::Update()
 				universe = new UniverseSimulator();
 				AddItems();									 //Get The universe Together
 				init();							             //Initialize all glut Properties
+				//Load Menus and minimaps
+				//so they are able to use Planets Informations
+				m_miniMap->load();
 				menu->start();
 			}
 			else {
@@ -162,11 +166,14 @@ void Game::Update()
 			}
 		}
 	} break;
+		//Update everything that is included after the user started simulation
+		//In game is called when simulation is started
 	case InGame: {	
 		menu->update();
 		if(cameraIndex == 0) m_camera->Update(gameTime->getDeltaTime());
 		if(cameraIndex == 1) orbitCamera->Update(gameTime->getDeltaTime());
 		universe->simulate(gameTime->getDeltaTime());
+		m_miniMap->update();
 	}break;
 	default: break;
 	case Exiting: {
@@ -195,6 +202,9 @@ GLvoid Game::render()
 		//Draw a Simple text just to help player on how to start the Game
 		m_text1->drawText("Press 'S' to Start");
 	}break;
+		//All rendering and postUpdate stuff
+		//included in In game
+		//In game is called when simulation is started
 	case InGame: {
 		glLoadIdentity();
 		if(cameraIndex == 0) m_camera->Draw();
@@ -203,6 +213,7 @@ GLvoid Game::render()
 		universe->draw();
 		if(cameraIndex == 0) m_camera->drawInfo();
 		if(cameraIndex == 1) orbitCamera->drawInfo();
+		m_miniMap->draw();
 	}break;
 	default: break;
 	}

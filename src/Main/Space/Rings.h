@@ -71,8 +71,8 @@ inline void Ring::draw(UniverseObject& planet) const
 inline void Ring::attachToPlanet(UniverseObject& _planet) const
 {
 	glNewList(listIndex, GL_COMPILE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	Lightning::applyMaterial1();
 	glPushMatrix();
 	_glRotatef(-90, Vector3(1,0,0));

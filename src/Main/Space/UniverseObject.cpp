@@ -32,8 +32,8 @@ void UniverseObject::load()
 	/* This List will Render the spheres */
 	list = glGenLists(1);
 	glNewList(list, GL_COMPILE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	Lightning::applyMaterial2();
 	//Rodar o planeta para a textura parecer legit XD
 	_glRotatef(90, Vector3(1, 0, 0));

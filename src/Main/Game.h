@@ -7,6 +7,7 @@
 #include "Camera/SimpleCamera.h"
 #include "Space/Planets/SolarSystem.h"
 #include "MainMenu.h"
+#include <Misc/MiniMap.h>
 
 #define _640_BY_480_RR_60   "640x480:32@60"
 #define _640_BY_480_	    "640x480:32"
@@ -50,7 +51,7 @@ public:
 		cameraIndex = _index;
 		cameraIndex = MathHelper::Clampf(cameraIndex, 0, 1);
 	}
-
+	static int cameraIndex;
 private:
 	Game(int argc, char **argv);
 	~Game();
@@ -61,14 +62,13 @@ private:
 
 	static void AddItems();
 
+	static MiniMap* m_miniMap;
 	static GLUquadric* m_Object;
 	static Game* instance;
 	static RenderText* text;
 	static RenderText* m_text1;
 	static GameTime* gameTime;
 	static GLuint EvenFlag;
-
-	static int cameraIndex;
 };
 
 

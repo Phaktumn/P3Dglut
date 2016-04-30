@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Misc\MiniMap.cpp" />
     <ClCompile Include="src\Main\Camera\FPScamera.cpp" />
     <ClCompile Include="src\Main\Space\Comet.cpp" />
     <ClCompile Include="src\Main\MainMenu.cpp" />
@@ -180,12 +181,12 @@
     <ClCompile Include="src\Vars\Object.cpp" />
     <ClCompile Include="src\Misc\GLM\glm.cpp" />
     <ClCompile Include="src\Misc\RenderText.cpp" />
-    <ClCompile Include="src\Misc\Axis.cpp" />
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Main\Camera\SimpleCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Misc\MiniMap.h" />
     <ClInclude Include="src\Main\Camera\FPScamera.h" />
     <ClInclude Include="src\Main\FreeGlutWrap.h" />
     <ClInclude Include="src\Main\Globals.h" />
@@ -233,7 +234,6 @@
     <ClInclude Include="src\Vars\Object.h" />
     <ClInclude Include="src\Misc\GLM\glm.h" />
     <ClInclude Include="src\Misc\RenderText.h" />
-    <ClInclude Include="src\Misc\Axis.h" />
     <ClInclude Include="src\Main\Game.h" />
     <ClInclude Include="src\Vars\MathHelper.h" />
     <ClInclude Include="src\Vars\vec3f.h" />

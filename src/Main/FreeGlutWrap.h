@@ -42,6 +42,14 @@ extern "C" {
 		glBindTexture(GL_TEXTURE_2D, _Texture_ID);
 	}
 
+	//************************************
+	// Qualifier: Use X as X and Y as Z in your Vector3
+	// Parameter: const Vector3 & _vectorXz
+	//************************************
+	inline void APIENTRY _RasterPos2(const Vector3& _vectorXz){
+		glRasterPos2f(_vectorXz.x, _vectorXz.z);
+	}
+
 #ifdef __cplusplus
 }
 #endif
