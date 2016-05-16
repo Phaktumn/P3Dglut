@@ -184,8 +184,10 @@
     <ClCompile Include="src\Main\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Main\Camera\SimpleCamera.cpp" />
+    <ClCompile Include="src\Main\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Main\GameMain.h" />
     <ClInclude Include="src\Misc\MiniMap.h" />
     <ClInclude Include="src\Main\Camera\FPScamera.h" />
     <ClInclude Include="src\Main\FreeGlutWrap.h" />
@@ -239,6 +241,10 @@
     <ClInclude Include="src\Vars\vec3f.h" />
     <ClInclude Include="src\Main\Camera\SimpleCamera.h" />
     <ClInclude Include="src\Main\UniverseSimulator.h" />
+    <ClInclude Include="src\Main\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Main\Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

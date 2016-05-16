@@ -36,6 +36,7 @@
     <ClCompile Include="src\Main\Camera\FPScamera.cpp" />
     <ClCompile Include="src\Main\Space\UniverseObject.cpp" />
     <ClCompile Include="src\Misc\MiniMap.cpp" />
+    <ClCompile Include="src\Main\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ECS\Component.h" />
@@ -91,5 +92,10 @@
     <ClInclude Include="src\Main\FreeGlutWrap.h" />
     <ClInclude Include="src\Main\Space\UniverseObject.h" />
     <ClInclude Include="src\Misc\MiniMap.h" />
+    <ClInclude Include="src\Main\GameMain.h" />
+    <ClInclude Include="src\Main\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Main\Text.txt" />
   </ItemGroup>
 </Project>
