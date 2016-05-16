@@ -145,7 +145,7 @@ void Game::Update()
 		{
 			state = InGame;
 			glutFullScreen();
-			glutFullScreenToggle();
+			//glutFullScreenToggle();
 			orbitCamera = new SimpleCamera(Vector3(100, 0, 100), 0.0f, true);
 			orbitCamera->setLookAt(Vector3(0, 0, 0));
 			m_camera = new FPScamera(Vector3(0, 50, 0), false);
